@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-const app = getApp()
+// const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -7,57 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '',
-    // 提示信息
-    hidden: true,
-    // 分析师关注信息提示
-    followHidden: true,
-    type: null
-  },
-  // 提示信息处理
-  confirm () {
-    this.setData({
-      hidden: true
-    })
-    wx.navigateBack({
-      delta: 1
-    })
-  },
-  // 关注分析师
-  followfxs (e) {
-    app.followfxs(e)
-    this.setData({
-      followHidden: false
-    })
-  },
-  // 关注分析师点击确定后逻辑
-  confirmfxs () {
-    let that = this
-    app.confirmfxs(that)
-  },
-  /**
-   * 分享设置
-   * @returns {desc: string, title: string, path: string}
-   */
-  onShareAppMessage () {
-    return {
-      desc: '分享我的分析师',
-      title: '金大侠',
-      path: '/pages/myinfo/myinfo'
-    }
+    title: '公司介绍',
+    text: '公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍'
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad (params) {
-    var that = this
-    this.setData({
-      title: params.title || '金大侠-个人信息',
-      type: params.type || 'myfxs'
-    })
-    wx.setNavigationBarTitle({
-      title: that.data.title
-    })
+  onLoad () {
+    // todo
   },
 
   /**
@@ -72,7 +29,6 @@ Page({
    */
   onShow () {
     // TODO: onShow
-    console.info(this.data.type)
   },
 
   /**

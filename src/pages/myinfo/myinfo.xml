@@ -1,42 +1,5 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
 <view class="container">
-  <!--弹出框-->
-  <modal hidden="{{hidden}}" title="标题" confirm-text="okay" cancel-text="ng" bindconfirm="confirm" bindcancel="cancel">一个弹出框</modal>
-  <!--分析师信息模块-->
-  <view wx:if="{{type == 'myfxs'}}" class="fxs-container">
-    <view class="fxs" wx:for="[1,2]" wx:key="index">
-      <!--上部-分析师信息-->
-      <view class="fxs-top">
-        <!--左侧图片-->
-        <view class="fxs-t-left">
-          <image src="../../images/wechatHL.png"></image>
-        </view>
-        <!--右侧信息-->
-        <view class="fxs-t-right">
-          <view class="fxs-t-r-name">分析师：<text>xxxx|xxx</text></view>
-          <view class="fxs-t-r-rise">收益率：<text>xxx</text></view>
-          <view class="fxs-t-r-time">最近操作：<text>xxx</text></view>
-        </view>
-      </view>
-      <!--下部-分析师功能-->
-      <view class="fxs-bottom">
-        <!--todo 关注分析师ID-->
-        <button bindtap="followfxs" data-id="fxsID" class="fxs-follow">关注</button>
-        <!--todo 对应分析师ID-->
-        <view class="fxs-detail">从事行业：xxxxxxxxxxxxxxx</view>
-      </view>
-    </view>
-  </view>
-  <!--其他信息模块-->
-  <view wx:if="{{type == 'company'}}">
-    <view class="company">
-      公司展示模块
-    </view>
-  </view>
-  <view wx:if="{{type == 'soft'}}">
-    <view class="soft">
-      软件展示模块
-    </view>
-  </view>
+  <text class="text">{{ text }}</text>
+  <image src="../../images/fxs-image.png"></image>
 </view>
-<modal hidden="{{followHidden}}" title="关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">关注成功</modal>
