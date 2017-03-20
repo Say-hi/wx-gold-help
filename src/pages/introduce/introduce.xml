@@ -1,0 +1,25 @@
+<!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
+<view class="container">
+  <!--分析师信息-->
+  <view class="fxs-container">
+    <view class="fxs">
+      <!--上部-分析师信息-->
+      <view class="fxs-top">
+        <!--左侧图片-->
+        <view class="fxs-t-left">
+          <image src="{{ fxsInfo.img }}"></image>
+        </view>
+        <!--右侧分析师信息-->
+        <view class="fxs-t-right color666">
+          <view class="fxs-t-r-name">分析师：<text>{{ fxsInfo.name }}{{ index }} <text class="fxs-t-r-site">职位:</text> {{ fxsInfo.type }}</text></view>
+          <view class="fxs-t-r-company">公司名：<text>{{ fxsInfo.company }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
+          <view class="fxs-t-r-rise">收益率：<text>{{ fxsInfo.rise }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ fxsInfo.time }}</text></text> </view>
+        </view>
+      </view>
+      <view class="fxs-introduce">
+        {{ fxsInfo.introduce }}
+      </view>
+    </view>
+  </view>
+</view>

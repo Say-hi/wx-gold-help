@@ -1,0 +1,59 @@
+.container {
+  padding: 18rpx 16rpx 20rpx 21rpx;
+  margin-top: 20rpx;
+  background-image: linear-gradient(90deg, #fef091, #f0c937);
+}
+//分析师信息样式
+.fxs-container {
+  border: 20rpx solid #fff;
+  border-top: 9rpx solid #fff;
+  border-radius:20rpx;
+  width: 713rpx;
+  box-sizing: border-box;
+  .fxs{
+    background-color: #fff;
+    .fxs-top {
+      display: flex;
+      position: relative;
+      .fxs-t-left {
+        image {
+          margin-right: 9rpx;
+          width: 214rpx;
+          height: 214rpx;
+        }
+      }
+      .fxs-t-right {
+        view {
+          //padding-left: 30rpx;
+          //padding-bottom: 20rpx;
+          font-size: 24rpx;
+          margin-bottom: 31rpx;
+          .fxs-t-r-site, .fxs-t-r-time {
+            font-size: 24rpx;
+            padding-left: 31rpx;
+            color: #666;
+          }
+          text {
+            font-size: 26rpx;
+            color: #000;
+          }
+        }
+      }
+    }
+    .fxs-introduce {
+      text-indent: 1em;
+      font-size: 24rpx;
+      padding-top: 20rpx;
+      position: relative;
+    }
+    .fxs-introduce::before {
+      position: absolute;
+      top: 15rpx;
+      left: 12rpx;
+      content: '';
+      width: 5rpx;
+      height: 21rpx;
+      background-image: linear-gradient(#fef091, #fde01b);
+    }
+  }
+}

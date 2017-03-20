@@ -1,0 +1,7 @@
+// Window configuration
+// https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
+{
+  // 导航栏标题文字内容
+  "navigationBarTitleText": "查看明细",
+  "enablePullDownRefresh": false
+}

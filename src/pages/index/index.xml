@@ -1,0 +1,54 @@
+<!--加载处理-->
+<loading hidden="{{hidden}}">正在努力加载中^_^</loading>
+<!--最外层容器-->
+<scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" bindscrolltolower="showMore"  class="container" >
+  <!--小程序标题-->
+  <!--<view class="title">{{ title }}</view>-->
+  <!--黄金信息-->
+  <view class="info-container">
+    <view class="info-contanier-wrap">
+      <view  class="info-container-title">上海黄金交易所行情</view>
+      <view class="info info-title">
+        <view class="info-title-kind">品种</view>
+        <view class="info-title-price">最新价</view>
+        <view class="info-title-rise">涨幅</view>
+      </view>
+      <view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">
+        <view class='info-kind'>{{item.kind}}</view>
+        <view class='info-price {{item.type}}'>{{item.price}}</view>
+        <view class='info-rise {{item.type}}'>{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+  <!--分析师信息-->
+  <view class="fxs-container">
+    <navigator hover-class="none" open-type="navigate" url="../detail/detail?type=fxsid" class="fxs" wx:for="{{fxs}}" wx:key="index">
+      <!--上部-分析师信息-->
+      <view class="fxs-top">
+        <!--图片位置交换->原左现右-->
+        <!--右侧信息-->
+        <view class="fxs-t-right color666">
+          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}{{ index }} <text class="fxs-t-r-site">职位:</text> {{ item.type }}</text></view>
+          <view class="fxs-t-r-company">公司名：<text>{{ item.company }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ item.style }}</text></view>
+          <view class="fxs-t-r-rise">收益率：<text>{{ item.rise }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ item.time }}</text></text> </view>
+        </view>
+        <!--左侧图片-->
+        <view class="fxs-t-left">
+          <image src="{{ item.img }}"></image>
+        </view>
+      </view>
+      <!--下部-分析师功能-->
+      <view class="fxs-bottom">
+        <!--todo 关注分析师ID-->
+        <button catchtap="followfxs" data-id="fxsID" class="fxs-follow">关注</button>
+        <!--todo 对应分析师ID-->
+        <navigator open-type="navigate" url="../detail/detail?type=fxsid" class="fxs-detail">查看明细</navigator>
+      </view>
+    </navigator>
+  </view>
+  <!--查看更多-->
+  <view class="footer" bindtap="showMore" wx:if="{{show}}">查看更多</view>
+</scroll-view>
+<!--关注结果弹窗-->
+<modal hidden="{{followHidden}}" title="关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">关注成功</modal>

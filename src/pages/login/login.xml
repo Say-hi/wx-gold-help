@@ -1,0 +1,53 @@
+<view class="container">
+  <!--用户信息-->
+  <view class="user">
+    <view class="user-wrap">
+      <image bindtap="chooseImage" class="user-pic" src="{{userInfo.avatarUrl}}"></image>
+      <view class="user-name">{{userInfo.nickName}}</view>
+      <view class="user-title">
+        {{ userInfo.title || '你猜你最近在干嘛...' }}
+      </view>
+    </view>
+    <image class="user-bottom-img" src="../../images/login.png"></image>
+    <image class="user-bottom-img2" src="../../images/login.png"></image>
+  </view>
+  <!--个人中心功能-->
+
+  <!--分析师-->
+  <view wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
+    <view class="fxs">
+      <!--上部-分析师信息-->
+      <navigator hover-class="none" open-type="navigate" url='../introduce/introduce?type=fxsid' class="fxs-top">
+        <!--左侧图片-->
+        <view class="fxs-t-left">
+          <image src="{{ fxsInfo.img }}"></image>
+        </view>
+        <!--右侧分析师信息-->
+        <view class="fxs-t-right color666">
+          <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
+          <view class="fxs-t-r-gender">性别：<text>{{ fxsInfo.gender }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
+          <view class="fxs-t-r-company">公司：<text>{{ fxsInfo.company }}</text></view>
+        </view>
+      </navigator>
+      <view class="fxs-bottom">
+        <!--todo 分析师ID-->
+        <button catchtap="followfxs" data-id="fxsID" class="fxs-follow">取消关注</button>
+      </view>
+    </view>
+  </view>
+  <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还么有关注分析师哦...快去首页关注分析师吧</view>
+  <!--软件信息-->
+  <view class="soft">
+    <image class="soft-img" src="../../images/fxs-image.png"></image>
+    <view class="soft-content">
+      <view class="soft-title">软件介绍</view>
+      <view class="soft-text"> {{ soft }} </view>
+    </view>
+  </view>
+  <!--公司信息-->
+  <navigator class="company" url="" open-type="navigate">
+    <image class="company-img" src="../../images/company.png"></image>
+    <view>公司介绍</view>
+  </navigator>
+</view>

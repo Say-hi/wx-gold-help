@@ -1,0 +1,6 @@
+// Window configuration
+// https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
+{
+  // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/app-service/page.html?t=1476197491005#页面相关事件处理函数
+  "enablePullDownRefresh": false
+}

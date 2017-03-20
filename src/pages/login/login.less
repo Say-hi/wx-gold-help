@@ -1,0 +1,176 @@
+//用户信息样式
+.user {
+  height: 209rpx;
+  background-color: #f4d34a;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  .user-wrap {
+    position: relative;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .user-pic {
+    margin-top: 17rpx;
+    width: 77rpx;
+    height: 77rpx;
+    border-radius: 50%;
+  }
+  .user-name {
+    padding-top: 9rpx;
+    text-align: center;
+    font-size: 26rpx;
+  }
+  .user-title {
+    padding-top: 20rpx;
+    text-align: center;
+    font-size: 22rpx;
+  }
+}
+.user-bottom-img, .user-bottom-img2 {
+  position: absolute;
+  bottom: 0;
+  width: 769rpx;
+  height: 126rpx;
+}
+.user-bottom-img {
+  left: -100rpx;
+}
+.user-bottom-img2 {
+  width: 717rpx;
+  right: -33rpx;
+}
+
+//分析师信息样式
+.fxs-container {
+  height: 405rpx;
+  background-color: #fff;
+  padding-left: 27rpx;
+  border-bottom: 1rpx solid #eee;
+  .fxs{
+    border-top: 82rpx solid #fff;
+    background-color: #fff;
+    .fxs-top {
+      display: flex;
+      position: relative;
+      .fxs-t-left {
+        padding-right: 29rpx;
+        image {
+          margin-right: 9rpx;
+          width: 214rpx;
+          height: 214rpx;
+        }
+      }
+      .fxs-t-right {
+        view {
+          //padding-left: 30rpx;
+          //padding-bottom: 20rpx;
+          font-size: 24rpx;
+          margin-bottom: 31rpx;
+          .fxs-t-r-site, .fxs-t-r-time {
+            font-size: 24rpx;
+            padding-left: 31rpx;
+            color: #666;
+          }
+          text {
+            font-size: 26rpx;
+            color: #000;
+          }
+        }
+      }
+
+    }
+    //关注按钮样式
+    .fxs-bottom {
+      position: relative;
+      .fxs-follow {
+        position: absolute;
+        left: 44rpx;
+        width: 112rpx;
+        padding: 0;
+        font-size: 24rpx;
+        text-align: center;
+        background-image: linear-gradient(#fffdf1, #fde01a);
+        border: 2rpx solid #edc01a;
+        color: #000;
+        line-height: 33rpx;
+      }
+    }
+  }
+}
+//未关注分析师样式
+.no-fxs {
+  font-size: 24rpx;
+  width: 100%;
+  height: 100rpx;
+  background-color: #fff;
+  text-align: center;
+  text-indent: 2em;
+  line-height: 100rpx;
+}
+//软件信息样式
+.soft{
+  background-color: #fff;
+  margin-top: 20rpx;
+  padding: 33rpx 67rpx 33rpx 19rpx;
+  display: flex;
+  align-items: center;
+  .soft-img {
+    width: 215rpx;
+    height: 162rpx;
+  }
+  .soft-content {
+    width: 417rpx;
+    display: flex;
+    flex-direction: column;
+    padding-left: 29rpx;
+    .soft-title {
+      font-size: 26rpx;
+      padding-left: 15rpx;
+      position: relative;
+    }
+    .soft-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 8rpx;
+      height: 25rpx;
+      background-image: linear-gradient(#fef091, #fddf12);
+    }
+    .soft-text {
+      position: relative;
+      padding-top: 18rpx;
+      color: #666;
+      font-size: 22rpx;
+      line-height: 35rpx;
+    }
+    //.soft-text::after {
+    //  position: absolute;
+    //  content: '.......................';
+    //  bottom: 0;
+    //  background-color: #fff;
+    //  right: 1em;
+    //}
+  }
+
+}
+//公司信息样式
+.company {
+  background-color: #fff;
+  height: 90rpx;
+  margin: 20rpx 0;
+  display: flex;
+  align-items: center;
+  padding-left: 21rpx;
+  .company-img {
+    width: 54rpx;
+    height: 54rpx;
+  }
+  view {
+    padding-left: 19rpx;
+    font-size: 28rpx;
+  }
+}
