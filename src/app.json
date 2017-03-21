@@ -6,7 +6,6 @@
     "pages/index/index",
     "pages/login/login",
     "pages/detail/detail",
-    "pages/myinfo/myinfo",
     "pages/introduce/introduce"
     // Dont remove this comment
   ],

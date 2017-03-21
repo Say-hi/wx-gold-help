@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: 'detail',
+    title: '分析师明细',
     fxsInfo: {
       'name': '张三',
       'company': '北京金融有限公司',
@@ -58,6 +58,8 @@ Page({
    */
   onLoad (params) {
     console.log(params)
+    var id = params.type
+    console.log(id)
     // wx.setNavigationBarTitle({
     //   title: '当前页面'
     // })

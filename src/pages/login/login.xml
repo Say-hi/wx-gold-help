@@ -14,7 +14,7 @@
   <!--个人中心功能-->
 
   <!--分析师-->
-  <view wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
+  <navigator open-type="navigate" url='../detail/detail?fxsId={{ index }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
     <view class="fxs">
       <!--上部-分析师信息-->
       <view class="fxs-top">
@@ -35,7 +35,7 @@
         <button catchtap="cancelFollow" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
       </view>
     </view>
-  </view>
+  </navigator>
   <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还么有关注分析师哦...快去首页关注分析师吧</view>
   <!--软件信息-->
   <view class="soft">
@@ -50,6 +50,7 @@
     <image class="company-img" src="../../images/company.png"></image>
     <view>公司介绍</view>
   </navigator>
+
 </view>
 <!--关注结果弹窗-->
 <modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">取消关注成功</modal>

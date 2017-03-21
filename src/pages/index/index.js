@@ -34,10 +34,12 @@ Page({
     infoShow: true,
     // 关注弹窗显示
     followHidden: true,
+    flag: true,
     title: '上海黄金交易所行情',
     userInfo: {},
     fxsNumber: 20,
     scrollHeight: 0,
+    scrollTop: 10,
     url: 'https://api.douban.com/v2/movie/in_theaters',
     shanghaiInfo: [{
       'kind': 'Aut+D',
@@ -111,6 +113,29 @@ Page({
       })
     }, 1000)
   },
+  // 下拉重新加载数据
+  refresh () {
+    if (this.data.flag) {
+      this.setData({
+        flag: false
+      })
+      // wx.showToast({
+      //   title: '刷新数据中',
+      //   icon: 'loading',
+      //   duration: 10000
+      // })
+      console.log('重新加载数据')
+      setTimeout(this.onLoad, 2000)
+    }
+    console.log('呵呵')
+    // this.onLoad()
+  },
+  // 滚动设置高度
+  scroll (event) {
+    this.setData({
+      scrollTop: event.detail.scrollTop
+    })
+  },
   /**
    * 分享设置
    * @returns {desc: string, title: string, path: string}
@@ -146,6 +171,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad (e) {
+    this.setData({
+      scrollTop: 10,
+      flag: true
+    })
+    // wx.hideToast()
     console.log(' ---------- onLoad ----------')
     // var that = this
     // var url = that.data.url
