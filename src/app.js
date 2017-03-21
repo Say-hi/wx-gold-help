@@ -12,8 +12,9 @@ App({
    * 可以定义任何成员，用于在整个应用中共享
    */
   data: {
-    name: '金大侠',
+    name: '黄金帮',
     version: '0.1.0',
+    baseUrl: 'https://xxxx.xxxx.xxx',
     userInfo: null
   },
   // 不是只能定义`data`，别的也可以
@@ -28,6 +29,7 @@ App({
     var id = e.currentTarget.dataset.id
     console.log('fxsID:' + id)
     console.log('关注了该分析师')
+    // wx:request()
   },
   /**
    * 关注后的弹窗

@@ -9,6 +9,7 @@ Page({
   data: {
     title: '我的分析师',
     userInfo: {},
+    followHidden: true,
     usertools: [{
       'icon': '../../images/wechatHL.png',
       'tool': '我的分析师',
@@ -33,6 +34,7 @@ Page({
       'time': '2017/2/2',
       'rise': '1.2%',
       'img': '../../images/fxs-image.png',
+      'id': '123',
       'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
     },
     {
@@ -66,29 +68,35 @@ Page({
       }
     })
   },
-  /**
-   * 介绍内容切换
-   */
-  company () {
+  // 取消关注
+  cancelFollow (e) {
+    console.log(e)
+    var fxsId = e.currentTarget.dataset.id
+    console.log(fxsId)
+    // todo 取消关注的分析师--->重新获取关注数据array.splice()
+    // wx.request()
+    this.data.fxsInfo.splice(1, 1)
     this.setData({
-      company: true
+      followHidden: false,
+      fxsInfo: this.data.fxsInfo
     })
   },
-  soft () {
+  // 关注结果弹窗
+  confirmfxs () {
     this.setData({
-      company: false
+      followHidden: true
     })
   },
   /**
    * 分享设置
    * @returns {{title: string, path: string}}
    */
-  onShareAppMessage () {
-    return {
-      title: '分享我的分析师',
-      path: '/pages/login/login'
-    }
-  },
+  // onShareAppMessage () {
+  //   return {
+  //     title: '分享我的分析师',
+  //     path: '/pages/login/login'
+  //   }
+  // },
   /**
    * 生命周期函数--监听页面加载
    */

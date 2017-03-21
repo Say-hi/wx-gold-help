@@ -4,7 +4,7 @@
   <view class="fxs-container">
     <view class="fxs">
       <!--上部-分析师信息-->
-      <navigator hover-class="none" open-type="navigate" url='../introduce/introduce?type=fxsid' class="fxs-top">
+      <view class="fxs-top">
         <!--左侧图片-->
         <view class="fxs-t-left">
           <image src="{{ fxsInfo.img }}"></image>
@@ -16,12 +16,11 @@
           <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
           <view class="fxs-t-r-rise">收益率：<text>{{ fxsInfo.rise }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ fxsInfo.time }}</text></text> </view>
         </view>
-
-      </navigator>
-      <!--todo 确定分析师id-->
-      <view class="fxs-bottom">
-        <navigator url="../introduce/introduce?type=fxsid" open-type="navigate" class="show-more">详细介绍</navigator>
       </view>
+      <!--todo 确定分析师id-->
+      <!--<view class="fxs-bottom">-->
+        <!--<navigator url="../introduce/introduce?type=fxsid" open-type="navigate" class="show-more">详细介绍</navigator>-->
+      <!--</view>-->
     </view>
   </view>
   <!--操作记录-->
@@ -37,5 +36,9 @@
       </view>
       <view bindtap="showMore" class="show-more color666">查看更多</view>
     </view>
+  </view>
+  <!--分析师介绍-->
+  <view class="introduce">
+    <text>{{ introduce }}</text>
   </view>
 </view>

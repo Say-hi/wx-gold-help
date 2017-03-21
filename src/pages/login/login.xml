@@ -5,7 +5,7 @@
       <image bindtap="chooseImage" class="user-pic" src="{{userInfo.avatarUrl}}"></image>
       <view class="user-name">{{userInfo.nickName}}</view>
       <view class="user-title">
-        {{ userInfo.title || '你猜你最近在干嘛...' }}
+        {{ userInfo.title || '猜猜你最近在干嘛...' }}
       </view>
     </view>
     <image class="user-bottom-img" src="../../images/login.png"></image>
@@ -17,7 +17,7 @@
   <view wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
     <view class="fxs">
       <!--上部-分析师信息-->
-      <navigator hover-class="none" open-type="navigate" url='../introduce/introduce?type=fxsid' class="fxs-top">
+      <view class="fxs-top">
         <!--左侧图片-->
         <view class="fxs-t-left">
           <image src="{{ fxsInfo.img }}"></image>
@@ -29,10 +29,10 @@
           <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
           <view class="fxs-t-r-company">公司：<text>{{ fxsInfo.company }}</text></view>
         </view>
-      </navigator>
+      </view>
       <view class="fxs-bottom">
         <!--todo 分析师ID-->
-        <button catchtap="followfxs" data-id="fxsID" class="fxs-follow">取消关注</button>
+        <button catchtap="cancelFollow" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
       </view>
     </view>
   </view>
@@ -46,8 +46,10 @@
     </view>
   </view>
   <!--公司信息-->
-  <navigator class="company" url="" open-type="navigate">
+  <navigator class="company" url="../introduce/introduce?type=company" open-type="navigate">
     <image class="company-img" src="../../images/company.png"></image>
     <view>公司介绍</view>
   </navigator>
 </view>
+<!--关注结果弹窗-->
+<modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">取消关注成功</modal>

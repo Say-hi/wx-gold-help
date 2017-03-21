@@ -118,8 +118,8 @@ Page({
   onShareAppMessage () {
     return {
       desc: '分享我的首页',
-      title: '金大侠',
-      path: '/pages/login/login'
+      title: '黄金帮',
+      path: '/pages/index/index'
     }
   },
   /**

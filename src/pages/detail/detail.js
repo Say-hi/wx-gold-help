@@ -17,9 +17,27 @@ Page({
       'rise': '1.2%',
       'img': '../../images/fxs-image.png'
     },
+    introduce: '分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍',
     operation: [{
       'kind': 'AuT+D',
       'way': '开仓买入',
+      'price': '价格',
+      'garbage': '仓位'
+    }]
+  },
+  // todo 点击后请求数据刷新数据
+  showMore () {
+    // var that = this
+    // wx.request()
+    var newOperation = [{
+      'kind': 'AuT+D',
+      'way': '闭仓卖出',
+      'price': '价格',
+      'garbage': '仓位'
+    },
+    {
+      'kind': 'AuT+D',
+      'way': '闭仓卖出',
       'price': '价格',
       'garbage': '仓位'
     },
@@ -29,22 +47,11 @@ Page({
       'price': '价格',
       'garbage': '仓位'
     }]
-  },
-  // todo 点击后请求数据刷新数据
-  showMore () {
-    var that = this
-    // wx.request()
-    var newOperation = {
-      'kind': 'AuT+D',
-      'way': '闭仓卖出',
-      'price': '价格',
-      'garbage': '仓位'
-    }
-    this.data.operation.push(newOperation)
+    var operation = this.data.operation.concat(newOperation)
     this.setData({
-      operation: that.data.operation
+      operation: operation
     })
-    console.log('记载更多数据')
+    console.log('加载更多数据')
   },
   /**
    * 生命周期函数--监听页面加载
@@ -57,8 +64,8 @@ Page({
   },
   onShareAppMessage () {
     return {
-      desc: '金大侠理财',
-      title: '分享分析师',
+      desc: '分享分析师',
+      title: '黄金帮',
       path: '/pages/detail/detail'
     }
   },

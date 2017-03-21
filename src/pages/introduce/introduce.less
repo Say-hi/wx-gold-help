@@ -57,3 +57,32 @@
     }
   }
 }
+//公司信息样式
+.container2 {
+  padding: 0;
+  background-color: #fff;
+}
+.company {
+  background-color: #fff;
+  padding-left: 27rpx;
+  image {
+    width: 470rpx;
+    height: 313rpx;
+    float: right;
+  }
+  text {
+    font-size: 24rpx;
+    //text-indent: 2em;
+    line-height: 50rpx;
+    position: relative;
+  }
+  text::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 5rpx;
+    height: 22rpx;
+    background-image: linear-gradient(#fef08e, #fde01a);
+  }
+}

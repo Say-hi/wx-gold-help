@@ -1,7 +1,7 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
-<view class="container">
+<view class="container {{ type === 'company' ? 'container2' : ''}}">
   <!--分析师信息-->
-  <view class="fxs-container">
+  <view wx:if="{{ type !== 'company' }}" class="fxs-container">
     <view class="fxs">
       <!--上部-分析师信息-->
       <view class="fxs-top">
@@ -21,5 +21,10 @@
         {{ fxsInfo.introduce }}
       </view>
     </view>
+  </view>
+  <!--公司信息-->
+  <view wx:if="{{ type === 'company' }}" class="company">
+    <image src="{{ company.img }}"></image>
+    <text>{{ company.text }}</text>
   </view>
 </view>
