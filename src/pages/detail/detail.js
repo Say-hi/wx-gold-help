@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -20,10 +20,12 @@ Page({
     introduce: '分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍',
     operation: [{
       'kind': 'AuT+D',
-      'way': '开仓买入',
+      'change': '买入',
       'price': '价格',
-      'garbage': '仓位'
-    }]
+      'garbage': '仓位比列',
+      'count': '数量'
+    }],
+    url: '/analyst/get/'
   },
   // todo 点击后请求数据刷新数据
   showMore () {
@@ -58,12 +60,35 @@ Page({
    */
   onLoad (params) {
     console.log(params)
+    // 加载分析师信息
+
+    // 程序id
+    var appId = app.data.appId
+    // 页面传递分析师id
     var id = params.type
-    console.log(id)
-    // wx.setNavigationBarTitle({
-    //   title: '当前页面'
-    // })
+    // 签名
+    var sign = app.md5()
+    // 时间戳
+    var timestamp = app.timest()
+    // 拼接url
+    var url = app.data.baseUrl + this.data.url + id + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    // 请求方法
+    var method = 'GET'
+    // 配置传参数据
+    var obj = {
+      url: url,
+      method: method,
+      success (res) {
+        console.log(url)
+        console.log(res)
+      }
+    }
+    wx.request(obj)
   },
+  /**
+   * 设置分享
+   * @returns {{desc: string, title: string, path: string}}
+   */
   onShareAppMessage () {
     return {
       desc: '分享分析师',

@@ -40,23 +40,24 @@ Page({
     fxsNumber: 20,
     scrollHeight: 0,
     scrollTop: 10,
-    url: 'https://api.douban.com/v2/movie/in_theaters',
+    followText: '关注成功',
+    url: '/analyst/list',
     shanghaiInfo: [{
       'kind': 'Aut+D',
       'price': '278',
-      'time': '11.600',
+      'rise': '11.600',
       'type': 'red'
     },
     {
       'kind': 'Maut+D',
       'price': '2785',
-      'time': '11.1600',
+      'rise': '11.1600',
       'type': 'green'
     },
     {
       'kind': 'Maut+D',
       'price': '2785',
-      'time': '11.1600',
+      'rise': '11.1600',
       'type': 'green'
     }],
     fxs: [{
@@ -66,7 +67,8 @@ Page({
       'style': '金融  专业  成熟',
       'time': '2017/2/2',
       'rise': '1.2%',
-      'img': '../../images/fxs-image.png'
+      'img': '../../images/fxs-image.png',
+      'id': '52f005e6d4b340edb025fd26cdd7793a'
     },
     {
       'name': '张三',
@@ -75,7 +77,8 @@ Page({
       'style': '金融  专业  成熟',
       'time': '2017/2/2',
       'rise': '1.2%',
-      'img': '../../images/fxs-image.png'
+      'img': '../../images/fxs-image.png',
+      'id': '02'
     },
     {
       'name': '张三',
@@ -84,7 +87,8 @@ Page({
       'style': '金融  专业  成熟',
       'time': '2017/2/2',
       'rise': '1.2%',
-      'img': '../../images/fxs-image.png'
+      'img': '../../images/fxs-image.png',
+      'id': '03'
     }]
   },
   /**
@@ -151,11 +155,8 @@ Page({
    * 关注分析师功能
    */
   followfxs (e) {
-    app.followfxs(e)
-    // todo 后台返回信息判断是否展示弹窗
-    this.setData({
-      followHidden: false
-    })
+    var that = this
+    app.followfxs(e, that)
   },
   // 关注分析师点击确定后逻辑
   confirmfxs () {
@@ -200,6 +201,23 @@ Page({
         })
       }
     })
+    // todo 加载首页数据
+    var appId = app.data.appId
+    var sign = app.md5()
+    var timestamp = app.timest()
+    var url = app.data.baseUrl + this.data.url + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var method = 'POST'
+    var obj = {
+      url: url,
+      // header: {'Content-Type': 'application/x-www-form-urlencoded'},
+      method: method,
+      success (res) {
+        console.log(url)
+        console.log(res)
+        // console.log(res.data.result[0])
+      }
+    }
+    wx.request(obj)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -14,7 +14,7 @@
   <!--个人中心功能-->
 
   <!--分析师-->
-  <navigator open-type="navigate" url='../detail/detail?fxsId={{ index }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
+  <navigator hover-class="none" open-type="navigate" url='../detail/detail?fxsId={{ index }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
     <view class="fxs">
       <!--上部-分析师信息-->
       <view class="fxs-top">
@@ -32,7 +32,7 @@
       </view>
       <view class="fxs-bottom">
         <!--todo 分析师ID-->
-        <button catchtap="cancelFollow" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
+        <button catchtap="cancelFollow" data-number="{{ index }}" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
       </view>
     </view>
   </navigator>
@@ -46,11 +46,11 @@
     </view>
   </view>
   <!--公司信息-->
-  <navigator class="company" url="../introduce/introduce?type=company" open-type="navigate">
+  <navigator  class="company" url="../introduce/introduce?type=company" open-type="navigate">
     <image class="company-img" src="../../images/company.png"></image>
     <view>公司介绍</view>
   </navigator>
 
 </view>
 <!--关注结果弹窗-->
-<modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">取消关注成功</modal>
+<modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ cancelText }}</modal>

@@ -16,13 +16,13 @@
       <view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">
         <view class='info-kind'>{{item.kind}}</view>
         <view class='info-price {{item.type}}'>{{item.price}}</view>
-        <view class='info-rise {{item.type}}'>{{item.time}}</view>
+        <view class='info-rise {{item.type}}'>{{item.rise}}</view>
       </view>
     </view>
   </view>
   <!--分析师信息-->
   <view class="fxs-container">
-    <navigator hover-class="none" open-type="navigate" url="../detail/detail?type=fxsid" class="fxs" wx:for="{{fxs}}" wx:key="index">
+    <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs" wx:for="{{fxs}}" wx:key="index">
       <!--上部-分析师信息-->
       <view class="fxs-top">
         <!--图片位置交换->原左现右-->
@@ -41,16 +41,16 @@
       <!--下部-分析师功能-->
       <view class="fxs-bottom">
         <!--todo 关注分析师ID-->
-        <button catchtap="followfxs" data-id="fxsID" class="fxs-follow">关注</button>
+        <button catchtap="followfxs" data-id="{{ item.id }}" class="fxs-follow">关注</button>
         <!--todo 对应分析师ID-->
-        <navigator open-type="navigate" url="../detail/detail?type=fxsid" class="fxs-detail">查看明细</navigator>
+        <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs-detail">查看明细</navigator>
       </view>
     </navigator>
   </view>
   <!--查看更多-->
   <view class="footer" bindtap="showMore" >查看更多</view>
 </scroll-view>
-<modal hidden="{{ followHidden }}" title="关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">关注成功</modal>
+<modal hidden="{{ followHidden }}" title="关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
 <!--遮罩层-->
 <!--上拉加载遮罩-->
 <view class="mask" hidden="{{ hidden }}">

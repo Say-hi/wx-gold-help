@@ -8,23 +8,10 @@ Page({
    */
   data: {
     title: '我的分析师',
+    cancelUrl: '/followers/cancelConcern/',
+    cancelText: '取消关注成功',
     userInfo: {},
     followHidden: true,
-    usertools: [{
-      'icon': '../../images/wechatHL.png',
-      'tool': '我的分析师',
-      'type': 'myfxs'
-    },
-    {
-      'icon': '../../images/wechatHL.png',
-      'tool': '公司介绍',
-      'type': 'company'
-    },
-    {
-      'icon': '../../images/wechatHL.png',
-      'tool': '软件介绍',
-      'type': 'soft'
-    }],
     fxsInfo: [{
       'name': '张三',
       'company': '北京金融有限公司',
@@ -34,7 +21,7 @@ Page({
       'time': '2017/2/2',
       'rise': '1.2%',
       'img': '../../images/fxs-image.png',
-      'id': '123',
+      'id': '52f005e6d4b340edb025fd26cdd7793a',
       'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
     },
     {
@@ -46,6 +33,19 @@ Page({
       'time': '2017/2/2',
       'rise': '1.2%',
       'img': '../../images/fxs-image.png',
+      'id': '1234',
+      'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
+    },
+    {
+      'name': '张三',
+      'company': '北京金融有限公司',
+      'type': '高级分析师',
+      'gender': '男',
+      'style': '金融  专业  成熟',
+      'time': '2017/2/2',
+      'rise': '1.2%',
+      'img': '../../images/fxs-image.png',
+      'id': '1235',
       'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
     }],
     company: true,
@@ -70,16 +70,43 @@ Page({
   },
   // 取消关注
   cancelFollow (e) {
-    console.log(e)
-    var fxsId = e.currentTarget.dataset.id
-    console.log(fxsId)
+    var that = this
+    var analystId = e.currentTarget.dataset.id
+    var number = e.currentTarget.dataset.number
+    console.log(analystId)
     // todo 取消关注的分析师--->重新获取关注数据array.splice()
-    // wx.request()
-    this.data.fxsInfo.splice(1, 1)
-    this.setData({
-      followHidden: false,
-      fxsInfo: this.data.fxsInfo
-    })
+    var appId = app.data.appId
+    var sign = app.md5()
+    var timestamp = app.timest()
+    var url = app.data.baseUrl + this.data.cancelUrl + app.data.userId + '/' + analystId + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var method = 'GET'
+    var obj = {
+      url: url,
+      method: method,
+      success (res) {
+        console.log(url)
+        console.log(res)
+        var code = res.data.code
+        console.log(typeof code)
+        if (code === '200') {
+          that.setData({
+            cancelText: '取消关注失败'
+          })
+        }
+        if (code === '500') {
+          console.log(number)
+          that.data.fxsInfo.splice(number, 1)
+          that.setData({
+            cancelText: '取消关注成功',
+            fxsInfo: that.data.fxsInfo
+          })
+        }
+        that.setData({
+          followHidden: false
+        })
+      }
+    }
+    wx.request(obj)
   },
   // 关注结果弹窗
   confirmfxs () {

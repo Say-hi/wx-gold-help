@@ -30,8 +30,9 @@
       <!-- todo 循环添加操作记录-->
       <view class="info" wx:for="{{ operation }}" wx:key="index">
         <view class='info-kind'>{{ item.kind }}</view>
-        <view class='info-way'>{{ item.way }}</view>
+        <view class='info-change'>{{ item.change }}</view>
         <view class='info-price'>{{ item.price }}</view>
+        <view class="info-count">{{ item.count }}</view>
         <view class='info-garbage'>{{ item.garbage }}</view>
       </view>
       <view bindtap="showMore" class="show-more color666">查看更多</view>
@@ -39,6 +40,6 @@
   </view>
   <!--分析师介绍-->
   <view class="introduce">
-    <text>{{ introduce }}</text>
+    <view>{{ introduce }}</view>
   </view>
 </view>

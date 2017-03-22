@@ -6,6 +6,7 @@
  */
 const wechat = require('./utils/wechat')
 const Promise = require('./utils/bluebird')
+const md5 = require('./utils/wxmd5')
 App({
   /**
    * Global shared
@@ -14,8 +15,12 @@ App({
   data: {
     name: '黄金帮',
     version: '0.1.0',
-    baseUrl: 'https://xxxx.xxxx.xxx',
-    userInfo: null
+    baseUrl: 'http://120.24.41.38:8183/rest',
+    followUrl: '/followers/concern/',
+    userInfo: null,
+    userId: 123,
+    appId: 'e0d13e1b692968f4a3fd9e21c926d7d8',
+    PDK: '52f005e6d4b340edb025fd26cdd7793a'
   },
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
@@ -24,18 +29,67 @@ App({
    * 关注分析师功能
    * @param e {Event} 事件参数
    */
-  followfxs (e) {
+  followfxs (e, that) {
     // 获取分析师ID
-    var id = e.currentTarget.dataset.id
-    console.log('fxsID:' + id)
-    console.log('关注了该分析师')
-    // wx:request()
+    var analystId = e.currentTarget.dataset.id
+    // console.log('fxsID:' + analystId)
+    // console.log('关注了该分析师')
+    var appId = this.data.appId
+    var sign = this.md5()
+    var timestamp = this.timest()
+    var url = this.data.baseUrl + this.data.followUrl + this.data.userId + '/' + analystId + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var method = 'GET'
+    var obj = {
+      url: url,
+      method: method,
+      success (res) {
+        // console.log(url)
+        // console.log(res)
+        var code = res.data.code
+        if (code === '500') {
+          that.setData({
+            followText: '小主，关注失败了'
+          })
+        }
+        if (code === '200') {
+          that.setData({
+            followText: '小主，成功关注了'
+          })
+        }
+        that.setData({
+          followHidden: false
+        })
+      }
+    }
+    wx.request(obj)
   },
   /**
    * 关注后的弹窗
    */
   confirmfxs (that) {
     return that.setData({followHidden: true})
+  },
+  /**
+   * md5 加密
+   * @returns {*}
+   */
+  md5 () {
+    let timestamp = this.timest()
+    let PDK = this.data.PDK
+    let appId = this.data.appId
+    let str = timestamp + appId + PDK
+    return md5.hexMD5(PDK + md5.hexMD5(str))
+  },
+  /**
+   * 获取时间戳
+   * @returns {string}
+   */
+  timest () {
+    // var tmp = Date.parse(new Date()).toString()
+    var timer = new Date()
+    var tmp = timer.getTime().toString()
+    tmp = tmp.substr(0, 10)
+    return tmp
   },
   /**
    * 获取用户信息
