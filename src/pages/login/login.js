@@ -73,7 +73,7 @@ Page({
     var that = this
     var analystId = e.currentTarget.dataset.id
     var number = e.currentTarget.dataset.number
-    console.log(analystId)
+    // console.log(analystId)
     // todo 取消关注的分析师--->重新获取关注数据array.splice()
     var appId = app.data.appId
     var sign = app.md5()
@@ -84,17 +84,18 @@ Page({
       url: url,
       method: method,
       success (res) {
-        console.log(url)
-        console.log(res)
+        // console.log(url)
+        // console.log(res)
         var code = res.data.code
-        console.log(typeof code)
+        // console.log(typeof code)
         if (code === '500') {
+          // 失败
           that.setData({
             cancelText: '取消关注失败'
           })
-        }
-        if (code === '200') {
-          console.log(number)
+        } else if (code === '200') {
+          // 成功
+          // console.log(number)
           that.data.fxsInfo.splice(number, 1)
           that.setData({
             cancelText: '取消关注成功',

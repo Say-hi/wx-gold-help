@@ -153,9 +153,11 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
-    // TODO: onReady
     // 渲染富文本数据
+    var reg = /src="/g
     var article = this.data.introduce
+    var str = 'src="' + app.data.imgUlr
+    article = article.replace(reg, str)
     console.log(article)
     var that = this
     WxParse.wxParse('article', 'html', article, that, 5)
