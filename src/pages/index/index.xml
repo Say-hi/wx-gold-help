@@ -28,14 +28,14 @@
         <!--图片位置交换->原左现右-->
         <!--右侧信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}{{ index }} <text class="fxs-t-r-site">职位:</text> {{ item.type }}</text></view>
+          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}<text class="fxs-t-r-site">职位:</text> {{ item.jobDescription }}</text></view>
           <view class="fxs-t-r-company">公司名：<text>{{ item.company }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ item.style }}</text></view>
-          <view class="fxs-t-r-rise">收益率：<text>{{ item.rise }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ item.time }}</text></text> </view>
+          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text></view>
+          <view class="fxs-t-r-rise">收益率：<text>{{ item.profitability }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ item.lastOperate }}</text></text> </view>
         </view>
         <!--左侧图片-->
         <view class="fxs-t-left">
-          <image src="{{ item.img }}"></image>
+          <image src="{{ item.photo }}" alt="分析师头像"></image>
         </view>
       </view>
       <!--下部-分析师功能-->

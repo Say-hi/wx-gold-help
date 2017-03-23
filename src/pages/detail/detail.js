@@ -1,6 +1,6 @@
 // 获取全局应用程序实例对象
 const app = getApp()
-
+const WxParse = require('../../wxParse/wxParse')
 // 创建页面实例对象
 Page({
   /**
@@ -8,24 +8,15 @@ Page({
    */
   data: {
     title: '分析师明细',
-    fxsInfo: {
-      'name': '张三',
-      'company': '北京金融有限公司',
-      'type': '高级分析师',
-      'style': '金融  专业  成熟',
-      'time': '2017/2/2',
-      'rise': '1.2%',
-      'img': '../../images/fxs-image.png'
-    },
-    introduce: '分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍分析师介绍',
+    fxsInfo: {},
+    introduce: '',
     operation: [{
       'kind': 'AuT+D',
       'change': '买入',
       'price': '价格',
       'garbage': '仓位比列',
       'count': '数量'
-    }],
-    url: '/analyst/get/'
+    }]
   },
   // todo 点击后请求数据刷新数据
   showMore () {
@@ -56,34 +47,96 @@ Page({
     console.log('加载更多数据')
   },
   /**
+   * 处理分析师数据
+   * @param res
+   * @param that
+   */
+  getSingleFixData (res, that) {
+    let fxs = res.data.result
+    // 处理字符串
+    // 处理时间
+    if (fxs.lastOperate !== undefined) {
+      var time = fxs.lastOperate.slice(0, 10)
+    } else {
+      time = '无最新操作时间'
+    }
+    fxs.lastOperate = time
+    // 处理头像
+    let photo = app.data.imgUlr + fxs.photo
+    fxs.photo = photo
+    // 处理介绍信息
+    let introduce = fxs.introduce
+    console.log(introduce)
+
+    that.setData({
+      fxsInfo: fxs,
+      introduce: fxs.introduce,
+      show: false,
+      hidden: true
+    })
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad (params) {
-    console.log(params)
+    // console.log(params)
     // 加载分析师信息
-
-    // 程序id
-    var appId = app.data.appId
+    let that = this
     // 页面传递分析师id
     var id = params.type
-    // 签名
-    var sign = app.md5()
-    // 时间戳
-    var timestamp = app.timest()
-    // 拼接url
-    var url = app.data.baseUrl + this.data.url + id + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
-    // 请求方法
-    var method = 'GET'
-    // 配置传参数据
-    var obj = {
-      url: url,
-      method: method,
-      success (res) {
-        console.log(url)
-        console.log(res)
-      }
+    // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
+    let inObj = {
+      those: that,
+      url: app.data.getfxsUrl + id,
+      method: 'GET',
+      // data: {
+      //   'page': {
+      //     'pageNo': that.data.pageNo,
+      //     'pageSize': that.data.pageSize
+      //   },
+      //   'nickName': that.data.userInfo.nickName
+      // },
+      header: {'Content-Type': 'application/json'}
     }
-    wx.request(obj)
+    app.getData(inObj, this.getSingleFixData)
+    // // 程序id
+    // var appId = app.data.appId
+    //
+    // // 签名
+    // var sign = app.md5()
+    // // 时间戳
+    // var timestamp = app.timest()
+    // // 拼接url
+    // var url = app.data.baseUrl + app.data.getfxsUrl + id + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    // // 请求方法
+    // var method = 'GET'
+    // // 配置传参数据
+    // var obj = {
+    //   url: url,
+    //   method: method,
+    //   success (res) {
+    //     // console.log(url)
+    //     // console.log(res)
+    //     let fxs = res.data.result
+    //     console.log(fxs)
+    //     // 处理字符串
+    //     // 处理时间
+    //     if (fxs.lastOperate !== undefined) {
+    //       var time = fxs.lastOperate.slice(0, 10)
+    //     } else {
+    //       time = '无最新操作时间'
+    //     }
+    //     // let time = fxs[i].lastOperate.slice(0, 10) || '无最新操作'
+    //     fxs.lastOperate = time
+    //     // 处理头像
+    //     var photo = app.data.imgUlr + fxs.photo
+    //     fxs.photo = photo
+    //     that.setData({
+    //       fxsInfo: fxs
+    //     })
+    //   }
+    // }
+    // wx.request(obj)
   },
   /**
    * 设置分享
@@ -101,6 +154,11 @@ Page({
    */
   onReady () {
     // TODO: onReady
+    // 渲染富文本数据
+    var article = this.data.introduce
+    console.log(article)
+    var that = this
+    WxParse.wxParse('article', 'html', article, that, 5)
   },
   /**
    * 生命周期函数--监听页面显示

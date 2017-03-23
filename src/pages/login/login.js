@@ -88,12 +88,12 @@ Page({
         console.log(res)
         var code = res.data.code
         console.log(typeof code)
-        if (code === '200') {
+        if (code === '500') {
           that.setData({
             cancelText: '取消关注失败'
           })
         }
-        if (code === '500') {
+        if (code === '200') {
           console.log(number)
           that.data.fxsInfo.splice(number, 1)
           that.setData({

@@ -1,4 +1,5 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
+<import src="../../wxParse/wxParse" ></import>
 <view class="container">
   <!--分析师-->
   <view class="fxs-container">
@@ -7,17 +8,16 @@
       <view class="fxs-top">
         <!--左侧图片-->
         <view class="fxs-t-left">
-          <image src="{{ fxsInfo.img }}"></image>
+          <image src="{{ fxsInfo.photo }}"></image>
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">分析师：<text>{{ fxsInfo.name }}{{ index }} <text class="fxs-t-r-site">职位:</text> {{ fxsInfo.type }}</text></view>
+          <view class="fxs-t-r-name">分析师：<text>{{ fxsInfo.name }}<text class="fxs-t-r-site">职位:</text>{{ fxsInfo.jobDescription }}</text></view>
           <view class="fxs-t-r-company">公司名：<text>{{ fxsInfo.company }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
-          <view class="fxs-t-r-rise">收益率：<text>{{ fxsInfo.rise }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ fxsInfo.time }}</text></text> </view>
+          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
+          <view class="fxs-t-r-rise">收益率：<text>{{ fxsInfo.profitability }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ fxsInfo.lastOperate }}</text></text> </view>
         </view>
       </view>
-      <!--todo 确定分析师id-->
       <!--<view class="fxs-bottom">-->
         <!--<navigator url="../introduce/introduce?type=fxsid" open-type="navigate" class="show-more">详细介绍</navigator>-->
       <!--</view>-->
@@ -40,6 +40,6 @@
   </view>
   <!--分析师介绍-->
   <view class="introduce">
-    <view>{{ introduce }}</view>
+    <template is="wxParse" data="{{ wxParseData:article.nodes }}"></template>
   </view>
 </view>
