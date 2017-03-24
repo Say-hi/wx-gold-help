@@ -20,8 +20,6 @@ App({
     baseUrl: 'http://120.24.41.38:8183/rest',
     // 首页接口
     homeUrl: '/analyst/list',
-    // 登陆接口
-    loginUrl: '/login',
     // 图片接口
     imgUlr: 'http://120.24.41.38:8183',
     // 关注接口
@@ -30,10 +28,13 @@ App({
     getfxsUrl: '/analyst/get/',
     // 取消关注
     cancelUrl: '/followers/cancelConcern/',
+    // 获取sessionID
+    sessionIdUrl: '/wechatUser/getSessionID/',
     userInfo: null,
-    userId: null,
-    wxCode: null,
+    sessionId: null,
+    // 服务器定义的id
     appId: 'e0d13e1b692968f4a3fd9e21c926d7d8',
+    // 签名码
     PDK: '52f005e6d4b340edb025fd26cdd7793a'
   },
   // 不是只能定义`data`，别的也可以
@@ -51,14 +52,14 @@ App({
     var appId = this.data.appId
     var sign = this.md5()
     var timestamp = this.timest()
-    var url = this.data.baseUrl + this.data.followUrl + this.data.userId + '/' + analystId + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var url = this.data.baseUrl + this.data.followUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
     var method = 'GET'
     var obj = {
       url: url,
       method: method,
       success (res) {
-        console.log(url)
-        console.log(res)
+        // console.log(url)
+        // console.log(res)
         var code = res.data.code
         // if (code === '500') {
         //   wx.showModal({
@@ -92,7 +93,7 @@ App({
           })
         } else {
           that.setData({
-            followText: '状态码有误',
+            followText: '服务器开小差了',
             followHidden: false
           })
         }
@@ -125,7 +126,6 @@ App({
    * @returns {string}
    */
   timest () {
-    // var tmp = Date.parse(new Date()).toString()
     let timer = new Date()
     let tmp = timer.getTime().toString()
     tmp = tmp.substr(0, 10)
@@ -139,7 +139,7 @@ App({
     return new Promise((resolve, reject) => {
       if (this.data.userInfo) return reject(this.data.userInfo)
       wechat.login()
-        .then(res => console.log(res))
+        // .then(res => console.log(res))
         .then(() => wechat.getUserInfo())
         .then(res => res.userInfo)
         .then(info => (this.data.userInfo = info))
@@ -150,25 +150,69 @@ App({
   /**
    * 获取用户授权
    */
-  // userLogin () {
-  //   let sign = this.md5()
-  //   let timestamp = this.timest()
-  //   let url = this.data.baseUrl + this.data.loginUrl + '?appId=' + this.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
-  //   let obj = {
-  //     url: url,
-  //     data: {
-  //       // code: res.code
-  //     }
-  //   }
-  //   wx.login({
-  //     // 用户授权成功
-  //     success () {
-  //       // 获取用户基本信息
-  //       wx.getUserInfo()
-  //       wx.request(obj)
-  //     }
-  //   })
-  // },
+  userLogin () {
+    let that = this
+    let userCode = null
+    wx.login({
+      success: function (res) {
+        // 用户code
+        // console.log(res)
+        userCode = res.code
+        // console.log('login中的' + userCode)
+        wx.getUserInfo({
+          success: function (result) {
+            // console.log(result)
+            // that.data.userInfo = result.userInfo
+            // that.setData({
+            //   userInfo: result.userInfo
+            // })
+            wx.setStorage({
+              key: 'userInfo',
+              data: result.userInfo
+            })
+            // console.log('getuserinfo' + userCode)
+            if (userCode) {
+              // 发起网络请求
+              let nikeName = result.userInfo.nickName
+              // console.log(nikeName)
+              let photoUrl = result.userInfo.avatarUrl
+              let sign = that.md5()
+              let timestamp = that.timest()
+              let url = that.data.baseUrl + that.data.sessionIdUrl + userCode + '?appId=' + that.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
+              wx.request({
+                url: url,
+                method: 'POST',
+                data: {
+                  'nikeName': nikeName,
+                  'photoUrl': photoUrl
+                },
+                success (session) {
+                  // console.log(session)
+                  // 存储sessionId
+                  wx.setStorage({
+                    key: 'sessionId',
+                    data: session.data.result
+                  })
+                  // console.log(that)
+                  that.data.sessionId = session.data.result
+                  // wx.getStorage({
+                  //   key: 'sessionId',
+                  //   success (res) {
+                  //     that.data.sessionId = res.result
+                  //   }
+                  // })
+                }
+              })
+            } else {
+              console.log('获取用户登录态失败！' + res.errMsg)
+            }
+          }
+        })
+      }
+    })
+    // that.data.sessionId = wx.getStorageSync('sessionId')
+    // console.log(that.data.sessionId)
+  },
   /**
    * 登陆状态维护
    */
@@ -191,42 +235,14 @@ App({
   getData (inObj, callback) {
     let sign = this.md5()
     let timestamp = this.timest()
-    // let method = inObj.method
-    let url = this.data.baseUrl + inObj.url + '?appId=' + this.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
+    let url = this.data.baseUrl + inObj.url + '?appId=' + this.data.appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
     let obj = {
       url: url,
-      // data: {
-      //   'page': {
-      //     'pageNo': that.data.pageNo,
-      //     'pageSize': that.data.pageSize
-      //   },
-      //   'nickName': that.data.userInfo.nickName
-      // },
       data: inObj.data,
-      // header: {'Content-Type': 'application/json'},
       header: inObj.header,
       method: inObj.method,
       success (res) {
         callback(res, inObj.those)
-        // let fxs = res.data.result
-        // // 处理字符串
-        // for (let i = 0; i < fxs.length; i++) {
-        //   // 处理时间
-        //   if (fxs[i].lastOperate !== undefined) {
-        //     var time = fxs[i].lastOperate.slice(0, 10)
-        //   } else {
-        //     time = '无最新操作时间'
-        //   }
-        //   fxs[i].lastOperate = time
-        //   // 处理头像
-        //   let photo = app.data.imgUlr + fxs[i].photo
-        //   fxs[i].photo = photo
-        // }
-        // that.setData({
-        //   fxs: that.data.fxs.concat(fxs),
-        //   show: false,
-        //   hidden: true
-        // })
       }
     }
     wx.request(obj)
@@ -237,6 +253,23 @@ App({
    */
   onLaunch () {
     console.log(' ========== Application is launched ========== ')
+    let that = this
+    // let userCode = ''
+    // let userInfo = {}
+    // that.userLogin()
+    wx.checkSession({
+      // sessionId有效
+      success () {
+        console.log('登陆态有效')
+        that.userLogin()
+      },
+      // sessionId失效
+      fail () {
+        console.log('登陆态失效')
+        // 重新登陆
+        that.userLogin()
+      }
+    })
   },
   /**
    * 生命周期函数--监听小程序显示

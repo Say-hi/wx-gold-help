@@ -43,6 +43,7 @@ Page({
     scrollTop: 10,
     followText: '',
     // url: '/analyst/list',
+    orderBy: 'line',
     pageNo: 0,
     pageSize: 4,
     shanghaiInfo: [{
@@ -190,10 +191,9 @@ Page({
       url: app.data.homeUrl,
       method: 'POST',
       data: {
-        'page': {
-          'pageNo': that.data.pageNo,
-          'pageSize': that.data.pageSize
-        },
+        // 'orderBy': that.data.orderBy,
+        'pageNo': that.data.pageNo,
+        'pageSize': that.data.pageSize,
         'nickName': that.data.userInfo.nickName
       },
       header: {'Content-Type': 'application/json'}
@@ -255,19 +255,22 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad (e) {
+  onLoad () {
+    let that = this
+    // app.userLogin()
+    // var sessionId = wx.getStorageSync('sessionId')
     // 页面回滚到预设位置
-    // console.log(app.data.wxCode)
     this.setData({
       scrollTop: 10,
-      flag: true
+      flag: true,
+      userInfo: wx.getStorageSync('userInfo')
     })
-    // wx.hideToast()
     console.log(' ---------- onLoad ----------')
     //  获取用户信息
-    app.getUserInfo()
-      .then(info => this.setData({ userInfo: info }))
-      .catch(console.info)
+    // app.getUserInfo()
+    //   .then(info => this.setData({ userInfo: info }))
+    //   .catch(console.info)
+    // app.userLogin()
     // let that = this
     // let url = that.data.url
     // console.dir(app.data)
@@ -277,16 +280,25 @@ Page({
     //     hidden: true
     //   })
     // })
-    let that = this
     // 设定scroll-height高度值
     wx.getSystemInfo({
       success (res) {
-        // console.log(res.windowHeight)
         that.setData({
           scrollHeight: res.windowHeight
         })
       }
     })
+    // wx.getUserInfo({
+    //   success (res) {
+    //     that.setData({
+    //       userInfo: res.userInfo
+    //     })
+    //   }
+    // })
+    // console.log(that.data.userInfo)
+    // this.setData({
+    //   userInfo: app.data.userInfo
+    // })
     // 加载首页数据
     // let sign = app.md5()
     // let timestamp = app.timest()
@@ -329,26 +341,27 @@ Page({
     // }
     // wx.request(obj)
     // 请求首页数据
-    let inObj = {
-      those: that,
-      url: app.data.homeUrl,
-      method: 'POST',
-      data: {
-        'page': {
+    setTimeout(function () {
+      let inObj = {
+        those: that,
+        url: app.data.homeUrl,
+        method: 'POST',
+        data: {
           'pageNo': that.data.pageNo,
-          'pageSize': that.data.pageSize
+          'pageSize': that.data.pageSize,
+          'nikeName': that.data.userInfo.nickName
         },
-        'nickName': that.data.userInfo.nickName
-      },
-      header: {'Content-Type': 'application/json'}
-    }
-    app.getData(inObj, that.getHomeFixData)
+        header: {'Content-Type': 'application/json'}
+      }
+      app.getData(inObj, that.getHomeFixData)
+    },500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
     console.log(' ---------- onReady ----------')
+    // let that = this
   },
   /**
    * 生命周期函数--监听页面显示

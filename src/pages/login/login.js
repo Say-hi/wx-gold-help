@@ -78,7 +78,7 @@ Page({
     var appId = app.data.appId
     var sign = app.md5()
     var timestamp = app.timest()
-    var url = app.data.baseUrl + this.data.cancelUrl + app.data.userId + '/' + analystId + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID='+ wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
     var method = 'GET'
     var obj = {
       url: url,
@@ -100,6 +100,10 @@ Page({
           that.setData({
             cancelText: '取消关注成功',
             fxsInfo: that.data.fxsInfo
+          })
+        } else {
+          that.setData({
+            cancelText: '服务器开小差了',
           })
         }
         that.setData({
@@ -131,7 +135,7 @@ Page({
   onLoad () {
     // 获取用户信息
     this.setData({
-      userInfo: app.data.userInfo
+      userInfo: wx.getStorageSync('userInfo')
     })
   },
   /**
