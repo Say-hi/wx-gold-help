@@ -83,8 +83,8 @@ Page({
       }
       fxs[i].lastOperate = time
       // 处理头像
-      let photo = app.data.imgUlr + fxs[i].photo
-      fxs[i].photo = photo
+      // let photo = app.data.imgUlr + fxs[i].photo
+      // fxs[i].photo = photo
     }
     that.setData({
       fxs: that.data.fxs.concat(fxs),
@@ -109,8 +109,8 @@ Page({
       }
       fxs[i].lastOperate = time
       // 处理头像
-      let photo = app.data.imgUlr + fxs[i].photo
-      fxs[i].photo = photo
+      // let photo = app.data.imgUlr + fxs[i].photo
+      // fxs[i].photo = photo
     }
     that.setData({
       fxs: fxs,
@@ -240,7 +240,59 @@ Page({
    */
   followfxs (e) {
     let that = this
-    app.followfxs(e, that)
+    let useUrl = app.data.followUrl
+    app.followfxs(e, that, useUrl)
+  },
+  /**
+   * 取消关注分析师功能
+   * @param e
+   */
+  cancelFollow (e) {
+    let that = this
+    let useUrl = app.data.cancelUrl
+    app.followfxs(e, that, useUrl)
+    // var that = this
+    // var analystId = e.currentTarget.dataset.id
+    // // var number = e.currentTarget.dataset.number
+    // // console.log(analystId)
+    // // todo 取消关注的分析师--->重新获取关注数据array.splice()
+    // var appId = app.data.appId
+    // var sign = app.md5()
+    // var timestamp = app.timest()
+    // var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+    // var method = 'GET'
+    // var obj = {
+    //   url: url,
+    //   method: method,
+    //   success (res) {
+    //     // console.log(url)
+    //     // console.log(res)
+    //     var code = res.data.code
+    //     // console.log(typeof code)
+    //     if (code === '500') {
+    //       // 失败
+    //       that.setData({
+    //         cancelText: '取消关注失败'
+    //       })
+    //     } else if (code === '200') {
+    //       // 成功
+    //       // console.log(number)
+    //       that.data.fxsInfo.splice(number, 1)
+    //       that.setData({
+    //         cancelText: '取消关注成功',
+    //         fxsInfo: that.data.fxsInfo
+    //       })
+    //     } else {
+    //       that.setData({
+    //         cancelText: '服务器开小差了'
+    //       })
+    //     }
+    //     that.setData({
+    //       followHidden: false
+    //     })
+    //   }
+    // }
+    // wx.request(obj)
   },
   // 关注分析师点击确定后逻辑
   confirmfxs () {
@@ -354,7 +406,7 @@ Page({
         header: {'Content-Type': 'application/json'}
       }
       app.getData(inObj, that.getHomeFixData)
-    },500)
+    }, 500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -49,7 +49,7 @@ Page({
       'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
     }],
     company: true,
-    soft: '软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍软件介绍'
+    soft: {}
   },
   /**
    * 用户头像照片选择
@@ -78,7 +78,7 @@ Page({
     var appId = app.data.appId
     var sign = app.md5()
     var timestamp = app.timest()
-    var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID='+ wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+    var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
     var method = 'GET'
     var obj = {
       url: url,
@@ -103,7 +103,7 @@ Page({
           })
         } else {
           that.setData({
-            cancelText: '服务器开小差了',
+            cancelText: '服务器开小差了'
           })
         }
         that.setData({
@@ -133,9 +133,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
+    let that = this
     // 获取用户信息
     this.setData({
       userInfo: wx.getStorageSync('userInfo')
+    })
+    // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
+    let inObj = {
+      those: that,
+      url: app.data.softUrl,
+      method: 'GET',
+      // data: {
+      //   // 'orderBy': that.data.orderBy,
+      //   'pageNo': that.data.pageNo,
+      //   'pageSize': that.data.pageSize,
+      //   'nickName': that.data.userInfo.nickName
+      // },
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(inObj, function (res, that) {
+      that.setData({
+        soft: res.data.result
+      })
     })
   },
   /**

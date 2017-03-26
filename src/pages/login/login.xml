@@ -39,10 +39,10 @@
   <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还么有关注分析师哦...快去首页关注分析师吧</view>
   <!--软件信息-->
   <view class="soft">
-    <image class="soft-img" src="../../images/fxs-image.png"></image>
+    <image class="soft-img" src="{{ soft.img }}"></image>
     <view class="soft-content">
       <view class="soft-title">软件介绍</view>
-      <view class="soft-text"> {{ soft }} </view>
+      <view class="soft-text"> {{ soft.introduce }} </view>
     </view>
   </view>
   <!--公司信息-->

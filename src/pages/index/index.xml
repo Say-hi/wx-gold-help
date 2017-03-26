@@ -41,16 +41,15 @@
       <!--下部-分析师功能-->
       <view class="fxs-bottom">
         <!--todo 关注分析师ID-->
-        <button catchtap="followfxs" data-id="{{ item.id }}" class="fxs-follow">关注</button>
-        <!--todo 对应分析师ID-->
-        <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs-detail">查看明细</navigator>
+        <button catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
+        <view class="fxs-detail">查看明细</view>
       </view>
     </navigator>
   </view>
   <!--查看更多-->
   <view class="footer" bindtap="showMore" >查看更多</view>
 </scroll-view>
-<modal hidden="{{ followHidden }}" title="关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
+<modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
 <!--遮罩层-->
 <!--上拉加载遮罩-->
 <view class="mask" hidden="{{ hidden }}">

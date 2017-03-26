@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -9,29 +9,35 @@ Page({
   data: {
     title: 'introduce',
     type: 'fxs',
-    fxsInfo: {
-      'name': '张三',
-      'company': '北京金融有限公司',
-      'type': '高级分析师',
-      'style': '金融  专业  成熟',
-      'time': '2017/2/2',
-      'rise': '1.2%',
-      'img': '../../images/fxs-image.png',
-      'introduce': '这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师这是一个分析师'
-    },
-    company: {
-      'img': '../../images/fxs-image.png',
-      'text': '　公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍'
-    }
+    fxsInfo: {},
+    company: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad (parmas) {
+    let that = this
     var type = parmas.type
     this.setData({
       type: type
+    })
+    let inObj = {
+      those: that,
+      url: app.data.companyUrl,
+      method: 'GET',
+      // data: {
+      //   // 'orderBy': that.data.orderBy,
+      //   'pageNo': that.data.pageNo,
+      //   'pageSize': that.data.pageSize,
+      //   'nickName': that.data.userInfo.nickName
+      // },
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(inObj, function (res, that) {
+      that.setData({
+        company: res.data.result
+      })
     })
   },
 

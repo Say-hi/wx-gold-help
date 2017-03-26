@@ -28,6 +28,12 @@ App({
     getfxsUrl: '/analyst/get/',
     // 取消关注
     cancelUrl: '/followers/cancelConcern/',
+    // 获取操作记录
+    operationUrl: '/market/list',
+    // 获取软件介绍
+    softUrl: '/article/getAppIntroduction',
+    // 获取公司介绍
+    companyUrl: '/article/getCompanyIntroduction',
     // 获取sessionID
     sessionIdUrl: '/wechatUser/getSessionID/',
     userInfo: null,
@@ -44,15 +50,16 @@ App({
    * 关注分析师功能
    * @param e {Event} 事件参数
    */
-  followfxs (e, that) {
+  followfxs (e, that, useUrl) {
     // 获取分析师ID
     var analystId = e.currentTarget.dataset.id
+    var arrayId = e.currentTarget.dataset.arraryid
     // console.log('fxsID:' + analystId)
     // console.log('关注了该分析师')
     var appId = this.data.appId
     var sign = this.md5()
     var timestamp = this.timest()
-    var url = this.data.baseUrl + this.data.followUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+    var url = this.data.baseUrl + useUrl + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
     var method = 'GET'
     var obj = {
       url: url,
@@ -82,13 +89,17 @@ App({
         //   })
         // }
         if (code === '200') {
+          // console.log(that.data)
+          // console.log(arrayId)
+          that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1? 0 : 1
           that.setData({
-            followText: '关注成功了',
-            followHidden: false
+            followText: '操作成功了',
+            followHidden: false,
+            fxs: that.data.fxs,
           })
         } else if (code === '500') {
           that.setData({
-            followText: '关注失败了',
+            followText: '操作失败了',
             followHidden: false
           })
         } else {
@@ -108,7 +119,9 @@ App({
    * 关注后的弹窗
    */
   confirmfxs (that) {
-    return that.setData({followHidden: true})
+    return that.setData({
+      followHidden: true
+    })
   },
   /**
    * md5 加密
@@ -261,7 +274,7 @@ App({
       // sessionId有效
       success () {
         console.log('登陆态有效')
-        that.userLogin()
+        // that.userLogin()
       },
       // sessionId失效
       fail () {

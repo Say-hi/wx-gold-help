@@ -10,41 +10,35 @@ Page({
     title: '分析师明细',
     fxsInfo: {},
     introduce: '',
-    operation: [{
-      'kind': 'AuT+D',
-      'change': '买入',
-      'price': '价格',
-      'garbage': '仓位比列',
-      'count': '数量'
-    }]
+    operation: [],
+    pageNo: 0,
+    pageSize: 1
   },
   // todo 点击后请求数据刷新数据
   showMore () {
-    // var that = this
+    let that = this
     // wx.request()
-    var newOperation = [{
-      'kind': 'AuT+D',
-      'way': '闭仓卖出',
-      'price': '价格',
-      'garbage': '仓位'
-    },
-    {
-      'kind': 'AuT+D',
-      'way': '闭仓卖出',
-      'price': '价格',
-      'garbage': '仓位'
-    },
-    {
-      'kind': 'AuT+D',
-      'way': '闭仓卖出',
-      'price': '价格',
-      'garbage': '仓位'
-    }]
-    var operation = this.data.operation.concat(newOperation)
-    this.setData({
-      operation: operation
+    // var newOperation = []
+    // var operation = this.data.operation.concat(newOperation)
+    // this.setData({
+    //   operation: operation
+    // })
+    let inObj3 = {
+      those: that,
+      url: app.data.operationUrl,
+      method: 'POST',
+      data: {
+        'analystId': that.data.fxsInfo.id,
+        'pageNo': ++that.data.pageNo,
+        'pageSize': 3
+      },
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(inObj3, function (res, that) {
+      console.log(res)
+      console.log(that)
     })
-    console.log('加载更多数据')
+    // console.log('加载更多数据')
   },
   /**
    * 处理分析师数据
@@ -65,14 +59,25 @@ Page({
     let photo = app.data.imgUlr + fxs.photo
     fxs.photo = photo
     // 处理介绍信息
-    let introduce = fxs.introduce
-    console.log(introduce)
+    // let introduce = fxs.introduce
+    // console.log(introduce)
 
     that.setData({
       fxsInfo: fxs,
       introduce: fxs.introduce,
       show: false,
       hidden: true
+    })
+  },
+  /**
+   * 处理分析师操作记录
+   * @param res
+   * @param that
+   */
+  getOperationData (res, that) {
+    // let operation =
+    that.setData({
+      operation: res.data.result
     })
   },
   /**
@@ -98,7 +103,23 @@ Page({
       // },
       header: {'Content-Type': 'application/json'}
     }
+    // 获取分析师数据
     app.getData(inObj, this.getSingleFixData)
+    // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
+    let inObj2 = {
+      those: that,
+      url: app.data.operationUrl,
+      method: 'POST',
+      data: {
+        'analystId': id,
+        'pageNo': that.data.pageNo,
+        'pageSize': that.data.pageSize
+      },
+      header: {'Content-Type': 'application/json'}
+    }
+    // 获取分析师操作记录
+    app.getData(inObj2, this.getOperationData)
+    // app.getData()
     // // 程序id
     // var appId = app.data.appId
     //
@@ -158,7 +179,7 @@ Page({
     var article = this.data.introduce
     var str = 'src="' + app.data.imgUlr
     article = article.replace(reg, str)
-    console.log(article)
+    // console.log(article)
     var that = this
     WxParse.wxParse('article', 'html', article, that, 5)
   },
