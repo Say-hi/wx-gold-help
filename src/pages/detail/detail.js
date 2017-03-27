@@ -35,17 +35,19 @@ Page({
       header: {'Content-Type': 'application/json'}
     }
     app.getData(inObj3, function (res, that) {
-      console.log(res)
-      console.log(that)
+      that.setData({
+        operation: that.data.operation.concat(res.data.result)
+      })
     })
     // console.log('加载更多数据')
   },
   /**
    * 处理分析师数据
-   * @param res
-   * @param that
+   * @param res [返回值]
+   * @param that [this指向]
    */
   getSingleFixData (res, that) {
+    // console.log(res)
     let fxs = res.data.result
     // 处理字符串
     // 处理时间
@@ -61,12 +63,13 @@ Page({
     // 处理介绍信息
     // let introduce = fxs.introduce
     // console.log(introduce)
-
+    that.data.operation.push(fxs.market)
     that.setData({
       fxsInfo: fxs,
       introduce: fxs.introduce,
       show: false,
-      hidden: true
+      hidden: true,
+      operation: that.data.operation
     })
   },
   /**
@@ -74,12 +77,12 @@ Page({
    * @param res
    * @param that
    */
-  getOperationData (res, that) {
-    // let operation =
-    that.setData({
-      operation: res.data.result
-    })
-  },
+  // getOperationData (res, that) {
+  //   // let operation =
+  //   that.setData({
+  //     operation: res.data.result
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -106,19 +109,19 @@ Page({
     // 获取分析师数据
     app.getData(inObj, this.getSingleFixData)
     // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
-    let inObj2 = {
-      those: that,
-      url: app.data.operationUrl,
-      method: 'POST',
-      data: {
-        'analystId': id,
-        'pageNo': that.data.pageNo,
-        'pageSize': that.data.pageSize
-      },
-      header: {'Content-Type': 'application/json'}
-    }
+    // let inObj2 = {
+    //   those: that,
+    //   url: app.data.operationUrl,
+    //   method: 'POST',
+    //   data: {
+    //     'analystId': id,
+    //     'pageNo': that.data.pageNo,
+    //     'pageSize': that.data.pageSize
+    //   },
+    //   header: {'Content-Type': 'application/json'}
+    // }
     // 获取分析师操作记录
-    app.getData(inObj2, this.getOperationData)
+    // app.getData(inObj2, this.getOperationData)
     // app.getData()
     // // 程序id
     // var appId = app.data.appId

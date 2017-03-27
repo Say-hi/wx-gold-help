@@ -36,6 +36,8 @@ App({
     companyUrl: '/article/getCompanyIntroduction',
     // 获取sessionID
     sessionIdUrl: '/wechatUser/getSessionID/',
+    // 获取用户已关注的分析师
+    getUserFxs: '/analyst/concernedAnalyst',
     userInfo: null,
     sessionId: null,
     // 服务器定义的id
@@ -91,11 +93,11 @@ App({
         if (code === '200') {
           // console.log(that.data)
           // console.log(arrayId)
-          that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1? 0 : 1
+          that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
             followText: '操作成功了',
             followHidden: false,
-            fxs: that.data.fxs,
+            fxs: that.data.fxs
           })
         } else if (code === '500') {
           that.setData({
@@ -229,18 +231,18 @@ App({
   /**
    * 登陆状态维护
    */
-  checkSession () {
-    wx.checkSession({
-      // session有效
-      success () {
-
-      },
-      // session失效
-      fail () {
-        this.userLogin()
-      }
-    })
-  },
+  // checkSession () {
+  //   wx.checkSession({
+  //     // session有效
+  //     success () {
+  //
+  //     },
+  //     // session失效
+  //     fail () {
+  //       this.userLogin()
+  //     }
+  //   })
+  // },
   /**
    *
    * @param inObj {object} [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]

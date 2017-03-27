@@ -14,19 +14,19 @@
   <!--个人中心功能-->
 
   <!--分析师-->
-  <navigator hover-class="none" open-type="navigate" url='../detail/detail?fxsId={{ index }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
+  <navigator hover-class="none" open-type="navigate" url='../detail/detail?type={{ fxsInfo.id }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
     <view class="fxs">
       <!--上部-分析师信息-->
       <view class="fxs-top">
         <!--左侧图片-->
         <view class="fxs-t-left">
-          <image src="{{ fxsInfo.img }}"></image>
+          <image src="{{ fxsInfo.photo }}"></image>
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">
           <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
           <view class="fxs-t-r-gender">性别：<text>{{ fxsInfo.gender }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.style }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
           <view class="fxs-t-r-company">公司：<text>{{ fxsInfo.company }}</text></view>
         </view>
       </view>

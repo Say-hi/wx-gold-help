@@ -28,12 +28,12 @@
     <view class="operation-title">操作记录</view>
     <view class="info-container">
       <!-- todo 循环添加操作记录-->
-      <view class="info" wx:for="{{ operation }}" wx:key="index">
-        <view class='info-kind'>{{ item.kind }}</view>
-        <view class='info-change'>{{ item.change }}</view>
+      <view class="info" wx:for="{{ operation }}">
+        <view class='info-kind'>{{ item.typeDescription }}</view>
+        <view class='info-change'>{{ item.directionDescription }}</view>
         <view class='info-price'>{{ item.price }}</view>
-        <view class="info-count">{{ item.count }}</view>
-        <view class='info-garbage'>{{ item.garbage }}</view>
+        <view class="info-count">{{ item.quantity }}</view>
+        <view class='info-garbage'>{{ item.buyRatio }}</view>
       </view>
       <view bindtap="showMore" class="show-more color666">查看更多</view>
     </view>
