@@ -1,7 +1,7 @@
 <!--加载处理-->
 <!--<loading hidden="{{ hidden }}">正在努力加载中^_^</loading>-->
 <!--最外层容器-->
-<scroll-view bindscroll="scroll" scroll-top="{{ scrollTop }}" style="height:{{scrollHeight}}px;" scroll-y="true" bindscrolltolower="showMore" bindscrolltoupper="refresh"  class="container" >
+<!--<scroll-view bindscroll="scroll" scroll-top="{{ scrollTop }}" style="height:{{scrollHeight}}px;" scroll-y="true" bindscrolltolower="showMore" bindscrolltoupper="refresh"  class="container" >-->
   <!--小程序标题-->
   <!--<view class="title">{{ title }}</view>-->
   <!--黄金信息-->
@@ -48,7 +48,7 @@
   </view>
   <!--查看更多-->
   <view class="footer" bindtap="showMore" >查看更多</view>
-</scroll-view>
+<!--</scroll-view>-->
 <modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
 <!--遮罩层-->
 <!--上拉加载遮罩-->

@@ -163,33 +163,52 @@ App({
     })
   },
   /**
+   * 获取用户信息
+   */
+  // getUserInfo () {
+  //   // let that = this
+  //   wx.login ({
+  //     success () {
+  //
+  //     }
+  //   })
+  //   wx.getUserInfo({
+  //     success (res) {
+  //       wx.setStorage({
+  //         key: 'userInfo',
+  //         data: res.userInfo
+  //       })
+  //     },
+  //     fail (res) {
+  //       console.log(res)
+  //       // that.getUserInfo()
+  //     }
+  //   })
+  // },
+  /**
    * 获取用户授权
    */
   userLogin () {
-    let that = this
     let userCode = null
+    let that = this
     wx.login({
       success: function (res) {
         // 用户code
-        // console.log(res)
         userCode = res.code
+        wx.setStorage({
+          key: 'code',
+          data: userCode
+        })
         // console.log('login中的' + userCode)
         wx.getUserInfo({
           success: function (result) {
-            // console.log(result)
-            // that.data.userInfo = result.userInfo
-            // that.setData({
-            //   userInfo: result.userInfo
-            // })
             wx.setStorage({
               key: 'userInfo',
               data: result.userInfo
             })
-            // console.log('getuserinfo' + userCode)
             if (userCode) {
               // 发起网络请求
               let nikeName = result.userInfo.nickName
-              // console.log(nikeName)
               let photoUrl = result.userInfo.avatarUrl
               let sign = that.md5()
               let timestamp = that.timest()
@@ -202,31 +221,24 @@ App({
                   'photoUrl': photoUrl
                 },
                 success (session) {
-                  // console.log(session)
                   // 存储sessionId
                   wx.setStorage({
                     key: 'sessionId',
                     data: session.data.result
                   })
-                  // console.log(that)
                   that.data.sessionId = session.data.result
-                  // wx.getStorage({
-                  //   key: 'sessionId',
-                  //   success (res) {
-                  //     that.data.sessionId = res.result
-                  //   }
-                  // })
                 }
               })
             } else {
               console.log('获取用户登录态失败！' + res.errMsg)
             }
           }
+          // fail: function () {
+          //
+          // }
         })
       }
     })
-    // that.data.sessionId = wx.getStorageSync('sessionId')
-    // console.log(that.data.sessionId)
   },
   /**
    * 登陆状态维护
@@ -263,20 +275,24 @@ App({
     wx.request(obj)
   },
   /**
+   * session 失效的时候处理
+   */
+  code300 () {
+    // 用户重新授权
+    this.userLogin()
+  },
+  /**
    * 生命周期函数--监听小程序初始化
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch () {
-    console.log(' ========== Application is launched ========== ')
     let that = this
-    // let userCode = ''
-    // let userInfo = {}
-    // that.userLogin()
+    console.log(' ========== Application is launched ========== ')
     wx.checkSession({
       // sessionId有效
       success () {
         console.log('登陆态有效')
-        // that.userLogin()
+        that.userLogin()
       },
       // sessionId失效
       fail () {

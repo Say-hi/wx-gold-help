@@ -39,12 +39,12 @@ Page({
     title: '上海黄金交易所行情',
     userInfo: {},
     fxsNumber: 20,
-    scrollHeight: 0,
-    scrollTop: 10,
+    // scrollHeight: 0,
+    // scrollTop: 10,
     followText: '',
     // url: '/analyst/list',
     orderBy: 'line',
-    pageNo: 0,
+    pageNo: 1,
     pageSize: 4,
     shanghaiInfo: [{
       'kind': 'Aut+D',
@@ -105,13 +105,18 @@ Page({
       if (fxs[i].lastOperate !== undefined) {
         var time = fxs[i].lastOperate.slice(0, 10)
       } else {
-        time = '无最新操作时间'
+        time = '无操作时间'
       }
       fxs[i].lastOperate = time
       // 处理头像
       // let photo = app.data.imgUlr + fxs[i].photo
       // fxs[i].photo = photo
     }
+    // 更新数据
+    // 停止弹出框
+    wx.hideToast()
+    // 停止下拉刷新
+    wx.stopPullDownRefresh()
     that.setData({
       fxs: fxs,
       show: false,
@@ -201,29 +206,29 @@ Page({
     app.getData(inObj, that.getMoreFixData)
   },
   // 下拉重新加载数据
-  refresh () {
-    if (this.data.flag) {
-      this.setData({
-        pageNo: 0,
-        flag: false
-      })
-      // wx.showToast({
-      //   title: '刷新数据中',
-      //   icon: 'loading',
-      //   duration: 10000
-      // })
-      console.log('重新加载数据')
-      this.onLoad()
-    }
-    // console.log('呵呵')
-    // this.onLoad()
-  },
+  // refresh () {
+  //   if (this.data.flag) {
+  //     this.setData({
+  //       pageNo: 0,
+  //       flag: false
+  //     })
+  //     // wx.showToast({
+  //     //   title: '刷新数据中',
+  //     //   icon: 'loading',
+  //     //   duration: 10000
+  //     // })
+  //     console.log('重新加载数据')
+  //     this.onLoad()
+  //   }
+  //   // console.log('呵呵')
+  //   // this.onLoad()
+  // },
   // 滚动设置高度
-  scroll (event) {
-    this.setData({
-      scrollTop: event.detail.scrollTop
-    })
-  },
+  // scroll (event) {
+  //   this.setData({
+  //     scrollTop: event.detail.scrollTop
+  //   })
+  // },
   /**
    * 分享设置
    * @returns {desc: string, title: string, path: string}
@@ -309,15 +314,32 @@ Page({
    */
   onLoad () {
     let that = this
+    // 页面数据初始化
+    this.setData({
+      pageNo: 1
+    })
     // app.userLogin()
     // var sessionId = wx.getStorageSync('sessionId')
     // 页面回滚到预设位置
     this.setData({
-      scrollTop: 10,
+      // scrollTop: 10,
       flag: true,
       userInfo: wx.getStorageSync('userInfo')
     })
-    console.log(' ---------- onLoad ----------')
+    // 获取首页数据
+    let inObj = {
+      those: that,
+      url: app.data.homeUrl,
+      method: 'POST',
+      data: {
+        'pageNo': that.data.pageNo,
+        'pageSize': that.data.pageSize,
+        'nikeName': that.data.userInfo.nickName
+      },
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(inObj, that.getHomeFixData)
+    // console.log(' ---------- onLoad ----------')
     //  获取用户信息
     // app.getUserInfo()
     //   .then(info => this.setData({ userInfo: info }))
@@ -333,13 +355,13 @@ Page({
     //   })
     // })
     // 设定scroll-height高度值
-    wx.getSystemInfo({
-      success (res) {
-        that.setData({
-          scrollHeight: res.windowHeight
-        })
-      }
-    })
+    // wx.getSystemInfo({
+    //   success (res) {
+    //     that.setData({
+    //       scrollHeight: res.windowHeight
+    //     })
+    //   }
+    // })
     // wx.getUserInfo({
     //   success (res) {
     //     that.setData({
@@ -393,33 +415,48 @@ Page({
     // }
     // wx.request(obj)
     // 请求首页数据
-    setTimeout(function () {
-      let inObj = {
-        those: that,
-        url: app.data.homeUrl,
-        method: 'POST',
-        data: {
-          'pageNo': that.data.pageNo,
-          'pageSize': that.data.pageSize,
-          'nikeName': that.data.userInfo.nickName
-        },
-        header: {'Content-Type': 'application/json'}
-      }
-      app.getData(inObj, that.getHomeFixData)
-    }, 500)
+    // setTimeout(function () {
+    //   let inObj = {
+    //     those: that,
+    //     url: app.data.homeUrl,
+    //     method: 'POST',
+    //     data: {
+    //       'pageNo': that.data.pageNo,
+    //       'pageSize': that.data.pageSize,
+    //       'nikeName': that.data.userInfo.nickName
+    //     },
+    //     header: {'Content-Type': 'application/json'}
+    //   }
+    //   app.getData(inObj, that.getHomeFixData)
+    // }, 500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
-    console.log(' ---------- onReady ----------')
+    // console.log(' ---------- onReady ----------')
     // let that = this
+    // 初始化页面pageNo数据
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow () {
     console.log(' ---------- onShow ----------')
+    // console.log(12)
+    let that = this
+    let inObj = {
+      those: that,
+      url: app.data.homeUrl,
+      method: 'POST',
+      data: {
+        'pageNo': that.data.pageNo,
+        'pageSize': that.data.pageSize,
+        'nikeName': that.data.userInfo.nickName
+      },
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(inObj, that.getHomeFixData)
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -437,7 +474,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh () {
-    console.log(' ---------- onPullDownRefresh 重新获取当前页数据 ----------')
+    // 显示弹出框
+    wx.showToast({
+      title: '接收数据中...',
+      icon: 'loading',
+      duration: 10000
+    })
+    // 重新加载首页数据
+    this.onLoad()
+    // console.log(' ---------- onPullDownRefresh 重新获取当前页数据 ----------')
   //  下拉刷新重新获取数据
   //   let that = this
   //   let url = that.data.url
@@ -449,5 +494,10 @@ Page({
   //       hidden: true
   //     })
   //   })
+  },
+  // 上拉加载数据
+  onReachBottom () {
+    // console.log(1)
+    this.showMore()
   }
 })
