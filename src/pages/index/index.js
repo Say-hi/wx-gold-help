@@ -36,14 +36,15 @@ Page({
     // 关注弹窗显示
     followHidden: true,
     flag: true,
+    status: 0,
     title: '上海黄金交易所行情',
     userInfo: {},
-    fxsNumber: 20,
+    // fxsNumber: 20,
     // scrollHeight: 0,
     // scrollTop: 10,
     followText: '',
     // url: '/analyst/list',
-    orderBy: 'line',
+    orderBy: 'UP',
     pageNo: 1,
     pageSize: 4,
     shanghaiInfo: [{
@@ -79,7 +80,7 @@ Page({
       if (fxs[i].lastOperate !== undefined) {
         var time = fxs[i].lastOperate.slice(0, 10)
       } else {
-        time = '无最新操作时间'
+        time = '无操作时间'
       }
       fxs[i].lastOperate = time
       // 处理头像
@@ -98,16 +99,26 @@ Page({
    * @param that
    */
   getHomeFixData (res, that) {
+    // console.log(res)
+    // console.log(typeof res.data.code)
     let fxs = res.data.result
+    if (res.data.code !== '200') {
+      this.setData({
+        status: 0
+      })
+      this.onLoad()
+    }else {
+      for (let i = 0; i < fxs.length; i++) {
+        // 处理时间
+        if (fxs[i].lastOperate !== undefined) {
+          var time = fxs[i].lastOperate.slice(0, 10)
+        } else {
+          time = '无操作时间'
+        }
+        fxs[i].lastOperate = time
+    }
     // 处理字符串
-    for (let i = 0; i < fxs.length; i++) {
-      // 处理时间
-      if (fxs[i].lastOperate !== undefined) {
-        var time = fxs[i].lastOperate.slice(0, 10)
-      } else {
-        time = '无操作时间'
-      }
-      fxs[i].lastOperate = time
+
       // 处理头像
       // let photo = app.data.imgUlr + fxs[i].photo
       // fxs[i].photo = photo
@@ -304,6 +315,48 @@ Page({
     let that = this
     app.confirmfxs(that)
   },
+  getSessionId (callback) {
+    let that = this
+    wx.getStorage({
+      key: 'sessionId',
+      success () {
+        // console.log('拿到的sessionId')
+        // console.log(res)
+        callback
+      },
+      fail () {
+        // console.log(res)
+        that.getSessionId()
+      }
+    })
+  },
+  homeUser () {
+    let that = this
+    wx.getStorage({
+      key: 'userInfo',
+      success (res) {
+        that.setData({
+          userInfo: res.data
+        })
+        let inObj = {
+          those: that,
+          url: app.data.homeUrl,
+          method: 'POST',
+          data: {
+            'pageNo': that.data.pageNo,
+            'pageSize': that.data.pageSize,
+            'nikeName': that.data.userInfo.nickName
+          },
+          header: {'Content-Type': 'application/json'}
+        }
+        // console.log('从storage获取sessionId')
+        that.getSessionId(app.getData(inObj, that.getHomeFixData))
+      },
+      fail () {
+        that.homeUser()
+      }
+    })
+  },
   //   confirmfxs () {
   //     this.setData({
   //       followHidden: true
@@ -315,30 +368,35 @@ Page({
   onLoad () {
     let that = this
     // 页面数据初始化
+    // app.userLogin()
     this.setData({
-      pageNo: 1
+      pageNo: 1,
+      flag: true
     })
+    if (this.data.status === 0) {
+      that.homeUser()
+    } else {
+      let inObj = {
+        those: that,
+        url: app.data.homeUrl,
+        method: 'POST',
+        data: {
+          'pageNo': that.data.pageNo,
+          'pageSize': that.data.pageSize,
+          'nikeName': that.data.userInfo.nickName
+        },
+        header: {'Content-Type': 'application/json'}
+      }
+      app.getData(inObj, that.getHomeFixData)
+    }
     // app.userLogin()
     // var sessionId = wx.getStorageSync('sessionId')
     // 页面回滚到预设位置
-    this.setData({
-      // scrollTop: 10,
-      flag: true,
-      userInfo: wx.getStorageSync('userInfo')
-    })
+    // this.setData({
+    //   // scrollTop: 10,
+    // })
     // 获取首页数据
-    let inObj = {
-      those: that,
-      url: app.data.homeUrl,
-      method: 'POST',
-      data: {
-        'pageNo': that.data.pageNo,
-        'pageSize': that.data.pageSize,
-        'nikeName': that.data.userInfo.nickName
-      },
-      header: {'Content-Type': 'application/json'}
-    }
-    app.getData(inObj, that.getHomeFixData)
+
     // console.log(' ---------- onLoad ----------')
     //  获取用户信息
     // app.getUserInfo()
@@ -442,33 +500,39 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow () {
-    console.log(' ---------- onShow ----------')
-    // console.log(12)
     let that = this
-    let inObj = {
-      those: that,
-      url: app.data.homeUrl,
-      method: 'POST',
-      data: {
-        'pageNo': that.data.pageNo,
-        'pageSize': that.data.pageSize,
-        'nikeName': that.data.userInfo.nickName
-      },
-      header: {'Content-Type': 'application/json'}
+    // console.log(' ---------- onShow ----------')
+    // 当状态确认时请求数据
+    if (this.data.status === 1) {
+      let inObj = {
+        those: that,
+        url: app.data.homeUrl,
+        method: 'POST',
+        data: {
+          'pageNo': that.data.pageNo,
+          'pageSize': that.data.pageSize,
+          'nikeName': that.data.userInfo.nickName
+        },
+        header: {'Content-Type': 'application/json'}
+      }
+      app.getData(inObj, that.getHomeFixData)
     }
-    app.getData(inObj, that.getHomeFixData)
+    // 设置状态
+    this.setData({
+      status: 1
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide () {
-    console.log(' ---------- onHide ----------')
+    // console.log(' ---------- onHide ----------')
   },
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload () {
-    console.log(' ---------- onUnload ----------')
+    // console.log(' ---------- onUnload ----------')
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -482,20 +546,10 @@ Page({
     })
     // 重新加载首页数据
     this.onLoad()
-    // console.log(' ---------- onPullDownRefresh 重新获取当前页数据 ----------')
-  //  下拉刷新重新获取数据
-  //   let that = this
-  //   let url = that.data.url
-  //   this.setData({
-  //     hidden: false
-  //   })
-  //   getData(url, function () {
-  //     that.setData({
-  //       hidden: true
-  //     })
-  //   })
   },
-  // 上拉加载数据
+  /**
+   * 页面相关事件处理函数--监听用户上拉触底动作
+   */
   onReachBottom () {
     // console.log(1)
     this.showMore()

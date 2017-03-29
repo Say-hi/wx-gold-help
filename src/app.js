@@ -4,8 +4,8 @@
  * 用于将微信官方`API`封装为`Promise`方式
  * > 小程序支持以`CommonJS`规范组织代码结构
  */
-const wechat = require('./utils/wechat')
-const Promise = require('./utils/bluebird')
+// const wechat = require('./utils/wechat')
+// const Promise = require('./utils/bluebird')
 const md5 = require('./utils/wxmd5')
 // const appId = 'e0d13e1b692968f4a3fd9e21c926d7d8'
 App({
@@ -47,7 +47,6 @@ App({
   },
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
-  // todo 用户关注分析师功能补充
   /**
    * 关注分析师功能
    * @param e {Event} 事件参数
@@ -91,8 +90,6 @@ App({
         //   })
         // }
         if (code === '200') {
-          // console.log(that.data)
-          // console.log(arrayId)
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
             followText: '操作成功了',
@@ -150,18 +147,18 @@ App({
    * 获取用户信息
    * @return {Promise} 包含获取用户信息的`Promise`
    */
-  getUserInfo () {
-    return new Promise((resolve, reject) => {
-      if (this.data.userInfo) return reject(this.data.userInfo)
-      wechat.login()
-        // .then(res => console.log(res))
-        .then(() => wechat.getUserInfo())
-        .then(res => res.userInfo)
-        .then(info => (this.data.userInfo = info))
-        .then(info => resolve(info))
-        .catch(error => console.error('failed to get user info, error: ' + error))
-    })
-  },
+  // getUserInfo () {
+  //   return new Promise((resolve, reject) => {
+  //     if (this.data.userInfo) return reject(this.data.userInfo)
+  //     wechat.login()
+  //       // .then(res => console.log(res))
+  //       .then(() => wechat.getUserInfo())
+  //       .then(res => res.userInfo)
+  //       .then(info => (this.data.userInfo = info))
+  //       .then(info => resolve(info))
+  //       .catch(error => console.error('failed to get user info, error: ' + error))
+  //   })
+  // },
   /**
    * 获取用户信息
    */
@@ -189,87 +186,150 @@ App({
    * 获取用户授权
    */
   userLogin () {
-    let userCode = null
+    // let userCode = null
     let that = this
     wx.login({
       success: function (res) {
-        // 用户code
-        userCode = res.code
-        wx.setStorage({
-          key: 'code',
-          data: userCode
-        })
-        // console.log('login中的' + userCode)
+        // 本地存储code
+        that.wxSetStorage('code', res.code)
+        // that.wxGetUserInfo(that.wxSetStorage, () => {})
         wx.getUserInfo({
-          success: function (result) {
-            wx.setStorage({
-              key: 'userInfo',
-              data: result.userInfo
+          success (res) {
+            wx.setStorageSync('userInfo', res.userInfo)
+            that.requestSessionId(function () {
+              console.log('get sessionId from website')
             })
-            if (userCode) {
-              // 发起网络请求
-              let nikeName = result.userInfo.nickName
-              let photoUrl = result.userInfo.avatarUrl
-              let sign = that.md5()
-              let timestamp = that.timest()
-              let url = that.data.baseUrl + that.data.sessionIdUrl + userCode + '?appId=' + that.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
-              wx.request({
-                url: url,
-                method: 'POST',
-                data: {
-                  'nikeName': nikeName,
-                  'photoUrl': photoUrl
-                },
-                success (session) {
-                  // 存储sessionId
-                  wx.setStorage({
-                    key: 'sessionId',
-                    data: session.data.result
-                  })
-                  that.data.sessionId = session.data.result
-                }
-              })
-            } else {
-              console.log('获取用户登录态失败！' + res.errMsg)
-            }
+          },
+          fail () {
+            wx.showToast({
+              title: '用户拒绝供权限,无法查看信息',
+              icon: 'success',
+              duration: 3000
+            })
           }
-          // fail: function () {
-          //
-          // }
+        })
+        // wx.getUserInfo({
+        //   success (result) {
+        //     // 本地存储用户信息
+        //     that.wxSetStorage('userInfo', result.userInfo)
+        //   }
+        // })
+        // successCallback()
+      }
+    })
+  },
+  /**
+   * 获取用户信息
+   * @param successCallback
+   */
+  wxGetUserInfo (successCallback, failCallback) {
+    wx.getUserInfo({
+      success (res) {
+        successCallback('userInfo', res.userInfo)
+      },
+      fail () {
+        console.log('用户拒绝登陆授权')
+        failCallback()
+        wx.showToast({
+          title: '用户拒绝提供权限,无法查看信息',
+          icon: 'success',
+          duration: 3000
         })
       }
     })
   },
   /**
-   * 登陆状态维护
+   * 获取sessionID
    */
-  // checkSession () {
-  //   wx.checkSession({
-  //     // session有效
-  //     success () {
-  //
-  //     },
-  //     // session失效
-  //     fail () {
-  //       this.userLogin()
-  //     }
-  //   })
-  // },
+  requestSessionId (successCallback) {
+    let that = this
+    // 获取storage中的用户信息
+    let userInfo = that.wxGetStorage('userInfo')
+    let userCode = that.wxGetStorage('code')
+    // md5加密
+    let sign = that.md5()
+    // 时间戳
+    let timestamp = that.timest()
+    // 请求url
+    let url = that.data.baseUrl + that.data.sessionIdUrl + userCode + '?appId=' + that.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
+    // 请求数据
+    wx.request({
+      url: url,
+      method: 'POST',
+      data: {
+        'nikeName': userInfo.nikeName,
+        'photoUrl': userInfo.photoUrl
+      },
+      success (session) {
+        // 存储sessionId
+        that.wxSetStorage('sessionId', session.data.result)
+        // 回调函数
+        successCallback()
+        // that.getData()
+        // that.data.sessionId = session.data.result
+      }
+    })
+  },
+  /**
+   * 获取本地storage
+   * @param code [string] {要获取的session}
+   * @returns {*}
+   */
+  wxGetStorage (code) {
+    return wx.getStorageSync(code)
+  },
+  /**
+   * 设置本地storage
+   * @param codeName [string] {设置key}
+   * @param codeData [string || object] {设置keyData}
+   */
+  wxSetStorage (codeName, codeData) {
+    wx.setStorage({
+      key: codeName,
+      data: codeData
+    })
+  },
+  /**
+   * 微信登陆状态维护
+   */
+  wxSessionCheck () {
+    let that = this
+    wx.checkSession({
+      // session有效
+      success () {
+        console.log('登陆态有效')
+        that.userLogin()
+      },
+      // session失效
+      fail () {
+        console.log('登陆态失效')
+        that.userLogin()
+      }
+    })
+  },
   /**
    *
    * @param inObj {object} [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
    */
   getData (inObj, callback) {
+    let that = this
     let sign = this.md5()
     let timestamp = this.timest()
-    let url = this.data.baseUrl + inObj.url + '?appId=' + this.data.appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+    let SESSIONID = this.wxGetStorage('sessionId')
+    let url = this.data.baseUrl + inObj.url + '?appId=' + this.data.appId + '&SESSIONID=' + SESSIONID + '&sign=' + sign + '&timestamp=' + timestamp
     let obj = {
       url: url,
       data: inObj.data,
       header: inObj.header,
       method: inObj.method,
       success (res) {
-        callback(res, inObj.those)
+        // 301 sessionId失效
+        // if(res.code === '301') {
+        //   that.userLogin()
+        //   that.getData(inObj, callback)
+        // } else {
+          callback(res, inObj.those)
+        // }
       }
     }
     wx.request(obj)
@@ -286,34 +346,34 @@ App({
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch () {
-    let that = this
-    console.log(' ========== Application is launched ========== ')
-    wx.checkSession({
-      // sessionId有效
-      success () {
-        console.log('登陆态有效')
-        that.userLogin()
-      },
-      // sessionId失效
-      fail () {
-        console.log('登陆态失效')
-        // 重新登陆
-        that.userLogin()
-      }
-    })
+    this.wxSessionCheck()
+    // console.log(' ========== Application is launched ========== ')
+    // wx.checkSession({
+    //   // sessionId有效
+    //   success () {
+    //     console.log('登陆态有效')
+    //     that.userLogin()
+    //   },
+    //   // sessionId失效
+    //   fail () {
+    //     console.log('登陆态失效')
+    //     // 重新登陆
+    //     that.userLogin()
+    //   }
+    // })
   },
   /**
    * 生命周期函数--监听小程序显示
    * 当小程序启动，或从后台进入前台显示，会触发 onShow
    */
   onShow () {
-    console.log(' ========== Application is showed ========== ')
+    // console.log(' ========== Application is showed ========== ')
   },
   /**
    * 生命周期函数--监听小程序隐藏
    * 当小程序从前台进入后台，会触发 onHide
    */
   onHide () {
-    console.log(' ========== Application is hid ========== ')
+    // console.log(' ========== Application is hid ========== ')
   }
 })
