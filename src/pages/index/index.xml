@@ -5,18 +5,23 @@
   <!--小程序标题-->
   <!--<view class="title">{{ title }}</view>-->
   <!--黄金信息-->
+
   <view class="info-container">
     <view class="info-contanier-wrap">
       <view  class="info-container-title">上海黄金交易所行情</view>
       <view class="info info-title">
         <view class="info-title-kind">品种</view>
         <view class="info-title-price">最新价</view>
-        <view class="info-title-rise">涨幅</view>
+        <view class="info-title-rise">幅度</view>
+        <view class="info-title-grow">涨跌</view>
+        <view class="info-title-time">更新时间</view>
       </view>
       <view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">
         <view class='info-kind'>{{item.kind}}</view>
         <view class='info-price {{item.type}}'>{{item.price}}</view>
         <view class='info-rise {{item.type}}'>{{item.rise}}</view>
+        <view class='info-grow {{item.type}}'>{{item.grow}}</view>
+        <view class='info-time '>{{item.time}}</view>
       </view>
     </view>
   </view>
@@ -41,7 +46,12 @@
       <!--下部-分析师功能-->
       <view class="fxs-bottom">
         <!--todo 关注分析师ID-->
-        <button catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
+        <form bindsubmit="msgSub" report-submit>
+          <!--<input/>-->
+          <!--<button formType="submit">提交表单</button>-->
+          <button formType="submit" catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
+        </form>
+
         <view class="fxs-detail">查看明细</view>
       </view>
     </navigator>
@@ -67,3 +77,5 @@
     <view class="bounce3"></view>
   </view>
 </view>
+<!--消息推送-->
+

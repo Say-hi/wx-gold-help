@@ -51,19 +51,25 @@ Page({
       'kind': 'Aut+D',
       'price': '278',
       'rise': '11.600',
-      'type': 'red'
+      'type': 'red',
+      'time': '2017/3/30',
+      'grow': 'UP'
     },
     {
       'kind': 'Maut+D',
       'price': '2785',
       'rise': '11.1600',
-      'type': 'green'
+      'type': 'green',
+      'time': '2017/3/30',
+      'grow': 'DOWN'
     },
     {
       'kind': 'Maut+D',
       'price': '2785',
       'rise': '11.1600',
-      'type': 'green'
+      'type': 'green',
+      'time': '2017/3/30',
+      'grow': 'DOWN'
     }],
     fxs: []
   },
@@ -107,7 +113,7 @@ Page({
         status: 0
       })
       this.onLoad()
-    }else {
+    } else {
       for (let i = 0; i < fxs.length; i++) {
         // 处理时间
         if (fxs[i].lastOperate !== undefined) {
@@ -116,7 +122,7 @@ Page({
           time = '无操作时间'
         }
         fxs[i].lastOperate = time
-    }
+      }
     // 处理字符串
 
       // 处理头像
@@ -357,6 +363,13 @@ Page({
       }
     })
   },
+  /**
+   * 发送formId
+   * @param e
+   */
+  msgSub (e) {
+    app.sendFormId(e)
+  },
   //   confirmfxs () {
   //     this.setData({
   //       followHidden: true
@@ -366,6 +379,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
+    // this.msgSubmit()
     let that = this
     // 页面数据初始化
     // app.userLogin()

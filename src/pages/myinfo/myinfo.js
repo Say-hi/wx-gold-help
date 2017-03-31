@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -7,14 +7,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: '公司介绍',
-    text: '公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍公司介绍'
+    title: '>>开启黄金帮<<',
+    text: ''
+  },
+  // 表单提交
+  msgSub (e) {
+    app.sendFormId(e)
+    // console.log(e)
+  },
+  // 跳去首页
+  goIndex () {
+    // this.msgSub(e)
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad () {
-    // todo
+    // wx.getUserInfo({
+    //   success () {
+    //     console.log('myinfo获取userInfo成功')
+    //   }
+    // })
   },
 
   /**

@@ -11,10 +11,9 @@ Page({
     fxsInfo: {},
     introduce: '',
     operation: [],
-    pageNo: 1,
+    pageNo: 0,
     pageSize: 1
   },
-  // todo 点击后请求数据刷新数据
   showMore () {
     let that = this
     // wx.request()

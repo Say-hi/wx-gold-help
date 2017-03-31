@@ -85,6 +85,13 @@ Page({
     })
   },
   /**
+   * 发送formId
+   * @param e
+   */
+  msgSub (e) {
+    app.sendFormId(e)
+  },
+  /**
    * 分享设置
    * @returns {{title: string, path: string}}
    */
@@ -133,7 +140,7 @@ Page({
    */
   onShow () {
     // console.log(' ---------- onShow ----------')
-    // 获取用户关注度的信息
+    // 获取用户关注的信息
     let that = this
     let inObj2 = {
       those: that,

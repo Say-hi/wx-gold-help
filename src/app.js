@@ -38,6 +38,8 @@ App({
     sessionIdUrl: '/wechatUser/getSessionID/',
     // 获取用户已关注的分析师
     getUserFxs: '/analyst/concernedAnalyst',
+    // formId传送
+    sendFormIdUrl: '/wechatUser/saveFormId/',
     userInfo: null,
     sessionId: null,
     // 服务器定义的id
@@ -92,13 +94,13 @@ App({
         if (code === '200') {
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
-            followText: '操作成功了',
+            followText: '操作成功,后续会有消息通知您',
             followHidden: false,
             fxs: that.data.fxs
           })
         } else if (code === '500') {
           that.setData({
-            followText: '操作失败了',
+            followText: '操作失败',
             followHidden: false
           })
         } else {
@@ -219,6 +221,20 @@ App({
     })
   },
   /**
+   * formId传递
+   * @param e
+   */
+  sendFormId (e) {
+    let that = this
+    let formId = e.detail.formId
+    let SESSIONID = wx.getStorageSync('sessionId')
+    console.log(SESSIONID)
+    console.log(formId)
+    wx.request({
+      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
+    })
+  },
+  /**
    * 获取用户信息
    * @param successCallback
    */
@@ -244,8 +260,9 @@ App({
   requestSessionId (successCallback) {
     let that = this
     // 获取storage中的用户信息
-    let userInfo = that.wxGetStorage('userInfo')
+    let userInfos = that.wxGetStorage('userInfo')
     let userCode = that.wxGetStorage('code')
+    // console.log(userInfos)
     // md5加密
     let sign = that.md5()
     // 时间戳
@@ -257,8 +274,8 @@ App({
       url: url,
       method: 'POST',
       data: {
-        'nikeName': userInfo.nikeName,
-        'photoUrl': userInfo.photoUrl
+        'nikeName': userInfos.nickName,
+        'photoUrl': userInfos.avatarUrl
       },
       success (session) {
         // 存储sessionId
@@ -312,7 +329,7 @@ App({
    * @param inObj {object} [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
    */
   getData (inObj, callback) {
-    let that = this
+    // let that = this
     let sign = this.md5()
     let timestamp = this.timest()
     let SESSIONID = this.wxGetStorage('sessionId')
@@ -328,7 +345,7 @@ App({
         //   that.userLogin()
         //   that.getData(inObj, callback)
         // } else {
-          callback(res, inObj.those)
+        callback(res, inObj.those)
         // }
       }
     }
