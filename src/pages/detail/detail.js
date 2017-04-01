@@ -10,7 +10,13 @@ Page({
     title: '分析师明细',
     fxsInfo: {},
     introduce: '',
-    operation: [],
+    operation: [{
+      'typeDescription': '品种',
+      'directionDescription': '操作',
+      'price': '价格',
+      'quantity': '数量',
+      'buyRatio': '比例'
+    }],
     pageNo: 0,
     pageSize: 1
   },
@@ -62,7 +68,17 @@ Page({
     // 处理介绍信息
     // let introduce = fxs.introduce
     // console.log(introduce)
-    that.data.operation.push(fxs.market)
+    if (!fxs.market) {
+      that.data.operation.push({
+        'typeDescription': '暂无',
+        'directionDescription': '暂无',
+        'price': '暂无',
+        'quantity': '暂无',
+        'buyRatio': '暂无'
+      })
+    } else {
+      that.data.operation.push(fxs.market)
+    }
     that.setData({
       fxsInfo: fxs,
       introduce: fxs.introduce,

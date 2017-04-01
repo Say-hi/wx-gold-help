@@ -33,7 +33,7 @@
         <view class='info-change'>{{ item.directionDescription }}</view>
         <view class='info-price'>{{ item.price }}</view>
         <view class="info-count">{{ item.quantity }}</view>
-        <view class='info-garbage'>{{ item.buyRatio }}</view>
+        <view class='info-garbage'>{{ item.buyRatio }}{{index != 0 ? '%': ''}}</view>
       </view>
       <view bindtap="showMore" class="show-more color666">查看更多</view>
     </view>

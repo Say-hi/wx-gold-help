@@ -231,7 +231,10 @@ App({
     console.log(SESSIONID)
     console.log(formId)
     wx.request({
-      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
+      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID,
+      success (res) {
+        console.log(res)
+      }
     })
   },
   /**

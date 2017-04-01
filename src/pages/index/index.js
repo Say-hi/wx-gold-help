@@ -88,7 +88,9 @@ Page({
       } else {
         time = '无操作时间'
       }
+      let str = fxs[i].profitability + '%'
       fxs[i].lastOperate = time
+      fxs[i].profitability = str
       // 处理头像
       // let photo = app.data.imgUlr + fxs[i].photo
       // fxs[i].photo = photo
@@ -121,7 +123,9 @@ Page({
         } else {
           time = '无操作时间'
         }
+        let str = fxs[i].profitability + '%'
         fxs[i].lastOperate = time
+        fxs[i].profitability = str
       }
     // 处理字符串
 
