@@ -223,7 +223,7 @@ App({
           success (res) {
             wx.setStorageSync('userInfo', res.userInfo)
             that.requestSessionId(function () {
-              console.log('get sessionId from website')
+              console.info('get sessionId from site')
             })
           },
           fail () {
@@ -252,13 +252,13 @@ App({
     let that = this
     let formId = e.detail.formId
     let SESSIONID = wx.getStorageSync('sessionId')
-    console.log(SESSIONID)
-    console.log(formId)
+    // console.log(SESSIONID)
+    // console.log(formId)
     wx.request({
-      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID,
-      success (res) {
-        console.log(res)
-      }
+      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
+      // success () {
+      //   // console.log(res)
+      // }
     })
   },
   /**
@@ -342,7 +342,7 @@ App({
       // session有效
       success () {
         console.log('登陆态有效')
-        that.userLogin()
+        // that.userLogin()
       },
       // session失效
       fail () {
@@ -390,7 +390,18 @@ App({
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */
   onLaunch () {
+    let that = this
     this.wxSessionCheck()
+    wx.getStorage({
+      key: 'sessionId',
+      success () {
+        console.log('缓存有效')
+      },
+      fail () {
+        console.log('缓存无效')
+        that.userLogin()
+      }
+    })
     // console.log(' ========== Application is launched ========== ')
     // wx.checkSession({
     //   // sessionId有效

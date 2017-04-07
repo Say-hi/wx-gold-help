@@ -52,21 +52,21 @@ Page({
         'prod_name': 'Au(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_time': '--',
+        'quote_date': '--',
         'up_down': '--'
       },
       {
         'prod_name': 'mAu(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_time': '--',
+        'quote_date': '--',
         'up_down': '--'
       },
       {
         'prod_name': 'Ag(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_time': '--',
+        'quote_date': '--',
         'up_down': '--'
       }
     ],
@@ -373,6 +373,45 @@ Page({
   msgSub (e) {
     app.sendFormId(e)
   },
+  /**
+   * 获取交易所信息
+   * @param that
+   * @returns {*}
+   */
+  getStockInfo () {
+    let that = this
+    let stockObj = {
+      url: app.data.stockUrl,
+      method: 'POST',
+      data: {
+        'accessKey': app.data.accessKey,
+        'token': app.stockmd5(),
+        'time': app.timest13()
+      },
+      header: {'Content-Type': 'application/x-www-form-urlencoded'},
+      success (res) {
+        // console.log(res)
+        if (res.data.resultCode !== 0) {
+          return that.getStockInfo()
+        }
+        let arr = res.data.resultData
+        for (let i = 0; i < arr.length; i++) {
+          let date = arr[i].quote_time.split('')
+          // console.log(date)
+          date.splice(2, 0, ':')
+          // console.log(date)
+          date.splice(5, 0, ':')
+          // console.log(date)
+          arr[i].quote_time = date.join('')
+          arr[i].up_down_rate = (arr[i].up_down_rate * 100).toString().slice(0, 5) + '%'
+        }
+        that.setData({
+          shanghaiInfo: res.data.resultData
+        })
+      }
+    }
+    wx.request(stockObj)
+  },
   //   confirmfxs () {
   //     this.setData({
   //       followHidden: true
@@ -385,23 +424,7 @@ Page({
     // this.msgSubmit()
     let that = this
     // let that = this
-    let stockObj = {
-      url: app.data.stockUrl,
-      method: 'POST',
-      data: {
-        'accessKey': app.data.accessKey,
-        'token': app.stockmd5(),
-        'time': app.timest13()
-      },
-      header: {'Content-Type': 'application/x-www-form-urlencoded'},
-      success (res) {
-        // console.log(res)
-        that.setData({
-          shanghaiInfo: res.data.resultData
-        })
-      }
-    }
-    wx.request(stockObj)
+    this.getStockInfo()
     // 页面数据初始化
     // app.userLogin()
     this.setData({
