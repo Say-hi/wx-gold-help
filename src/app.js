@@ -45,7 +45,11 @@ App({
     // 服务器定义的id
     appId: 'e0d13e1b692968f4a3fd9e21c926d7d8',
     // 签名码
-    PDK: '52f005e6d4b340edb025fd26cdd7793a'
+    PDK: '52f005e6d4b340edb025fd26cdd7793a',
+    // 行情接口相关
+    accessKey: 'yb00001',
+    accessSecret: 'yb00001accessSecret',
+    stockUrl: 'http://cslyaoyao.vicp.net:1670/yuebao/api/ProxyController/proxyProdMarket.do'
   },
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
@@ -144,6 +148,26 @@ App({
     let tmp = timer.getTime().toString()
     tmp = tmp.substr(0, 10)
     return tmp
+  },
+  /**
+   * 获取时间戳不去除位数
+   * @returns {string}
+   */
+  timest13 () {
+    let timer = new Date()
+    let tmp = timer.getTime().toString()
+    return tmp
+  },
+  /**
+   * stock md5 加密
+   * @returns {*}
+   */
+  stockmd5 () {
+    let timestamp = this.timest13()
+    let accessKey = this.data.accessKey
+    let accessSecret = this.data.accessSecret
+    let str = 'accessKey=' + accessKey + '&accessSecret=' + accessSecret + '&time=' + timestamp
+    return md5.hexMD5(str)
   },
   /**
    * 获取用户信息

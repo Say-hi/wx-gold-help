@@ -12,16 +12,16 @@
       <view class="info info-title">
         <view class="info-title-kind">品种</view>
         <view class="info-title-price">最新价</view>
-        <view class="info-title-rise">幅度</view>
+        <view class="info-title-rise">涨幅</view>
         <view class="info-title-grow">涨跌</view>
         <view class="info-title-time">更新时间</view>
       </view>
       <view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">
-        <view class='info-kind'>{{item.kind}}</view>
-        <view class='info-price {{item.type}}'>{{item.price}}</view>
-        <view class='info-rise {{item.type}}'>{{item.rise}}</view>
-        <view class='info-grow {{item.type}}'>{{item.grow}}</view>
-        <view class='info-time '>{{item.time}}</view>
+        <view class='info-kind {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.prod_name}}</view>
+        <view class='info-price {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.new_price}}</view>
+        <view class='info-rise {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down_rate}}</view>
+        <view class='info-grow {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down}}</view>
+        <view class='info-time '>{{item.quote_date}}</view>
       </view>
     </view>
   </view>

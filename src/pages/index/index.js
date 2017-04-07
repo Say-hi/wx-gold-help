@@ -47,30 +47,29 @@ Page({
     orderBy: 'UP',
     pageNo: 1,
     pageSize: 4,
-    shanghaiInfo: [{
-      'kind': 'Aut+D',
-      'price': '278',
-      'rise': '11.600',
-      'type': 'red',
-      'time': '2017/3/30',
-      'grow': 'UP'
-    },
-    {
-      'kind': 'Maut+D',
-      'price': '2785',
-      'rise': '11.1600',
-      'type': 'green',
-      'time': '2017/3/30',
-      'grow': 'DOWN'
-    },
-    {
-      'kind': 'Maut+D',
-      'price': '2785',
-      'rise': '11.1600',
-      'type': 'green',
-      'time': '2017/3/30',
-      'grow': 'DOWN'
-    }],
+    shanghaiInfo: [
+      {
+        'prod_name': 'Au(T+D)',
+        'new_price': '--',
+        'up_down_rate': '--',
+        'quote_time': '--',
+        'up_down': '--'
+      },
+      {
+        'prod_name': 'mAu(T+D)',
+        'new_price': '--',
+        'up_down_rate': '--',
+        'quote_time': '--',
+        'up_down': '--'
+      },
+      {
+        'prod_name': 'Ag(T+D)',
+        'new_price': '--',
+        'up_down_rate': '--',
+        'quote_time': '--',
+        'up_down': '--'
+      }
+    ],
     fxs: []
   },
   /**
@@ -385,6 +384,24 @@ Page({
   onLoad () {
     // this.msgSubmit()
     let that = this
+    // let that = this
+    let stockObj = {
+      url: app.data.stockUrl,
+      method: 'POST',
+      data: {
+        'accessKey': app.data.accessKey,
+        'token': app.stockmd5(),
+        'time': app.timest13()
+      },
+      header: {'Content-Type': 'application/x-www-form-urlencoded'},
+      success (res) {
+        // console.log(res)
+        that.setData({
+          shanghaiInfo: res.data.resultData
+        })
+      }
+    }
+    wx.request(stockObj)
     // 页面数据初始化
     // app.userLogin()
     this.setData({
@@ -539,6 +556,24 @@ Page({
     this.setData({
       status: 1
     })
+    // 行情接口数据
+    // let stockObj = {
+    //   url: app.data.stockUrl,
+    //   method: 'POST',
+    //   data: {
+    //     'accessKey': app.data.accessKey,
+    //     'token': app.stockmd5(),
+    //     'time': app.timest13()
+    //   },
+    //   header: {'Content-Type': 'application/x-www-form-urlencoded'},
+    //   success (res) {
+    //     // console.log(res)
+    //     that.setData({
+    //       shanghaiInfo: res.data.resultData
+    //     })
+    //   }
+    // }
+    // wx.request(stockObj)
   },
   /**
    * 生命周期函数--监听页面隐藏
