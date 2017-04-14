@@ -39,12 +39,17 @@ Page({
     status: 0,
     title: '上海黄金交易所行情',
     userInfo: {},
+    currentSearch: 0,
+    goOn: true,
+    orderBy: 'a.create_date desc',
+    searchTitle: ['默认', '收益率', '最近操作'],
+    search: ['a.create_date desc', 'a.profitability desc', 'a.last_operate desc'],
     // fxsNumber: 20,
     // scrollHeight: 0,
     // scrollTop: 10,
     followText: '',
     // url: '/analyst/list',
-    orderBy: 'UP',
+    // orderBy: 'UP',
     pageNo: 1,
     pageSize: 4,
     shanghaiInfo: [
@@ -73,23 +78,64 @@ Page({
     fxs: []
   },
   /**
+   * 改变Search选项
+   * @param e
+   */
+  changeSearch (e) {
+    let index = e.currentTarget.dataset.serahcindex
+    this.setData({
+      pageNo: 1,
+      goOn: true,
+      currentSearch: index,
+      orderBy: this.data.search[index]
+    })
+    this.homeUser()
+  },
+  /**
    * 处理返回加载跟多请求的数据
    * @param res 传入返回的数据
    * @param that 传入this
    */
   getMoreFixData (res, that) {
     let fxs = res.data.result
+    if (!fxs) {
+      return wx.showToast({
+        title: '没有更多的分析师了',
+        icon: 'success',
+        success () {
+          that.setData({
+            show: false,
+            hidden: true
+          })
+        }
+      })
+    }
+    // if (fxs.length < that.data.pageSize) {
+    //   that.setData({
+    //     goOn: false
+    //   })
+    // }
+    // if (!that.data.goOn) {
+    //   return wx.showToast({
+    //     title: '没有更多的分析师啦',
+    //     success () {
+    //       that.setData({
+    //         show: false,
+    //         hidden: true
+    //       })
+    //     }
+    //   })
+    // }
     // 处理字符串
     for (let i = 0; i < fxs.length; i++) {
       // 处理时间
       if (fxs[i].lastOperate !== undefined) {
-        var time = fxs[i].lastOperate.slice(0, 10)
+        // var time = fxs[i].lastOperate.slice(0, 10)
       } else {
-        time = '无操作时间'
+        fxs[i].lastOperate = '无操作时间'
       }
-      let str = fxs[i].profitability + '%'
-      fxs[i].lastOperate = time
-      fxs[i].profitability = str
+      // let str = fxs[i].profitability + '%'
+      // fxs[i].profitability = str
       // 处理头像
       // let photo = app.data.imgUlr + fxs[i].photo
       // fxs[i].photo = photo
@@ -106,25 +152,23 @@ Page({
    * @param that
    */
   getHomeFixData (res, that) {
-    // console.log(res)
-    // console.log(typeof res.data.code)
     let fxs = res.data.result
     if (res.data.code !== '200') {
       this.setData({
         status: 0
       })
-      this.onLoad()
+      return
+      // this.onLoad()
     } else {
       for (let i = 0; i < fxs.length; i++) {
         // 处理时间
         if (fxs[i].lastOperate !== undefined) {
-          var time = fxs[i].lastOperate.slice(0, 10)
+          // var time = fxs[i].lastOperate.slice(0, 10)
         } else {
-          time = '无操作时间'
+          fxs[i].lastOperate = '无操作时间'
         }
-        let str = fxs[i].profitability + '%'
-        fxs[i].lastOperate = time
-        fxs[i].profitability = str
+        // let str = fxs[i].profitability + '%'
+        // fxs[i].profitability = str
       }
     // 处理字符串
 
@@ -153,62 +197,6 @@ Page({
       pageNo: ++this.data.pageNo,
       hidden: false
     })
-    // setTimeout(() => {
-    //   let addfxs = {
-    //     'name': '张三',
-    //     'type': '高级分析师',
-    //     'style': '稳健性',
-    //     'time': '2017/2/2',
-    //     'rise': '1.2%'
-    //   }
-    //   this.data.fxs.push(addfxs)
-    //   let that = this
-    //   this.setData({
-    //     fxs: that.data.fxs,
-    //     show: false,
-    //     hidden: true
-    //   })
-    // }, 1000)
-
-    // let that = this
-    // let sign = app.md5()
-    // let timestamp = app.timest()
-    // let method = 'POST'
-    // let url = app.data.baseUrl + this.data.url + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
-    // let obj = {
-    //   url: url,
-    //   data: {
-    //     'page': {
-    //       'pageNo': that.data.pageNo,
-    //       'pageSize': that.data.pageSize
-    //     },
-    //     'nickName': that.data.userInfo.nickName
-    //   },
-    //   header: {'Content-Type': 'application/json'},
-    //   method: method,
-    //   success (res) {
-    //     let fxs = res.data.result
-    //     // 处理字符串
-    //     for (let i = 0; i < fxs.length; i++) {
-    //       // 处理时间
-    //       if (fxs[i].lastOperate !== undefined) {
-    //         var time = fxs[i].lastOperate.slice(0, 10)
-    //       } else {
-    //         time = '无最新操作时间'
-    //       }
-    //       fxs[i].lastOperate = time
-    //       // 处理头像
-    //       let photo = app.data.imgUlr + fxs[i].photo
-    //       fxs[i].photo = photo
-    //     }
-    //     that.setData({
-    //       fxs: that.data.fxs.concat(fxs),
-    //       show: false,
-    //       hidden: true
-    //     })
-    //   }
-    // }
-    // wx.request(obj)
     let that = this
     // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
     let inObj = {
@@ -216,7 +204,7 @@ Page({
       url: app.data.homeUrl,
       method: 'POST',
       data: {
-        // 'orderBy': that.data.orderBy,
+        'orderBy': that.data.orderBy,
         'pageNo': that.data.pageNo,
         'pageSize': that.data.pageSize,
         'nickName': that.data.userInfo.nickName
@@ -225,30 +213,6 @@ Page({
     }
     app.getData(inObj, that.getMoreFixData)
   },
-  // 下拉重新加载数据
-  // refresh () {
-  //   if (this.data.flag) {
-  //     this.setData({
-  //       pageNo: 0,
-  //       flag: false
-  //     })
-  //     // wx.showToast({
-  //     //   title: '刷新数据中',
-  //     //   icon: 'loading',
-  //     //   duration: 10000
-  //     // })
-  //     console.log('重新加载数据')
-  //     this.onLoad()
-  //   }
-  //   // console.log('呵呵')
-  //   // this.onLoad()
-  // },
-  // 滚动设置高度
-  // scroll (event) {
-  //   this.setData({
-  //     scrollTop: event.detail.scrollTop
-  //   })
-  // },
   /**
    * 分享设置
    * @returns {desc: string, title: string, path: string}
@@ -256,7 +220,7 @@ Page({
   onShareAppMessage () {
     return {
       desc: '分享我的首页',
-      title: '黄金帮',
+      title: '黄金帮，名师帮您做参谋',
       path: '/pages/index/index'
     }
   },
@@ -329,12 +293,9 @@ Page({
     wx.getStorage({
       key: 'sessionId',
       success () {
-        // console.log('拿到的sessionId')
-        // console.log(res)
         callback
       },
       fail () {
-        // console.log(res)
         that.getSessionId()
       }
     })
@@ -352,13 +313,13 @@ Page({
           url: app.data.homeUrl,
           method: 'POST',
           data: {
+            'orderBy': that.data.orderBy,
             'pageNo': that.data.pageNo,
             'pageSize': that.data.pageSize,
             'nikeName': that.data.userInfo.nickName
           },
           header: {'Content-Type': 'application/json'}
         }
-        // console.log('从storage获取sessionId')
         that.getSessionId(app.getData(inObj, that.getHomeFixData))
       },
       fail () {
@@ -392,16 +353,14 @@ Page({
       success (res) {
         // console.log(res)
         if (res.data.resultCode !== 0) {
+          // console.log('交易所问题')
           return that.getStockInfo()
         }
         let arr = res.data.resultData
         for (let i = 0; i < arr.length; i++) {
           let date = arr[i].quote_time.split('')
-          // console.log(date)
           date.splice(2, 0, ':')
-          // console.log(date)
           date.splice(5, 0, ':')
-          // console.log(date)
           arr[i].quote_time = date.join('')
           arr[i].up_down_rate = (arr[i].up_down_rate * 100).toString().slice(0, 5) + '%'
         }
@@ -412,11 +371,6 @@ Page({
     }
     wx.request(stockObj)
   },
-  //   confirmfxs () {
-  //     this.setData({
-  //       followHidden: true
-  //     })
-  //   },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -439,6 +393,7 @@ Page({
         url: app.data.homeUrl,
         method: 'POST',
         data: {
+          'orderBy': that.data.orderBy,
           'pageNo': that.data.pageNo,
           'pageSize': that.data.pageSize,
           'nikeName': that.data.userInfo.nickName
@@ -447,112 +402,12 @@ Page({
       }
       app.getData(inObj, that.getHomeFixData)
     }
-    // app.userLogin()
-    // var sessionId = wx.getStorageSync('sessionId')
-    // 页面回滚到预设位置
-    // this.setData({
-    //   // scrollTop: 10,
-    // })
-    // 获取首页数据
-
-    // console.log(' ---------- onLoad ----------')
-    //  获取用户信息
-    // app.getUserInfo()
-    //   .then(info => this.setData({ userInfo: info }))
-    //   .catch(console.info)
-    // app.userLogin()
-    // let that = this
-    // let url = that.data.url
-    // console.dir(app.data)
-    // 数据请求
-    // getData(url, function () {
-    //   that.setData({
-    //     hidden: true
-    //   })
-    // })
-    // 设定scroll-height高度值
-    // wx.getSystemInfo({
-    //   success (res) {
-    //     that.setData({
-    //       scrollHeight: res.windowHeight
-    //     })
-    //   }
-    // })
-    // wx.getUserInfo({
-    //   success (res) {
-    //     that.setData({
-    //       userInfo: res.userInfo
-    //     })
-    //   }
-    // })
-    // console.log(that.data.userInfo)
-    // this.setData({
-    //   userInfo: app.data.userInfo
-    // })
-    // 加载首页数据
-    // let sign = app.md5()
-    // let timestamp = app.timest()
-    // let url = app.data.baseUrl + this.data.url + '?appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
-    // let method = 'POST'
-    // let obj = {
-    //   url: url,
-    //   data: {
-    //     'page': {
-    //       'pageNo': that.data.pageNo,
-    //       'pageSize': that.data.pageSize
-    //     },
-    //     'nickName': that.data.userInfo.nickName
-    //   },
-    //   header: {'Content-Type': 'application/json'},
-    //   method: method,
-    //   success (res) {
-    //     // console.log(url)
-    //     // console.log(res)
-    //     // console.log(res.data.result)
-    //     let fxs = res.data.result
-    //     // 处理字符串
-    //     for (let i = 0; i < fxs.length; i++) {
-    //       // 处理时间
-    //       if (fxs[i].lastOperate !== undefined) {
-    //         var time = fxs[i].lastOperate.slice(0, 10)
-    //       } else {
-    //         time = '无最新操作时间'
-    //       }
-    //       // let time = fxs[i].lastOperate.slice(0, 10) || '无最新操作'
-    //       fxs[i].lastOperate = time
-    //       // 处理头像
-    //       let photo = app.data.imgUlr + fxs[i].photo
-    //       fxs[i].photo = photo
-    //     }
-    //     that.setData({
-    //       fxs: fxs
-    //     })
-    //   }
-    // }
-    // wx.request(obj)
-    // 请求首页数据
-    // setTimeout(function () {
-    //   let inObj = {
-    //     those: that,
-    //     url: app.data.homeUrl,
-    //     method: 'POST',
-    //     data: {
-    //       'pageNo': that.data.pageNo,
-    //       'pageSize': that.data.pageSize,
-    //       'nikeName': that.data.userInfo.nickName
-    //     },
-    //     header: {'Content-Type': 'application/json'}
-    //   }
-    //   app.getData(inObj, that.getHomeFixData)
-    // }, 500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
     // console.log(' ---------- onReady ----------')
-    // let that = this
-    // 初始化页面pageNo数据
   },
   /**
    * 生命周期函数--监听页面显示
@@ -562,11 +417,15 @@ Page({
     // console.log(' ---------- onShow ----------')
     // 当状态确认时请求数据
     if (this.data.status === 1) {
+      this.setData({
+        pageNo: 1
+      })
       let inObj = {
         those: that,
         url: app.data.homeUrl,
         method: 'POST',
         data: {
+          'orderBy': that.data.orderBy,
           'pageNo': that.data.pageNo,
           'pageSize': that.data.pageSize,
           'nikeName': that.data.userInfo.nickName
@@ -579,24 +438,6 @@ Page({
     this.setData({
       status: 1
     })
-    // 行情接口数据
-    // let stockObj = {
-    //   url: app.data.stockUrl,
-    //   method: 'POST',
-    //   data: {
-    //     'accessKey': app.data.accessKey,
-    //     'token': app.stockmd5(),
-    //     'time': app.timest13()
-    //   },
-    //   header: {'Content-Type': 'application/x-www-form-urlencoded'},
-    //   success (res) {
-    //     // console.log(res)
-    //     that.setData({
-    //       shanghaiInfo: res.data.resultData
-    //     })
-    //   }
-    // }
-    // wx.request(stockObj)
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -627,7 +468,6 @@ Page({
    * 页面相关事件处理函数--监听用户上拉触底动作
    */
   onReachBottom () {
-    // console.log(1)
     this.showMore()
   }
 })

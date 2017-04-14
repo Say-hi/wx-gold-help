@@ -9,8 +9,15 @@ Page({
   data: {
     title: '分析师明细',
     fxsInfo: {},
-    introduce: '',
+    introduce: '啊哦，分析师还没有填写相关介绍',
     operation: [{
+      'typeDescription': '品种',
+      'directionDescription': '操作',
+      'price': '价格',
+      'quantity': '数量',
+      'buyRatio': '比例'
+    }],
+    operationCopy: [{
       'typeDescription': '品种',
       'directionDescription': '操作',
       'price': '价格',
@@ -40,9 +47,21 @@ Page({
       header: {'Content-Type': 'application/json'}
     }
     app.getData(inObj3, function (res, that) {
-      that.setData({
-        operation: that.data.operation.concat(res.data.result)
-      })
+      if (!res.data.result) {
+        return wx.showToast({
+          title: '没有更多的操作记录了',
+          icon: 'success'
+        })
+      }
+      if (that.data.pageNo === 1) {
+        that.setData({
+          operation: that.data.operationCopy.concat(res.data.result)
+        })
+      } else {
+        that.setData({
+          operation: that.data.operation.concat(res.data.result)
+        })
+      }
     })
     // console.log('加载更多数据')
   },
@@ -53,18 +72,20 @@ Page({
    */
   getSingleFixData (res, that) {
     // console.log(res)
+    if (res.data.code !== '200') {
+      return
+    }
     let fxs = res.data.result
     // 处理字符串
     // 处理时间
     if (fxs.lastOperate !== undefined) {
-      var time = fxs.lastOperate.slice(0, 10)
+      // var time = fxs.lastOperate.slice(0, 10)
     } else {
-      time = '无最新操作时间'
+      fxs.lastOperate = '暂无新操作'
     }
-    fxs.lastOperate = time
     // 处理头像
-    let photo = app.data.imgUlr + fxs.photo
-    fxs.photo = photo
+    // let photo = app.data.imgUlr + fxs.photo
+    // fxs.photo = photo
     // 处理介绍信息
     // let introduce = fxs.introduce
     // console.log(introduce)
@@ -79,6 +100,7 @@ Page({
     } else {
       that.data.operation.push(fxs.market)
     }
+    // console.log(fxs)
     that.setData({
       fxsInfo: fxs,
       introduce: fxs.introduce,
@@ -192,14 +214,15 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
-    // 渲染富文本数据
-    var reg = /src="/g
-    var article = this.data.introduce
-    var str = 'src="' + app.data.imgUlr
-    article = article.replace(reg, str)
-    // console.log(article)
     var that = this
-    WxParse.wxParse('article', 'html', article, that, 5)
+    setTimeout(function () {
+      var article = that.data.introduce
+      WxParse.wxParse('article', 'html', article, that, 5)
+    }, 100)
+    // 渲染富文本数据
+    // var reg = /src="/g
+    // var str = 'src="' + app.data.imgUlr
+    // article = article.replace(reg, str)
   },
   /**
    * 生命周期函数--监听页面显示

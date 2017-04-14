@@ -150,6 +150,11 @@ Page({
     }
     app.getData(inObj2, function (res, that) {
       // console.log(that)
+      if (!res.data.result) {
+        that.setData({
+          fxsInfo: []
+        })
+      }
       let fxsInfo = res.data.result
       for (let i = 0; i < fxsInfo.length; i++) {
         if (!fxsInfo[i].gender) {

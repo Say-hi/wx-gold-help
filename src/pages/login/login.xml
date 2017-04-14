@@ -20,7 +20,7 @@
       <view class="fxs-top">
         <!--左侧图片-->
         <view class="fxs-t-left">
-          <image src="{{ fxsInfo.photo }}"></image>
+          <image src="{{ fxsInfo.photo || '../../images/fxs-image.png' }}"></image>
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">

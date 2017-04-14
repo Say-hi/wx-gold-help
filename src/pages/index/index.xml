@@ -8,6 +8,7 @@
 
   <view class="info-container">
     <view class="info-contanier-wrap">
+      <image class="logo" src="../../images/logo.png"></image>
       <view  class="info-container-title">上海黄金交易所行情</view>
       <view class="info info-title">
         <view class="info-title-kind">品种</view>
@@ -33,14 +34,14 @@
         <!--图片位置交换->原左现右-->
         <!--右侧信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}<text class="fxs-t-r-site">职位:</text> {{ item.jobDescription }}</text></view>
-          <view class="fxs-t-r-company">公司名：<text>{{ item.company }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text></view>
-          <view class="fxs-t-r-rise">收益率：<text>{{ item.profitability }}</text> <text class="fxs-t-r-time">最近操作:<text>{{ item.lastOperate }}</text></text> </view>
+          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}</text></view>
+          <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}">　　　　<text>{{ item.jobDescription }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text> 收益率：<text>{{ item.profitability }}%</text></view>
+          <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
         </view>
         <!--左侧图片-->
         <view class="fxs-t-left">
-          <image src="{{ item.photo }}" alt="分析师头像"></image>
+          <image src="{{ item.photo || '../../images/fxs-image.png' }}" alt="分析师头像"></image>
         </view>
       </view>
       <!--下部-分析师功能-->
@@ -51,13 +52,16 @@
           <!--<button formType="submit">提交表单</button>-->
           <button formType="submit" catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
         </form>
-
         <view class="fxs-detail">查看明细</view>
       </view>
     </navigator>
   </view>
   <!--查看更多-->
   <view class="footer" bindtap="showMore" >查看更多</view>
+  <!--搜索排序-->
+  <view class="search">
+    <text bindtap="changeSearch" data-serahcindex="{{ index }}" class="{{ currentSearch == index ? 'active' : '' }}" wx:for="{{ searchTitle }}">{{ item }}</text>
+  </view>
 <!--</scroll-view>-->
 <modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
 <!--遮罩层-->

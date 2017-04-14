@@ -7,7 +7,6 @@
 // const wechat = require('./utils/wechat')
 // const Promise = require('./utils/bluebird')
 const md5 = require('./utils/wxmd5')
-// const appId = 'e0d13e1b692968f4a3fd9e21c926d7d8'
 App({
   /**
    * Global shared
@@ -17,11 +16,11 @@ App({
     name: '黄金帮',
     version: '0.1.0',
     // domain
-    baseUrl: 'http://120.24.41.38:8183/rest',
+    baseUrl: 'https://www.goldbang.cn/rest',
     // 首页接口
     homeUrl: '/analyst/list',
     // 图片接口
-    imgUlr: 'http://120.24.41.38:8183',
+    // imgUlr: 'http://120.24.41.38:8183',
     // 关注接口
     followUrl: '/followers/concern/',
     // 查询分析师接口
@@ -49,7 +48,7 @@ App({
     // 行情接口相关
     accessKey: 'yb00001',
     accessSecret: 'yb00001accessSecret',
-    stockUrl: 'http://cslyaoyao.vicp.net:1670/yuebao/api/ProxyController/proxyProdMarket.do'
+    stockUrl: 'https://www.yi-gold.com/yuebao/api/ProxyController/proxyProdMarket.do'
   },
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
@@ -105,6 +104,11 @@ App({
         } else if (code === '500') {
           that.setData({
             followText: '操作失败',
+            followHidden: false
+          })
+        } else if (code === '100') {
+          that.setData({
+            followText: '不能关注多个分析师，请到我的分析师中取消关注的分析师',
             followHidden: false
           })
         } else {
@@ -212,35 +216,28 @@ App({
    * 获取用户授权
    */
   userLogin () {
-    // let userCode = null
     let that = this
     wx.login({
       success: function (res) {
         // 本地存储code
         that.wxSetStorage('code', res.code)
-        // that.wxGetUserInfo(that.wxSetStorage, () => {})
+        console.log(res.code)
         wx.getUserInfo({
           success (res) {
             wx.setStorageSync('userInfo', res.userInfo)
+            console.log(res.userInfo)
             that.requestSessionId(function () {
-              console.info('get sessionId from site')
+              console.log('get sessionId from site')
             })
           },
           fail () {
             wx.showToast({
-              title: '用户拒绝供权限,无法查看信息',
+              title: '只查看交易所信息',
               icon: 'success',
               duration: 3000
             })
           }
         })
-        // wx.getUserInfo({
-        //   success (result) {
-        //     // 本地存储用户信息
-        //     that.wxSetStorage('userInfo', result.userInfo)
-        //   }
-        // })
-        // successCallback()
       }
     })
   },
@@ -252,13 +249,8 @@ App({
     let that = this
     let formId = e.detail.formId
     let SESSIONID = wx.getStorageSync('sessionId')
-    // console.log(SESSIONID)
-    // console.log(formId)
     wx.request({
       url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
-      // success () {
-      //   // console.log(res)
-      // }
     })
   },
   /**
@@ -297,6 +289,7 @@ App({
     // 请求url
     let url = that.data.baseUrl + that.data.sessionIdUrl + userCode + '?appId=' + that.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
     // 请求数据
+    console.log(url)
     wx.request({
       url: url,
       method: 'POST',
@@ -307,10 +300,9 @@ App({
       success (session) {
         // 存储sessionId
         that.wxSetStorage('sessionId', session.data.result)
+        console.log(session.data.result)
         // 回调函数
         successCallback()
-        // that.getData()
-        // that.data.sessionId = session.data.result
       }
     })
   },
@@ -367,13 +359,8 @@ App({
       header: inObj.header,
       method: inObj.method,
       success (res) {
-        // 301 sessionId失效
-        // if(res.code === '301') {
-        //   that.userLogin()
-        //   that.getData(inObj, callback)
-        // } else {
+        console.log(res)
         callback(res, inObj.those)
-        // }
       }
     }
     wx.request(obj)
@@ -394,28 +381,16 @@ App({
     this.wxSessionCheck()
     wx.getStorage({
       key: 'sessionId',
-      success () {
+      success (res) {
+        console.log(res.data)
         console.log('缓存有效')
       },
-      fail () {
+      fail (res) {
+        console.log(res.data)
         console.log('缓存无效')
         that.userLogin()
       }
     })
-    // console.log(' ========== Application is launched ========== ')
-    // wx.checkSession({
-    //   // sessionId有效
-    //   success () {
-    //     console.log('登陆态有效')
-    //     that.userLogin()
-    //   },
-    //   // sessionId失效
-    //   fail () {
-    //     console.log('登陆态失效')
-    //     // 重新登陆
-    //     that.userLogin()
-    //   }
-    // })
   },
   /**
    * 生命周期函数--监听小程序显示
