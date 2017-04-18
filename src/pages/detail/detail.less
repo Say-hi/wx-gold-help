@@ -3,6 +3,9 @@
   padding: 18rpx 16rpx 0 21rpx;
 }
 //分析师信息样式
+.approve::after {
+  margin-left: 40rpx;
+}
 .fxs-container {
   border: 20rpx solid #fff;
   border-bottom: none;
@@ -31,7 +34,7 @@
           //padding-left: 30rpx;
           //padding-bottom: 20rpx;
           font-size: 24rpx;
-          margin-bottom: 31rpx;
+          margin-bottom: 19rpx;
           .fxs-t-r-site, .fxs-t-r-time {
             font-size: 24rpx;
             padding-left: 5rpx;
@@ -54,9 +57,12 @@
     //}
   }
 }
-//操作记录样式
+.fxs-t-r-company text {
+  margin-left: 96rpx;
+}
+  //操作记录样式
 .operation {
-  border: 20rpx solid #fff;
+  border: 3rpx solid #fff;
   border-left:none;
   border-right:none;
   border-radius: 20rpx;
@@ -64,7 +70,7 @@
   background-color: #fff;
   .operation-title {
     font-size: 28rpx;
-    line-height: 73rpx;
+    line-height: 38rpx;
     text-align: center;
     color: #363636;
     border-bottom: 1rpx solid #eee;
@@ -75,8 +81,8 @@
     .info {
       display: flex;
       padding: 20rpx;
-      height: 80rpx;
-      line-height: 80rpx;
+      //height: 80rpx;
+      line-height: 8rpx;
       border-bottom: 2rpx solid #eee;
       .info-kind, .info-price, .info-change, .info-garbage, .info-count {
         flex: 1;

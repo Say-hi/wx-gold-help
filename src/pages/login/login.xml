@@ -2,7 +2,7 @@
   <!--用户信息-->
   <view class="user">
     <view class="user-wrap">
-      <image bindtap="chooseImage" class="user-pic" src="{{userInfo.avatarUrl}}"></image>
+      <image class="user-pic" src="{{ userInfo.avatarUrl }}"></image>
       <view class="user-name">{{userInfo.nickName}}</view>
       <view class="user-title">
         {{ userInfo.title || '猜猜你最近在干嘛...' }}
@@ -24,7 +24,7 @@
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
+          <view class="fxs-t-r-name {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}">姓名：<text>{{ fxsInfo.name }}</text></view>
           <view class="fxs-t-r-gender">性别：<text>{{ fxsInfo.genderDescription }}</text></view>
           <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
           <view class="fxs-t-r-company">公司：<text>{{ fxsInfo.company }}</text></view>
@@ -38,7 +38,7 @@
       </view>
     </view>
   </navigator>
-  <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还么有关注分析师哦...快去首页关注分析师吧</view>
+  <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还没有关注分析师哦...快去首页关注分析师吧</view>
   <!--软件信息-->
   <view class="soft">
     <image class="soft-img" src="{{ soft.img }}"></image>

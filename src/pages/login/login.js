@@ -10,7 +10,7 @@ Page({
     title: '我的分析师',
     cancelUrl: '/followers/cancelConcern/',
     cancelText: '取消关注成功',
-    userInfo: {},
+    userInfo: null,
     followHidden: true,
     fxsInfo: [],
     company: true,
@@ -154,16 +154,17 @@ Page({
         that.setData({
           fxsInfo: []
         })
-      }
-      let fxsInfo = res.data.result
-      for (let i = 0; i < fxsInfo.length; i++) {
-        if (!fxsInfo[i].gender) {
-          fxsInfo[i].gender = '未知'
+      } else {
+        let fxsInfo = res.data.result
+        for (let i = 0; i < fxsInfo.length; i++) {
+          if (!fxsInfo[i].gender) {
+            fxsInfo[i].gender = '未知'
+          }
         }
+        that.setData({
+          fxsInfo: fxsInfo
+        })
       }
-      that.setData({
-        fxsInfo: fxsInfo
-      })
     })
   },
   /**

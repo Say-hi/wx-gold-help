@@ -5,10 +5,12 @@
   <!--小程序标题-->
   <!--<view class="title">{{ title }}</view>-->
   <!--黄金信息-->
-
+  <view class="logo-wrap">
+    <image class="logo" src="../../images/logo1.png"></image>
+  </view>
   <view class="info-container">
+
     <view class="info-contanier-wrap">
-      <image class="logo" src="../../images/logo.png"></image>
       <view  class="info-container-title">上海黄金交易所行情</view>
       <view class="info info-title">
         <view class="info-title-kind">品种</view>
@@ -35,8 +37,8 @@
         <!--右侧信息-->
         <view class="fxs-t-right color666">
           <view class="fxs-t-r-name">分析师：<text>{{ item.name }}</text></view>
-          <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}">　　　　<text>{{ item.jobDescription }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text> 收益率：<text>{{ item.profitability }}%</text></view>
+          <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
+          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text> <text>收益率：{{ item.profitability }}%</text></view>
           <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
         </view>
         <!--左侧图片-->
@@ -60,7 +62,7 @@
   <view class="footer" bindtap="showMore" >查看更多</view>
   <!--搜索排序-->
   <view class="search">
-    <text bindtap="changeSearch" data-serahcindex="{{ index }}" class="{{ currentSearch == index ? 'active' : '' }}" wx:for="{{ searchTitle }}">{{ item }}</text>
+    <text bindtap="changeSearch" data-serahcindex="{{ index }}" class="{{ currentSearch == index ? 'active' : '' }}" wx:for="{{ searchTitle }}" wx:key="*this">{{ item }}</text>
   </view>
 <!--</scroll-view>-->
 <modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>

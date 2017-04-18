@@ -8,24 +8,35 @@
 //  padding: 24rpx;
 //}
 //行情样式
+.logo-wrap {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  //margin-top: 10rpx;
+}
+.logo {
+  height: 100rpx;
+  width: 400rpx;
+  height: 76rpx;
+  margin: 5rpx 0;
+  transform:translateX(125rpx);
+}
 .info-container {
   position: relative;
   //margin-top: 10rpx;
   padding: 0 17rpx 17rpx 19rpx;
   background-image:linear-gradient(90deg, #fef091, #f0c937);
-  .logo {
-    height: 100rpx;
-    width: 100%;
-  }
   // 标题信息
   .info-container-title {
-    text-align: center;
+    text-align: left;
     font-size: 28rpx;
-    padding:19rpx 0;
+    padding:8rpx 0;
   }
   .info {
     display: flex;
-    padding: 15rpx 20rpx;
+    padding: 10rpx 20rpx;
     background-color: #fff;
     border-bottom: 2rpx solid #eee;
     .info-kind, .info-price, .info-rise, .info-time, .info-grow, .info-title-kind, .info-title-price, .info-title-rise, .info-title-grow, .info-title-time {
@@ -79,7 +90,7 @@
   z-index: 990;
 }
 .fxs-container {
-  margin-top: 20rpx;
+  //margin-top: 20rpx;
   .fxs{
     background-color: #fff;
     padding: 17rpx 17rpx 31rpx 20rpx;
@@ -91,8 +102,8 @@
         image {
           right: 0;
           position: absolute;
-          width: 232rpx;
-          height: 232rpx;
+          width: 180rpx;
+          height: 180rpx;
         }
       }
       .fxs-t-right {
@@ -100,7 +111,7 @@
           //padding-left: 30rpx;
           //padding-bottom: 20rpx;
           font-size: 24rpx;
-          margin-bottom: 31rpx;
+          margin-bottom: 20rpx;
           .fxs-t-r-site, .fxs-t-r-time {
             font-size: 24rpx;
             padding-left: 10rpx;
@@ -111,6 +122,9 @@
             color: #000;
           }
         }
+        .fxs-t-r-company {
+          padding-left: 96rpx;
+        }
       }
     }
     //关注按钮样式
@@ -118,16 +132,17 @@
       position: relative;
       .fxs-follow {
         position: absolute;
-        right: 50rpx;
-        width: 130rpx;
-        padding: 2rpx 10rpx;
-        font-size: 24rpx;
+        right: 10rpx;
+        width: 174rpx;
+        padding: 13rpx 10rpx;
+        font-size: 28rpx;
         //background-color: #0094ff;
         background-image: linear-gradient(#fffdf1, #fde01a);
         border: 2rpx solid #edc01a;
         color: #000;
         line-height: 33rpx;
         z-index: 10;
+        transform:translateY(-10rpx);
       }
       .fxs-detail {
         font-size: 24rpx;
@@ -138,6 +153,12 @@
         z-index: 9;
       }
     }
+  }
+}
+.fxs-t-r-style {
+  text:nth-child(2) {
+    position: absolute;
+    left: 378rpx;
   }
 }
 //底部样式

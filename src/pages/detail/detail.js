@@ -129,6 +129,10 @@ Page({
     let that = this
     // 页面传递分析师id
     var id = params.type
+    this.setData({
+      id: id
+    })
+    console.log(id)
     // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
     let inObj = {
       those: that,
@@ -206,8 +210,8 @@ Page({
   onShareAppMessage () {
     return {
       desc: '分享分析师',
-      title: '黄金帮',
-      path: '/pages/detail/detail'
+      title: '黄金帮，名师帮您做参谋',
+      path: '/pages/detail/detail?type=' + this.data.id
     }
   },
   /**

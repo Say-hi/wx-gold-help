@@ -57,21 +57,21 @@ Page({
         'prod_name': 'Au(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_date': '--',
+        'quote_time': '--',
         'up_down': '--'
       },
       {
         'prod_name': 'mAu(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_date': '--',
+        'quote_time': '--',
         'up_down': '--'
       },
       {
         'prod_name': 'Ag(T+D)',
         'new_price': '--',
         'up_down_rate': '--',
-        'quote_date': '--',
+        'quote_time': '--',
         'up_down': '--'
       }
     ],
@@ -288,6 +288,7 @@ Page({
     let that = this
     app.confirmfxs(that)
   },
+  // 获取sessionId
   getSessionId (callback) {
     let that = this
     wx.getStorage({
@@ -296,10 +297,11 @@ Page({
         callback
       },
       fail () {
-        that.getSessionId()
+        return that.getSessionId()
       }
     })
   },
+  // 获取首页分析师列表信息
   homeUser () {
     let that = this
     wx.getStorage({
@@ -323,7 +325,18 @@ Page({
         that.getSessionId(app.getData(inObj, that.getHomeFixData))
       },
       fail () {
-        that.homeUser()
+        let inObj = {
+          those: that,
+          url: app.data.homeUrl,
+          method: 'POST',
+          data: {
+            'orderBy': that.data.orderBy,
+            'pageNo': that.data.pageNo,
+            'pageSize': that.data.pageSize
+          },
+          header: {'Content-Type': 'application/json'}
+        }
+        app.getData(inObj, that.getHomeFixData)
       }
     })
   },
@@ -357,6 +370,7 @@ Page({
           return that.getStockInfo()
         }
         let arr = res.data.resultData
+        if (!arr) return
         for (let i = 0; i < arr.length; i++) {
           let date = arr[i].quote_time.split('')
           date.splice(2, 0, ':')

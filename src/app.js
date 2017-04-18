@@ -113,7 +113,7 @@ App({
           })
         } else {
           that.setData({
-            followText: '服务器开小差了',
+            followText: '暂时无法关注分析师',
             followHidden: false
           })
         }
@@ -231,8 +231,8 @@ App({
             })
           },
           fail () {
-            wx.showToast({
-              title: '只查看交易所信息',
+            return wx.showToast({
+              title: '查看信息，无法关注分析师',
               icon: 'success',
               duration: 3000
             })
@@ -248,6 +248,8 @@ App({
   sendFormId (e) {
     let that = this
     let formId = e.detail.formId
+    console.log('触发了')
+    console.log("formId:" + formId)
     let SESSIONID = wx.getStorageSync('sessionId')
     wx.request({
       url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
@@ -388,7 +390,7 @@ App({
       fail (res) {
         console.log(res.data)
         console.log('缓存无效')
-        that.userLogin()
+        return that.userLogin()
       }
     })
   },
