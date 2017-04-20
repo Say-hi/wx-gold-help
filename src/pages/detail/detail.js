@@ -73,7 +73,18 @@ Page({
   getSingleFixData (res, that) {
     // console.log(res)
     if (res.data.code !== '200') {
-      return
+      return wx.showModal({
+        title: '抱歉',
+        content: '抱歉服务器开小差了，请尝试重新打开',
+        showCancel: false,
+        confirmText: '朕知道了',
+        confirmColor: '#0094ff',
+        success () {
+          wx.switchTab({
+            url: '../index/index'
+          })
+        }
+      })
     }
     let fxs = res.data.result
     // 处理字符串
@@ -132,7 +143,7 @@ Page({
     this.setData({
       id: id
     })
-    console.log(id)
+    // console.log(id)
     // [url:请求的接口; method:请求的方式; data:请求的数据; header:请求头; callback:回调函数; ]
     let inObj = {
       those: that,
@@ -221,6 +232,7 @@ Page({
     var that = this
     setTimeout(function () {
       var article = that.data.introduce
+      console.log(article)
       WxParse.wxParse('article', 'html', article, that, 5)
     }, 100)
     // 渲染富文本数据

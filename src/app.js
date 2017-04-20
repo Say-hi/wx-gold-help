@@ -60,8 +60,6 @@ App({
     // 获取分析师ID
     var analystId = e.currentTarget.dataset.id
     var arrayId = e.currentTarget.dataset.arraryid
-    // console.log('fxsID:' + analystId)
-    // console.log('关注了该分析师')
     var appId = this.data.appId
     var sign = this.md5()
     var timestamp = this.timest()
@@ -74,30 +72,10 @@ App({
         // console.log(url)
         // console.log(res)
         var code = res.data.code
-        // if (code === '500') {
-        //   wx.showModal({
-        //     title: '关注分析师',
-        //     showCancel: false,
-        //     content: '啊哦，小主关注失败了'
-        //   })
-        // }
-        // else if (code === '200') {
-        //   wx.showModal({
-        //     title: '关注分析师',
-        //     showCancel: false,
-        //     content: '小主关注成功啦'
-        //   })
-        // }
-        // else {
-        //   wx.showModal({
-        //     title: '未进入判断',
-        //     content: 'fail'
-        //   })
-        // }
         if (code === '200') {
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
-            followText: '操作成功,后续会有消息通知您',
+            followText: '您将收到名师最新的操作策略服务',
             followHidden: false,
             fxs: that.data.fxs
           })
@@ -108,7 +86,7 @@ App({
           })
         } else if (code === '100') {
           that.setData({
-            followText: '不能关注多个分析师，请到我的分析师中取消关注的分析师',
+            followText: '不能同时关注多名分析师，请先在"我的分析师"取消原来的关注后，再进行关注',
             followHidden: false
           })
         } else {
@@ -174,45 +152,6 @@ App({
     return md5.hexMD5(str)
   },
   /**
-   * 获取用户信息
-   * @return {Promise} 包含获取用户信息的`Promise`
-   */
-  // getUserInfo () {
-  //   return new Promise((resolve, reject) => {
-  //     if (this.data.userInfo) return reject(this.data.userInfo)
-  //     wechat.login()
-  //       // .then(res => console.log(res))
-  //       .then(() => wechat.getUserInfo())
-  //       .then(res => res.userInfo)
-  //       .then(info => (this.data.userInfo = info))
-  //       .then(info => resolve(info))
-  //       .catch(error => console.error('failed to get user info, error: ' + error))
-  //   })
-  // },
-  /**
-   * 获取用户信息
-   */
-  // getUserInfo () {
-  //   // let that = this
-  //   wx.login ({
-  //     success () {
-  //
-  //     }
-  //   })
-  //   wx.getUserInfo({
-  //     success (res) {
-  //       wx.setStorage({
-  //         key: 'userInfo',
-  //         data: res.userInfo
-  //       })
-  //     },
-  //     fail (res) {
-  //       console.log(res)
-  //       // that.getUserInfo()
-  //     }
-  //   })
-  // },
-  /**
    * 获取用户授权
    */
   userLogin () {
@@ -249,7 +188,7 @@ App({
     let that = this
     let formId = e.detail.formId
     console.log('触发了')
-    console.log("formId:" + formId)
+    console.log('formId:' + formId)
     let SESSIONID = wx.getStorageSync('sessionId')
     wx.request({
       url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
@@ -361,7 +300,7 @@ App({
       header: inObj.header,
       method: inObj.method,
       success (res) {
-        console.log(res)
+        // console.log(res)
         callback(res, inObj.those)
       }
     }
@@ -383,12 +322,27 @@ App({
     this.wxSessionCheck()
     wx.getStorage({
       key: 'sessionId',
-      success (res) {
-        console.log(res.data)
+      success () {
+        // check sessionId 是否有效
+        let checkObj = {
+          those: that,
+          url: that.data.getUserFxs,
+          method: 'GET',
+          header: {'Content-Type': 'application/json'}
+        }
+        that.getData(checkObj, function (res) {
+          let code = res.data.code
+          console.log(code)
+          if (code === '300' || code === '301') {
+            console.log('sessionId无效')
+            return that.userLogin()
+          }
+        })
+        // console.log(res.data)
         console.log('缓存有效')
       },
-      fail (res) {
-        console.log(res.data)
+      fail () {
+        // console.log(res.data)
         console.log('缓存无效')
         return that.userLogin()
       }

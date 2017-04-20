@@ -1,6 +1,6 @@
 // 获取全局应用程序实例对象
 const app = getApp()
-
+const WxParse = require('../../wxParse/wxParse')
 // 创建页面实例对象
 Page({
   /**
@@ -46,6 +46,14 @@ Page({
    */
   onReady () {
     // TODO: onReady
+    let that = this
+    // let article = this.data.company.introduce
+    // WxParse.wxParse('article', 'html', article, that, 5)
+    setTimeout(function () {
+      var article = that.data.company.introduce
+      console.log(article)
+      WxParse.wxParse('article', 'html', article, that, 5)
+    }, 100)
   },
 
   /**

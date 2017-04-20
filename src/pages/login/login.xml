@@ -1,12 +1,13 @@
+<import src="../../wxParse/wxParse"></import>
 <view class="container">
   <!--用户信息-->
   <view class="user">
     <view class="user-wrap">
       <image class="user-pic" src="{{ userInfo.avatarUrl }}"></image>
       <view class="user-name">{{userInfo.nickName}}</view>
-      <view class="user-title">
-        {{ userInfo.title || '猜猜你最近在干嘛...' }}
-      </view>
+      <!--<view class="user-title">-->
+        <!--&lt;!&ndash;{{ userInfo.title || '猜猜你最近在干嘛...' }}&ndash;&gt;-->
+      <!--</view>-->
     </view>
     <image class="user-bottom-img" src="../../images/login.png"></image>
     <image class="user-bottom-img2" src="../../images/login.png"></image>
@@ -14,6 +15,7 @@
   <!--个人中心功能-->
 
   <!--分析师-->
+  <view class="mytitle">我关注的分析师</view>
   <navigator hover-class="none" open-type="navigate" url='../detail/detail?type={{ fxsInfo.id }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
     <view class="fxs">
       <!--上部-分析师信息-->
@@ -24,10 +26,11 @@
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}">姓名：<text>{{ fxsInfo.name }}</text></view>
-          <view class="fxs-t-r-gender">性别：<text>{{ fxsInfo.genderDescription }}</text></view>
+          <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
+          <view class="fxs-t-r-gender {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}"><text>{{ fxsInfo.jobDescription }}</text></view>
           <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
-          <view class="fxs-t-r-company">公司：<text>{{ fxsInfo.company }}</text></view>
+          <view class="fxs-t-r-company">收益率：<text>{{ fxsInfo.profitability }}%</text></view>
+            <view class="fxs-t-r-time">最近操作: <text>{{ fxsInfo.lastOperate }}</text></view>
         </view>
       </view>
       <view class="fxs-bottom">
@@ -43,14 +46,16 @@
   <view class="soft">
     <image class="soft-img" src="{{ soft.img }}"></image>
     <view class="soft-content">
-      <view class="soft-title">软件介绍</view>
-      <view class="soft-text"> {{ soft.introduce }} </view>
+      <view class="soft-title">小程序介绍</view>
+      <view class="soft-text">
+        <template is="wxParse" data="{{ wxParseData:article.nodes }}"></template>
+      </view>
     </view>
   </view>
   <!--公司信息-->
   <navigator  class="company" url="../introduce/introduce?type=company" open-type="navigate">
     <image class="company-img" src="../../images/company.png"></image>
-    <view>公司介绍</view>
+    <view>服务介绍</view>
   </navigator>
 
 </view>

@@ -43,7 +43,7 @@ Page({
     goOn: true,
     orderBy: 'a.create_date desc',
     searchTitle: ['默认', '收益率', '最近操作'],
-    search: ['a.create_date desc', 'a.profitability desc', 'a.last_operate desc'],
+    search: ['a.is_top desc,a.create_date desc', 'a.is_top desc,a.profitability desc', 'a.is_top desc,a.last_operate desc'],
     // fxsNumber: 20,
     // scrollHeight: 0,
     // scrollTop: 10,
@@ -236,10 +236,15 @@ Page({
    * 取消关注分析师功能
    * @param e
    */
-  cancelFollow (e) {
-    let that = this
-    let useUrl = app.data.cancelUrl
-    app.followfxs(e, that, useUrl)
+  cancelFollow () {
+    wx.showModal({
+      title: '取消关注',
+      content: '请在"我的分析师"页面取消关注',
+      showCancel: false
+    })
+    // let that = this
+    // let useUrl = app.data.cancelUrl
+    // app.followfxs(e, that, useUrl)
     // var that = this
     // var analystId = e.currentTarget.dataset.id
     // // var number = e.currentTarget.dataset.number
@@ -367,7 +372,7 @@ Page({
         // console.log(res)
         if (res.data.resultCode !== 0) {
           // console.log('交易所问题')
-          return that.getStockInfo()
+          return setTimeout(that.getStockInfo, 200)
         }
         let arr = res.data.resultData
         if (!arr) return
@@ -376,7 +381,10 @@ Page({
           date.splice(2, 0, ':')
           date.splice(5, 0, ':')
           arr[i].quote_time = date.join('')
-          arr[i].up_down_rate = (arr[i].up_down_rate * 100).toString().slice(0, 5) + '%'
+          // 处理百分比
+          // arr[i].up_down_rate = (arr[i].up_down_rate * 100).toString().slice(0, 5) + '%'
+          // arr[i].up_down_rate = (arr[i].up_down_rate * 10000) / 100.00 + '%'
+          arr[i].up_down_rate = that.changeTwoDecimalf(arr[i].up_down_rate) + '%'
         }
         that.setData({
           shanghaiInfo: res.data.resultData
@@ -384,6 +392,28 @@ Page({
       }
     }
     wx.request(stockObj)
+  },
+  /**
+   * 小数点后两位
+   * @param floatvar
+   * @returns {*}
+   */
+  changeTwoDecimalf  (floatvar) {
+    var fx = parseFloat(floatvar)
+    if (isNaN(fx)) {
+      return false
+    }
+    fx = Math.round(fx * 10000) / 100.00
+    var sx = fx.toString()
+    var posdecimal = sx.indexOf('.')
+    if (posdecimal < 0) {
+      posdecimal = sx.length
+      sx += '.'
+    }
+    while (sx.length <= posdecimal + 2) {
+      sx += '0'
+    }
+    return sx
   },
   /**
    * 生命周期函数--监听页面加载

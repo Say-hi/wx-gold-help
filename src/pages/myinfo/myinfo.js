@@ -8,7 +8,9 @@ Page({
    */
   data: {
     title: '>>开启黄金帮<<',
-    text: ''
+    text: '',
+    windowWidth: 750,
+    windowHeight: 1334
   },
   // 表单提交
   msgSub (e) {
@@ -26,6 +28,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
+    var that = this
+    wx.getSystemInfo({
+      success (res) {
+        console.log(res)
+        that.setData({
+          windowWidth: res.windowWidth,
+          windowHeight: res.windowHeight
+        })
+      }
+    })
     // wx.getUserInfo({
     //   success () {
     //     console.log('myinfo获取userInfo成功')

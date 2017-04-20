@@ -38,7 +38,7 @@
         <view class="fxs-t-right color666">
           <view class="fxs-t-r-name">分析师：<text>{{ item.name }}</text></view>
           <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ item.styleDescription }}</text> <text>收益率：{{ item.profitability }}%</text></view>
+          <view class="fxs-t-r-style">风格:<text>{{ item.styleDescription }}</text> <text>收益率:{{ item.profitability }}%</text></view>
           <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
         </view>
         <!--左侧图片-->

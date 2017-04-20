@@ -1,6 +1,6 @@
 // 获取全局应用程序实例对象
 const app = getApp()
-
+const WxParse = require('../../wxParse/wxParse')
 // 创建页面实例对象
 Page({
   /**
@@ -63,7 +63,7 @@ Page({
           // console.log(number)
           that.data.fxsInfo.splice(number, 1)
           that.setData({
-            cancelText: '取消关注成功',
+            cancelText: '请记得去"首页"重新关注帮你参谋的名师噢',
             fxsInfo: that.data.fxsInfo
           })
         } else {
@@ -166,6 +166,10 @@ Page({
         })
       }
     })
+    setTimeout(function () {
+      var article = that.data.soft.introduce
+      WxParse.wxParse('article', 'html', article, that, 5)
+    }, 100)
   },
   /**
    * 生命周期函数--监听页面隐藏

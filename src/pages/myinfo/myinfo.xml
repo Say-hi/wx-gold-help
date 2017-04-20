@@ -1,6 +1,6 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
 <view class="container">
-  <image class="logo" src="../../images/logo.png"></image>
+  <image class="logo" style="width: {{ windowWidth }}px; height: {{ windowHeight }}px" src="../../images/index1.png"></image>
   <!--<view id="robot">-->
     <!--<view class="piston">-->
       <!--<view class="rotator"></view>-->

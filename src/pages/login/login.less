@@ -46,14 +46,22 @@
   right: -33rpx;
 }
 
+.mytitle {
+  background-color: #fff;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  padding-left: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
 //分析师信息样式
 .fxs-container {
-  height: 405rpx;
+  height: 337rpx;
   background-color: #fff;
   padding-left: 27rpx;
   border-bottom: 1rpx solid #eee;
   .fxs{
-    border-top: 82rpx solid #fff;
+    border-top: 14rpx solid #fff;
     background-color: #fff;
     .fxs-top {
       display: flex;
@@ -71,7 +79,7 @@
           //padding-left: 30rpx;
           //padding-bottom: 20rpx;
           font-size: 24rpx;
-          margin-bottom: 31rpx;
+          margin-bottom: 18rpx;
           .fxs-t-r-site, .fxs-t-r-time {
             font-size: 24rpx;
             padding-left: 31rpx;
@@ -91,6 +99,7 @@
       .fxs-follow {
         position: absolute;
         left: 28rpx;
+        top: -40rpx;
         width: 162rpx;
         padding: 7rpx 0rpx;
         margin-bottom: 20rpx;
@@ -103,6 +112,9 @@
       }
     }
   }
+}
+.fxs-t-r-gender {
+  margin-left: 73rpx;
 }
 //未关注分析师样式
 .no-fxs {
@@ -123,7 +135,7 @@
   align-items: center;
   .soft-img {
     width: 215rpx;
-    height: 162rpx;
+    height: 215rpx;
   }
   .soft-content {
     width: 417rpx;
@@ -139,6 +151,7 @@
       content: '';
       position: absolute;
       left: 0;
+      top: 7rpx;
       width: 8rpx;
       height: 25rpx;
       background-image: linear-gradient(#fef091, #fddf12);

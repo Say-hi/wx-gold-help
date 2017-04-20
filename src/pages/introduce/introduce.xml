@@ -1,4 +1,5 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
+<import src="../../wxParse/wxParse"></import>
 <view class="container {{ type === 'company' ? 'container2' : ''}}">
   <!--分析师信息-->
   <!--<view wx:if="{{ type !== 'company' }}" class="fxs-container">-->
@@ -24,7 +25,10 @@
   <!--</view>-->
   <!--公司信息-->
   <view wx:if="{{ type === 'company' }}" class="company">
-    <image src="{{ company.img }}"></image>
-    <text>{{ company.introduce }}</text>
+    <!--<text>{{ company.introduce }}</text>-->
+    <!--<image src="{{ company.img }}"></image>-->
+    <!--<view class="introduce">-->
+      <template is="wxParse" data="{{ wxParseData:article.nodes }}"></template>
+    <!--</view>-->
   </view>
 </view>
