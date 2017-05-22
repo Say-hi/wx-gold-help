@@ -37,19 +37,15 @@ Page({
     followHidden: true,
     flag: true,
     status: 0,
+    stockCode: 0,
     title: '上海黄金交易所行情',
     userInfo: {},
     currentSearch: 0,
     goOn: true,
-    orderBy: 'a.create_date desc',
+    orderBy: 'a.is_top desc,a.create_date desc',
     searchTitle: ['默认', '收益率', '最近操作'],
-    search: ['a.is_top desc,a.create_date desc', 'a.is_top desc,a.profitability desc', 'a.is_top desc,a.last_operate desc'],
-    // fxsNumber: 20,
-    // scrollHeight: 0,
-    // scrollTop: 10,
+    search: ['a.is_top desc,a.create_date desc', 'a.profitability desc', 'a.last_operate desc'],
     followText: '',
-    // url: '/analyst/list',
-    // orderBy: 'UP',
     pageNo: 1,
     pageSize: 4,
     shanghaiInfo: [
@@ -110,22 +106,6 @@ Page({
         }
       })
     }
-    // if (fxs.length < that.data.pageSize) {
-    //   that.setData({
-    //     goOn: false
-    //   })
-    // }
-    // if (!that.data.goOn) {
-    //   return wx.showToast({
-    //     title: '没有更多的分析师啦',
-    //     success () {
-    //       that.setData({
-    //         show: false,
-    //         hidden: true
-    //       })
-    //     }
-    //   })
-    // }
     // 处理字符串
     for (let i = 0; i < fxs.length; i++) {
       // 处理时间
@@ -134,11 +114,6 @@ Page({
       } else {
         fxs[i].lastOperate = '无操作时间'
       }
-      // let str = fxs[i].profitability + '%'
-      // fxs[i].profitability = str
-      // 处理头像
-      // let photo = app.data.imgUlr + fxs[i].photo
-      // fxs[i].photo = photo
     }
     that.setData({
       fxs: that.data.fxs.concat(fxs),
@@ -167,14 +142,7 @@ Page({
         } else {
           fxs[i].lastOperate = '无操作时间'
         }
-        // let str = fxs[i].profitability + '%'
-        // fxs[i].profitability = str
       }
-    // 处理字符串
-
-      // 处理头像
-      // let photo = app.data.imgUlr + fxs[i].photo
-      // fxs[i].photo = photo
     }
     // 更新数据
     // 停止弹出框
@@ -242,51 +210,6 @@ Page({
       content: '请在"我的分析师"页面取消关注',
       showCancel: false
     })
-    // let that = this
-    // let useUrl = app.data.cancelUrl
-    // app.followfxs(e, that, useUrl)
-    // var that = this
-    // var analystId = e.currentTarget.dataset.id
-    // // var number = e.currentTarget.dataset.number
-    // // console.log(analystId)
-    // // todo 取消关注的分析师--->重新获取关注数据array.splice()
-    // var appId = app.data.appId
-    // var sign = app.md5()
-    // var timestamp = app.timest()
-    // var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
-    // var method = 'GET'
-    // var obj = {
-    //   url: url,
-    //   method: method,
-    //   success (res) {
-    //     // console.log(url)
-    //     // console.log(res)
-    //     var code = res.data.code
-    //     // console.log(typeof code)
-    //     if (code === '500') {
-    //       // 失败
-    //       that.setData({
-    //         cancelText: '取消关注失败'
-    //       })
-    //     } else if (code === '200') {
-    //       // 成功
-    //       // console.log(number)
-    //       that.data.fxsInfo.splice(number, 1)
-    //       that.setData({
-    //         cancelText: '取消关注成功',
-    //         fxsInfo: that.data.fxsInfo
-    //       })
-    //     } else {
-    //       that.setData({
-    //         cancelText: '服务器开小差了'
-    //       })
-    //     }
-    //     that.setData({
-    //       followHidden: false
-    //     })
-    //   }
-    // }
-    // wx.request(obj)
   },
   // 关注分析师点击确定后逻辑
   confirmfxs () {
@@ -295,7 +218,7 @@ Page({
   },
   // 获取sessionId
   getSessionId (callback) {
-    let that = this
+    // let that = this
     wx.getStorage({
       key: 'sessionId',
       success () {
@@ -387,7 +310,8 @@ Page({
           arr[i].up_down_rate = that.changeTwoDecimalf(arr[i].up_down_rate) + '%'
         }
         that.setData({
-          shanghaiInfo: res.data.resultData
+          shanghaiInfo: res.data.resultData,
+          stockCode: res.data.resultCode
         })
       }
     }
@@ -422,7 +346,7 @@ Page({
     // this.msgSubmit()
     let that = this
     // let that = this
-    this.getStockInfo()
+    // this.getStockInfo()
     // 页面数据初始化
     // app.userLogin()
     this.setData({

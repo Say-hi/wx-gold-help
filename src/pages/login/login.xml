@@ -34,8 +34,7 @@
         </view>
       </view>
       <view class="fxs-bottom">
-        <!--todo 分析师ID-->
-        <form bindsubmit="msgSub" report-submit>
+        <form bindsubmit="msgSub" report-submit="true">
           <button formType="submit" catchtap="cancelFollow" data-number="{{ index }}" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
         </form>
       </view>

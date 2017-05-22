@@ -24,12 +24,10 @@ Page({
     wx.chooseImage({
       count: 1,
       success (res) {
-        console.log(res.tempFilePaths)
         that.data.userInfo.avatarUrl = res.tempFilePaths
         that.setData({
           userInfo: that.data.userInfo
         })
-        // todo 上传变更后信息到服务器
       }
     })
   },
@@ -38,8 +36,6 @@ Page({
     var that = this
     var analystId = e.currentTarget.dataset.id
     var number = e.currentTarget.dataset.number
-    // console.log(analystId)
-    // todo 取消关注的分析师--->重新获取关注数据array.splice()
     var appId = app.data.appId
     var sign = app.md5()
     var timestamp = app.timest()
@@ -49,10 +45,7 @@ Page({
       url: url,
       method: method,
       success (res) {
-        // console.log(url)
-        // console.log(res)
         var code = res.data.code
-        // console.log(typeof code)
         if (code === '500') {
           // 失败
           that.setData({
@@ -60,7 +53,6 @@ Page({
           })
         } else if (code === '200') {
           // 成功
-          // console.log(number)
           that.data.fxsInfo.splice(number, 1)
           that.setData({
             cancelText: '请记得去"首页"重新关注帮你参谋的名师噢',
@@ -115,25 +107,21 @@ Page({
       those: that,
       url: app.data.softUrl,
       method: 'GET',
-      // data: {
-      //   // 'orderBy': that.data.orderBy,
-      //   'pageNo': that.data.pageNo,
-      //   'pageSize': that.data.pageSize,
-      //   'nickName': that.data.userInfo.nickName
-      // },
       header: {'Content-Type': 'application/json'}
     }
     app.getData(inObj, function (res, that) {
       that.setData({
         soft: res.data.result
       })
+      var article = that.data.soft.introduce
+      WxParse.wxParse('article', 'html', article, that, 5)
     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
-    console.log(' ---------- onReady ----------')
+    // console.log(' ---------- onReady ----------')
   },
   /**
    * 生命周期函数--监听页面显示
@@ -166,27 +154,23 @@ Page({
         })
       }
     })
-    setTimeout(function () {
-      var article = that.data.soft.introduce
-      WxParse.wxParse('article', 'html', article, that, 5)
-    }, 100)
   },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide () {
-    console.log(' ---------- onHide ----------')
+    // console.log(' ---------- onHide ----------')
   },
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload () {
-    console.log(' ---------- onUnload ----------')
+    // console.log(' ---------- onUnload ----------')
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh () {
-    console.log(' ---------- onPullDownRefresh ----------')
+    // console.log(' ---------- onPullDownRefresh ----------')
   }
 })

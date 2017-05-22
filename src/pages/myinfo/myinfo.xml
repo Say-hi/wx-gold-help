@@ -1,44 +1,7 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
 <view class="container">
   <image class="logo" style="width: {{ windowWidth }}px; height: {{ windowHeight }}px" src="../../images/index1.png"></image>
-  <!--<view id="robot">-->
-    <!--<view class="piston">-->
-      <!--<view class="rotator"></view>-->
-      <!--<view class="block">-->
-        <!--我的-->
-        <!--<view class="arm"></view>-->
-      <!--</view>-->
-    <!--</view>-->
-    <!--<view class="piston">-->
-      <!--<view class="rotator"></view>-->
-      <!--<view class="block">-->
-        <!--专属-->
-        <!--<view class="arm"></view>-->
-      <!--</view>-->
-    <!--</view>-->
-    <!--<view class="piston">-->
-      <!--<view class="rotator"></view>-->
-      <!--<view class="block">-->
-        <!--黄金帮-->
-        <!--<view class="arm"></view>-->
-      <!--</view>-->
-    <!--</view>-->
-    <!--<view class="piston">-->
-    <!--<view class="rotator"></view>-->
-    <!--<view class="block">-->
-      <!--O-->
-      <!--<view class="arm"></view>-->
-    <!--</view>-->
-    <!--</view>-->
-    <!--<view class="piston">-->
-    <!--<view class="rotator"></view>-->
-    <!--<view class="block">-->
-      <!--T-->
-      <!--<view class="arm"></view>-->
-    <!--</view>-->
-  <!--</view>-->
-  <!--</view>-->
-  <form class="main-form" bindsubmit="msgSub" report-submit >
+  <form class="main-form" bindsubmit="msgSub" report-submit="true" >
     <button class="main-btn" formType="submit" bindtap="goIndex">{{ title }}</button>
   </form>
 </view>

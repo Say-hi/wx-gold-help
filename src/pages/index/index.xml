@@ -8,26 +8,32 @@
   <view class="logo-wrap">
     <image class="logo" src="../../images/logo1.png"></image>
   </view>
-  <view class="info-container">
+  <!--<view class="info-container">-->
 
-    <view class="info-contanier-wrap">
-      <view  class="info-container-title">上海黄金交易所行情</view>
-      <view class="info info-title">
-        <view class="info-title-kind">品种</view>
-        <view class="info-title-price">最新价</view>
-        <view class="info-title-rise">涨跌幅</view>
-        <view class="info-title-grow">涨跌</view>
-        <view class="info-title-time">更新时间</view>
-      </view>
-      <view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">
-        <view class='info-kind {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.prod_name}}</view>
-        <view class='info-price {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.new_price}}</view>
-        <view class='info-rise {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down_rate}}</view>
-        <view class='info-grow {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down}}</view>
-        <view class='info-time '>{{item.quote_time}}</view>
-      </view>
-    </view>
-  </view>
+    <!--<view class="info-contanier-wrap">-->
+      <!--<view  class="info-container-title">上海黄金交易所行情</view>-->
+      <!--<view  class="info-container-title"></view>-->
+      <!--<view class="info info-title">-->
+        <!--<view class="info-title-kind">品种</view>-->
+        <!--<view class="info-title-price">最新价</view>-->
+        <!--<view class="info-title-rise">涨跌幅</view>-->
+        <!--<view class="info-title-grow">涨跌</view>-->
+        <!--<view class="info-title-time">更新时间</view>-->
+        <!--<view class="info-title-kind"></view>-->
+        <!--<view class="info-title-price"></view>-->
+        <!--<view class="info-title-rise"></view>-->
+        <!--<view class="info-title-grow"></view>-->
+        <!--<view class="info-title-time"></view>-->
+      <!--</view>-->
+      <!--<view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">-->
+        <!--<view class='info-kind {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.prod_name}}</view>-->
+        <!--<view class='info-price {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.new_price}}</view>-->
+        <!--&lt;!&ndash;<view class='info-rise {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down_rate}}</view>&ndash;&gt;-->
+        <!--<view class='info-grow {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down}}</view>-->
+        <!--<view class='info-time '>{{item.quote_time}}</view>-->
+      <!--</view>-->
+    <!--</view>-->
+  <!--</view>-->
   <!--分析师信息-->
   <view class="fxs-container">
     <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs" wx:for="{{fxs}}" wx:key="index">
@@ -49,7 +55,7 @@
       <!--下部-分析师功能-->
       <view class="fxs-bottom">
         <!--todo 关注分析师ID-->
-        <form bindsubmit="msgSub" report-submit>
+        <form bindsubmit="msgSub" report-submit="true">
           <!--<input/>-->
           <!--<button formType="submit">提交表单</button>-->
           <button formType="submit" catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>

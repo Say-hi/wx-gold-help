@@ -4,8 +4,6 @@
  * 用于将微信官方`API`封装为`Promise`方式
  * > 小程序支持以`CommonJS`规范组织代码结构
  */
-// const wechat = require('./utils/wechat')
-// const Promise = require('./utils/bluebird')
 const md5 = require('./utils/wxmd5')
 App({
   /**
@@ -69,8 +67,6 @@ App({
       url: url,
       method: method,
       success (res) {
-        // console.log(url)
-        // console.log(res)
         var code = res.data.code
         if (code === '200') {
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
@@ -160,13 +156,13 @@ App({
       success: function (res) {
         // 本地存储code
         that.wxSetStorage('code', res.code)
-        console.log(res.code)
+        // console.log(res.code)
         wx.getUserInfo({
           success (res) {
             wx.setStorageSync('userInfo', res.userInfo)
-            console.log(res.userInfo)
+            // console.log(res.userInfo)
             that.requestSessionId(function () {
-              console.log('get sessionId from site')
+              // console.log('get sessionId from site')
             })
           },
           fail () {
@@ -187,8 +183,8 @@ App({
   sendFormId (e) {
     let that = this
     let formId = e.detail.formId
-    console.log('触发了')
-    console.log('formId:' + formId)
+    console.log(e)
+    console.log(formId)
     let SESSIONID = wx.getStorageSync('sessionId')
     wx.request({
       url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
@@ -204,7 +200,6 @@ App({
         successCallback('userInfo', res.userInfo)
       },
       fail () {
-        console.log('用户拒绝登陆授权')
         failCallback()
         wx.showToast({
           title: '用户拒绝提供权限,无法查看信息',
@@ -230,7 +225,7 @@ App({
     // 请求url
     let url = that.data.baseUrl + that.data.sessionIdUrl + userCode + '?appId=' + that.data.appId + '&sign=' + sign + '&timestamp=' + timestamp
     // 请求数据
-    console.log(url)
+    // console.log(url)
     wx.request({
       url: url,
       method: 'POST',
@@ -241,9 +236,12 @@ App({
       success (session) {
         // 存储sessionId
         that.wxSetStorage('sessionId', session.data.result)
-        console.log(session.data.result)
+        // console.log(session.data.result)
         // 回调函数
         successCallback()
+      },
+      fail (res) {
+        console.log(res)
       }
     })
   },
@@ -274,12 +272,12 @@ App({
     wx.checkSession({
       // session有效
       success () {
-        console.log('登陆态有效')
+        // console.log('登陆态有效')
         // that.userLogin()
       },
       // session失效
       fail () {
-        console.log('登陆态失效')
+        // console.log('登陆态失效')
         that.userLogin()
       }
     })
@@ -332,18 +330,18 @@ App({
         }
         that.getData(checkObj, function (res) {
           let code = res.data.code
-          console.log(code)
+          // console.log(code)
           if (code === '300' || code === '301') {
-            console.log('sessionId无效')
+            // console.log('sessionId无效')
             return that.userLogin()
           }
         })
         // console.log(res.data)
-        console.log('缓存有效')
+        // console.log('缓存有效')
       },
       fail () {
         // console.log(res.data)
-        console.log('缓存无效')
+        // console.log('缓存无效')
         return that.userLogin()
       }
     })

@@ -26,18 +26,14 @@ Page({
       those: that,
       url: app.data.companyUrl,
       method: 'GET',
-      // data: {
-      //   // 'orderBy': that.data.orderBy,
-      //   'pageNo': that.data.pageNo,
-      //   'pageSize': that.data.pageSize,
-      //   'nickName': that.data.userInfo.nickName
-      // },
       header: {'Content-Type': 'application/json'}
     }
     app.getData(inObj, function (res, that) {
       that.setData({
         company: res.data.result
       })
+      var article = that.data.company.introduce
+      WxParse.wxParse('article', 'html', article, that, 5)
     })
   },
 
@@ -45,42 +41,29 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
-    // TODO: onReady
-    let that = this
-    // let article = this.data.company.introduce
-    // WxParse.wxParse('article', 'html', article, that, 5)
-    setTimeout(function () {
-      var article = that.data.company.introduce
-      console.log(article)
-      WxParse.wxParse('article', 'html', article, that, 5)
-    }, 100)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow () {
-    // TODO: onShow
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide () {
-    // TODO: onHide
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload () {
-    // TODO: onUnload
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh () {
-    // TODO: onPullDownRefresh
   }
 })
