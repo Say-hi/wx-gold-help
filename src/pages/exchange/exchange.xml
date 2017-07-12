@@ -1,0 +1,14 @@
+<!--兑换记录-->
+<view class="exchange">
+  <block wx:for="{{ exchangeArr }}">
+    <view class="wrap">
+      <image src="{{ item.img }}"></image>
+      <view class="wrap-center">
+        <text class="w-c-a">{{ item.title }}</text>
+        <text class="w-c-b">{{ item.time }}</text>
+        <text class="w-c-c">{{ item.delScore }}</text>
+      </view>
+      <view class="status">{{ item.status }}</view>
+    </view>
+  </block>
+</view>

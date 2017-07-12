@@ -1,0 +1,47 @@
+<!--奖品兑换-->
+<view class="wrap">
+  <!--顶部展示-->
+  <view class="wrap-top">
+    <block wx:for="{{ topArr }}">
+      <view class="w-t-wrap">
+        <view class="img">
+          <image src="{{ item.img }}"></image>
+          <text class="tip">{{ item.tip }}</text>
+        </view>
+        <view class="title">{{ item.title }}</view>
+      </view>
+    </block>
+  </view>
+  <!--奖品说明-->
+  <view class="explain">
+    <image class="e-img" src="../../images/exchange.png"></image>
+    <view wx:for="{{ textArr }}">{{ item }}</view>
+  </view>
+  <!--地址-->
+  <view class="address">
+    <view class="a-title">收货地址</view>
+    <view class="a-people">
+      <text>收货人: {{ people }}</text><text>{{ phone }}</text>
+    </view>
+    <view class="iconfont icon-dizhi">
+      收货地址:{{ address }}
+    </view>
+    <navigator url="../address/address" class="changeAddress">修改地址</navigator>
+  </view>
+  <!--btn-->
+  <form class="s" bindsubmit="msgSub" report-submit="true">
+    <button class="btn-confirm" formType="submit">
+      <view class="confirm">
+        确认兑换
+      </view>
+    </button>
+  </form>
+</view>
+<!--积分不足弹窗-->
+<view wx:if="{{ mask }}" class="noscore">
+  <view>
+    <image src="../../images/cry.png"></image>
+    <view>哎呀，积分不足诶</view>
+    <view><text class="mask-btn" catchtap="maskBtnTap">确定</text></view>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+<!--用户认证-->
+<view class="rz">
+  <view class="in-user-info">
+    <image src="../../images/rz-bg.png"></image>
+    <view wx:if="{{ showRz }}" class="input-info">
+      <block wx:for="{{ inputArr }}">
+        <view class="i-i-text">
+          <text>{{ item }}:</text><input placeholder="请输入您的{{ item }}" data-tag="{{ item }}" bindinput="tagInput" />
+        </view>
+      </block>
+    </view>
+    <view wx:else class="input-info has">
+      <block wx:for="{{ inputArr2 }}">
+        <view class="hasRz">
+          <text class="hasrz-l">{{ item.title }}:</text><text class="hasrz-r">{{ item.text }}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view wx:if="{{ showRz }}" class="tips">
+    <view class="tips-title">认证说明</view>
+    <view class="tips-text">{{ tips }}</view>
+  </view>
+</view>

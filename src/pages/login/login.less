@@ -22,7 +22,7 @@
     border-radius: 50%;
   }
   .user-name {
-    padding-top: 9rpx;
+    padding-top: 20rpx;
     text-align: center;
     font-size: 26rpx;
   }
@@ -56,7 +56,7 @@
 }
 //分析师信息样式
 .fxs-container {
-  height: 337rpx;
+  height: 310rpx;
   background-color: #fff;
   padding-left: 27rpx;
   border-bottom: 1rpx solid #eee;
@@ -79,6 +79,7 @@
           //padding-left: 30rpx;
           //padding-bottom: 20rpx;
           font-size: 24rpx;
+          line-height: 26rpx;
           margin-bottom: 18rpx;
           .fxs-t-r-site, .fxs-t-r-time {
             font-size: 24rpx;
@@ -99,10 +100,10 @@
       .fxs-follow {
         position: absolute;
         left: 28rpx;
-        top: -40rpx;
+        top: 0rpx;
         width: 162rpx;
         padding: 7rpx 0rpx;
-        margin-bottom: 20rpx;
+        //margin-bottom: 20rpx;
         font-size: 24rpx;
         text-align: center;
         background-image: linear-gradient(#fffdf1, #fde01a);
@@ -177,27 +178,46 @@
 .company {
   background-color: #fff;
   height: 90rpx;
-  margin: 20rpx 0;
+  margin: 2rpx 0;
   display: flex;
   align-items: center;
-  padding-left: 21rpx;
+  padding-left: 20rpx;
   .company-img {
     width: 54rpx;
     height: 54rpx;
   }
   view {
     padding-left: 19rpx;
-    font-size: 28rpx;
+    font-size: 26rpx;
+    line-height: 90rpx;
+    color: #333;
+  }
+  .operation {
+    display: flex;
+    align-items: center;
+  }
+  .operation::before {
+    font-size: 40rpx;
+    font-weight: 500;
+    color: #f4d34a;
+    margin-right: 30rpx;
+  }
+  .text {
+    font-size: 20rpx;
+    color: #999;
+    flex: 1;
+    //line-height: 90rpx;
+  }
+  .title {
+    font-weight: 700;
+    width: 250rpx;
+  }
+  .number {
+    text-align: right;
+    width: 150rpx;
+    color: #f00;
   }
 }
-
-//todo 删除
-.footer_content {
-  display: flex;
-  align-items: center;
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+.tz {
+  margin: 30rpx 0;
 }

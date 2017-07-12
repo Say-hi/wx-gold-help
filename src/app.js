@@ -183,8 +183,8 @@ App({
   sendFormId (e) {
     let that = this
     let formId = e.detail.formId
-    console.log(e)
-    console.log(formId)
+    // console.log(e)
+    // console.log(formId)
     let SESSIONID = wx.getStorageSync('sessionId')
     wx.request({
       url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID

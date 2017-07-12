@@ -5,9 +5,9 @@
     <view class="user-wrap">
       <image class="user-pic" src="{{ userInfo.avatarUrl }}"></image>
       <view class="user-name">{{userInfo.nickName}}</view>
-      <!--<view class="user-title">-->
-        <!--&lt;!&ndash;{{ userInfo.title || '猜猜你最近在干嘛...' }}&ndash;&gt;-->
-      <!--</view>-->
+      <view class="user-title">
+        {{ userInfo.status || '' }}
+      </view>
     </view>
     <image class="user-bottom-img" src="../../images/login.png"></image>
     <image class="user-bottom-img2" src="../../images/login.png"></image>
@@ -17,30 +17,61 @@
   <!--分析师-->
   <view class="mytitle">我关注的分析师</view>
   <navigator hover-class="none" open-type="navigate" url='../detail/detail?type={{ fxsInfo.id }}' wx:if="{{ fxsInfo.length !== 0 }}" class="fxs-container" wx:for="{{ fxsInfo }}" wx:key="unique" wx:for-item="fxsInfo">
-    <view class="fxs">
-      <!--上部-分析师信息-->
-      <view class="fxs-top">
-        <!--左侧图片-->
-        <view class="fxs-t-left">
-          <image src="{{ fxsInfo.photo || '../../images/fxs-image.png' }}"></image>
+    <form bindsubmit="msgSub" report-submit="true">
+      <button formType="submit">
+        <view class="fxs">
+          <!--上部-分析师信息-->
+          <view class="fxs-top">
+            <!--左侧图片-->
+            <view class="fxs-t-left">
+              <image src="{{ fxsInfo.photo || '../../images/fxs-image.png' }}"></image>
+            </view>
+            <!--右侧分析师信息-->
+            <view class="fxs-t-right color666">
+              <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
+              <view class="fxs-t-r-gender {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}"><text>{{ fxsInfo.jobDescription }}</text></view>
+              <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
+              <view class="fxs-t-r-company">收益率：<text>{{ fxsInfo.profitability }}%</text></view>
+              <view class="fxs-t-r-time">最近操作: <text>{{ fxsInfo.lastOperate }}</text></view>
+            </view>
+          </view>
+          <view class="fxs-bottom">
+            <!--<form bindsubmit="msgSub" report-submit="true">-->
+              <button formType="submit" catchtap="cancelFollow" data-number="{{ index }}" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
+            <!--</form>-->
+          </view>
         </view>
-        <!--右侧分析师信息-->
-        <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">姓名：<text>{{ fxsInfo.name }}</text></view>
-          <view class="fxs-t-r-gender {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}"><text>{{ fxsInfo.jobDescription }}</text></view>
-          <view class="fxs-t-r-style">风格：<text>{{ fxsInfo.styleDescription }}</text></view>
-          <view class="fxs-t-r-company">收益率：<text>{{ fxsInfo.profitability }}%</text></view>
-            <view class="fxs-t-r-time">最近操作: <text>{{ fxsInfo.lastOperate }}</text></view>
-        </view>
-      </view>
-      <view class="fxs-bottom">
-        <form bindsubmit="msgSub" report-submit="true">
-          <button formType="submit" catchtap="cancelFollow" data-number="{{ index }}" data-id="{{ fxsInfo.id }}" class="fxs-follow">取消关注</button>
-        </form>
-      </view>
-    </view>
+      </button>
+    </form>
   </navigator>
   <view class="no-fxs" wx:if="{{ fxsInfo.length === 0 }}">啊哦，您还没有关注分析师哦...快去首页关注分析师吧</view>
+  <!--服务通知-->
+  <form bindsubmit="msgSub" report-submit="true">
+    <button formType="submit" bindtap="showTz">
+      <view class="company tz">
+        <!--<image class="company-img" src="../../images/company.png"></image>-->
+        <view class="operation iconfont {{ operation1.icon }}">
+          <text class="title">{{ operation1.title }}</text>
+          <text class="text">{{ operation1.text }}</text>
+          <text class="number">{{ operation1.nubmer }}</text>
+        </view>
+      </view>
+    </button>
+  </form>
+  <!--公司信息-->
+  <block wx:for="{{ operation }}">
+    <form bindsubmit="msgSub" report-submit="true">
+      <button formType="submit" data-url="{{ item.url }}" bindtap="gotocompany">
+        <navigator class="company" open-type="navigate">
+          <!--<image class="company-img" src="../../images/company.png"></image>-->
+          <view class="operation iconfont {{ item.icon }}">
+            <text class="title">{{ item.title }}</text>
+            <text class="text">{{ item.text }}</text>
+          </view>
+        </navigator>
+      </button>
+    </form>
+  </block>
   <!--软件信息-->
   <view class="soft">
     <image class="soft-img" src="{{ soft.img }}"></image>
@@ -51,12 +82,37 @@
       </view>
     </view>
   </view>
-  <!--公司信息-->
-  <navigator  class="company" url="../introduce/introduce?type=company" open-type="navigate">
-    <image class="company-img" src="../../images/company.png"></image>
-    <view>服务介绍</view>
-  </navigator>
 
+
+</view>
+<!--服务通知弹窗-->
+<view wx:if="{{ mask }}" class="tz-mask">
+  <view class="tz-content">
+    <image src="../../images/tz.png"></image>
+    <view class="tz-c-content">
+      <view class="title">
+        服务通知作用:
+      </view>
+      <view class="text">
+        帮助你及时收到分析师的消息
+      </view>
+      <view class="title">
+        服务通知期限:
+      </view>
+      <view class="text">
+        超过七天无法接收到推送消息哦！
+      </view>
+      <text class="title">
+        增加服务方法:<text class="text">点击下方按钮方可添加次数</text>
+      </text>
+    </view>
+    <form bindsubmit="msgSub" report-submit="true">
+      <button class="addTz" formType="submit">
+          点击我增加次数哦！
+      </button>
+    </form>
+    <view catchtap="closeTz" class="close">×</view>
+  </view>
 </view>
 <!--关注结果弹窗-->
 <modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ cancelText }}</modal>

@@ -1,0 +1,17 @@
+<view class="record">
+  <view class="jc-before">
+    <view class="jc-b-top">竞猜记录</view>
+    <view class="jc-b-top-title">
+      <text wx:for="{{ jcArr }}">{{ item }}</text>
+    </view>
+    <view wx:for="{{ jcResultArr }}">
+      <view class="jc-b-center">
+        <text>{{ item.time }}</text>
+        <text class="{{ item.before == '0' ? 'up' : 'down' }}">{{ item.before == '0' ? '涨' : '跌' }}</text>
+        <text class="{{ item.actual == '0' ? 'up' : 'down' }}">{{ item.actual == '0' ? '涨' : '跌' }}</text>
+        <text>{{ item.price }}</text>
+        <text class="{{ item.score > 0 ? 'up' : 'down' }}">{{ item.score > 0 ? '+' + item.score : item.score }}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,6 +1,5 @@
 // Window configuration
 // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#window
 {
- "navigationBarTitleText": "个人中心",
- "enablePullDownRefresh": false
+  "navigationBarTitleText": "积分兑换"
 }

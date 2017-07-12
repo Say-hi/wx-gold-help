@@ -38,7 +38,7 @@ Page({
     flag: true,
     status: 0,
     stockCode: 0,
-    title: '上海黄金交易所行情',
+    title: '信息展示',
     userInfo: {},
     currentSearch: 0,
     goOn: true,
@@ -218,10 +218,12 @@ Page({
   },
   // 获取sessionId
   getSessionId (callback) {
-    // let that = this
+    let that = this
     wx.getStorage({
       key: 'sessionId',
       success () {
+        // console.log(res)
+        // if (!res.data) return that.getSessionId()
         callback
       },
       fail () {

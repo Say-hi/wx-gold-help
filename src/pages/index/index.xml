@@ -1,75 +1,48 @@
-<!--加载处理-->
-<!--<loading hidden="{{ hidden }}">正在努力加载中^_^</loading>-->
-<!--最外层容器-->
-<!--<scroll-view bindscroll="scroll" scroll-top="{{ scrollTop }}" style="height:{{scrollHeight}}px;" scroll-y="true" bindscrolltolower="showMore" bindscrolltoupper="refresh"  class="container" >-->
-  <!--小程序标题-->
-  <!--<view class="title">{{ title }}</view>-->
-  <!--黄金信息-->
-  <view class="logo-wrap">
+<!--黄金信息-->
+<view class="logo-wrap">
     <image class="logo" src="../../images/logo1.png"></image>
-  </view>
-  <!--<view class="info-container">-->
-
-    <!--<view class="info-contanier-wrap">-->
-      <!--<view  class="info-container-title">上海黄金交易所行情</view>-->
-      <!--<view  class="info-container-title"></view>-->
-      <!--<view class="info info-title">-->
-        <!--<view class="info-title-kind">品种</view>-->
-        <!--<view class="info-title-price">最新价</view>-->
-        <!--<view class="info-title-rise">涨跌幅</view>-->
-        <!--<view class="info-title-grow">涨跌</view>-->
-        <!--<view class="info-title-time">更新时间</view>-->
-        <!--<view class="info-title-kind"></view>-->
-        <!--<view class="info-title-price"></view>-->
-        <!--<view class="info-title-rise"></view>-->
-        <!--<view class="info-title-grow"></view>-->
-        <!--<view class="info-title-time"></view>-->
-      <!--</view>-->
-      <!--<view class="info" wx:for="{{shanghaiInfo}}" wx:key="index" wx:if="infoShow">-->
-        <!--<view class='info-kind {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.prod_name}}</view>-->
-        <!--<view class='info-price {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.new_price}}</view>-->
-        <!--&lt;!&ndash;<view class='info-rise {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down_rate}}</view>&ndash;&gt;-->
-        <!--<view class='info-grow {{ (item.up_down * 1) >= 0 ? "green" : "red"}}'>{{item.up_down}}</view>-->
-        <!--<view class='info-time '>{{item.quote_time}}</view>-->
-      <!--</view>-->
-    <!--</view>-->
-  <!--</view>-->
-  <!--分析师信息-->
-  <view class="fxs-container">
+</view>
+<!--分析师信息-->
+<view class="fxs-container">
     <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs" wx:for="{{fxs}}" wx:key="index">
-      <!--上部-分析师信息-->
-      <view class="fxs-top">
-        <!--图片位置交换->原左现右-->
-        <!--右侧信息-->
-        <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">分析师：<text>{{ item.name }}</text></view>
-          <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
-          <view class="fxs-t-r-style">风格:<text>{{ item.styleDescription }}</text> <text>收益率:{{ item.profitability }}%</text></view>
-          <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
-        </view>
-        <!--左侧图片-->
-        <view class="fxs-t-left">
-          <image src="{{ item.photo || '../../images/fxs-image.png' }}" alt="分析师头像"></image>
-        </view>
-      </view>
-      <!--下部-分析师功能-->
-      <view class="fxs-bottom">
-        <!--todo 关注分析师ID-->
-        <form bindsubmit="msgSub" report-submit="true">
-          <!--<input/>-->
-          <!--<button formType="submit">提交表单</button>-->
-          <button formType="submit" catchtap="{{ item.isConcerned === 1? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
-        </form>
-        <view class="fxs-detail">查看明细</view>
-      </view>
+      <form bindsubmit="msgSub" report-submit="true">
+        <button formType="submit">
+          <!--上部-分析师信息-->
+          <view class="fxs-top">
+            <!--图片位置交换->原左现右-->
+            <!--右侧信息-->
+            <view class="fxs-t-right color666">
+              <view class="fxs-t-r-name">分析师：<text>{{ item.name }}</text></view>
+              <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
+              <view class="fxs-t-r-style">风格:<text>{{ item.styleDescription }}</text> <text>收益率:{{ item.profitability }}%</text></view>
+              <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
+            </view>
+            <!--左侧图片-->
+            <view class="fxs-t-left">
+              <image src="{{ item.photo || '../../images/fxs-image.png' }}" alt="分析师头像"></image>
+            </view>
+          </view>
+          <!--下部-分析师功能-->
+          <view class="fxs-bottom">
+            <!--todo 关注分析师ID-->
+              <button formType="submit" catchtap="{{ item.isConcerned === 1 ? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
+            <!--</form>-->
+            <view class="fxs-detail">查看明细</view>
+          </view>
+        </button>
+      </form>
     </navigator>
-  </view>
-  <!--查看更多-->
-  <view class="footer" bindtap="showMore" >查看更多</view>
-  <!--搜索排序-->
-  <view class="search">
-    <text bindtap="changeSearch" data-serahcindex="{{ index }}" class="{{ currentSearch == index ? 'active' : '' }}" wx:for="{{ searchTitle }}" wx:key="*this">{{ item }}</text>
-  </view>
+</view>
+<!--查看更多-->
+<view class="footer" bindtap="showMore" >查看更多</view>
+<!--搜索排序-->
+<form bindsubmit="msgSub" report-submit="true">
+    <button formType="submit">
+      <view class="search">
+        <text bindtap="changeSearch" data-serahcindex="{{ index }}" class="{{ currentSearch == index ? 'active' : '' }}" wx:for="{{ searchTitle }}" wx:key="*this">{{ item }}</text>
+      </view>
+    </button>
+</form>
 <!--</scroll-view>-->
 <modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>
 <!--遮罩层-->

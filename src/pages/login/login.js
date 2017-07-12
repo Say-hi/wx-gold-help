@@ -14,7 +14,52 @@ Page({
     followHidden: true,
     fxsInfo: [],
     company: true,
-    soft: {}
+    soft: {},
+    operation1: {
+      icon: 'icon-tongzhi1-on',
+      title: '服务通知',
+      text: '点击增加消息通知次数',
+      nubmer: 1
+    },
+    operation: [
+      {
+        icon: 'icon-VIP',
+        title: '申请用户认证',
+        text: '显示认证状态',
+        url: '../rz/rz?rz=true'
+      },
+      {
+        icon: 'icon-zhangfubang',
+        title: '金价涨跌竞猜',
+        text: '每天赚取积分赢大奖',
+        url: '../jc/jc'
+      },
+      {
+        icon: 'icon-giftfill',
+        title: '积分兑换',
+        text: '数种奖品任你选'
+      },
+      {
+        icon: 'icon-dizhi',
+        title: '地址管理',
+        text: '奖品直接寄到您手中'
+      },
+      {
+        icon: 'icon-kefu',
+        title: '联系客服',
+        text: '亲！不懂的请联系我们客服哦'
+      },
+      {
+        icon: 'icon-lingdang',
+        title: '服务介绍',
+        text: '看看我们是做。。。。。'
+      },
+      {
+        icon: 'icon-fangzi',
+        title: '公司介绍',
+        url: '../introduce/introduce?type=company'
+      }
+    ]
   },
   /**
    * 用户头像照片选择
@@ -82,6 +127,26 @@ Page({
    */
   msgSub (e) {
     app.sendFormId(e)
+  },
+  // 打开通知
+  showTz () {
+    this.setData({
+      mask: true
+    })
+  },
+  // 关闭服务通知弹窗
+  closeTz () {
+    this.setData({
+      mask: false
+    })
+  },
+  /**
+   * 去公司详情页
+   */
+  gotocompany (e) {
+    wx.navigateTo({
+      url: e.currentTarget.dataset.url
+    })
   },
   /**
    * 分享设置

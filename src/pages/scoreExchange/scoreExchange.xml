@@ -1,0 +1,20 @@
+<!--积分兑换-->
+<view class="exchange">
+  <block wx:for="{{ exchangeArr }}">
+    <navigator url="../confirmExchange/confirmExchange?id={{ item.id }}" class="wrap">
+      <view class="img-wrap">
+        <image src="{{ item.img }}"></image>
+        <text>{{ item.tip }}</text>
+      </view>
+      <view class="wrap-center">
+        <text class="w-c-b" wx:if="{{ item.status == 1 }}">精选</text>
+        <text class="w-c-a">{{ item.title }}</text>
+        <text class="w-c-n">数量{{ item.number }}</text>
+      </view>
+      <view class="status">
+        <text>{{ item.score }}积分</text>
+        <text class="exbtn">兑换</text>
+      </view>
+    </navigator>
+  </block>
+</view>
