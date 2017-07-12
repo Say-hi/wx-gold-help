@@ -26,7 +26,7 @@
     <view class="iconfont icon-dizhi">
       收货地址:{{ address }}
     </view>
-    <navigator url="../address/address" class="changeAddress">修改地址</navigator>
+    <view catchtap="addressfix" class="changeAddress">修改地址</view>
   </view>
   <!--btn-->
   <form class="s" bindsubmit="msgSub" report-submit="true">

@@ -37,22 +37,26 @@ Page({
       {
         icon: 'icon-giftfill',
         title: '积分兑换',
-        text: '数种奖品任你选'
+        text: '数种奖品任你选',
+        url: '../scoreExchange/scoreExchange'
       },
       {
         icon: 'icon-dizhi',
         title: '地址管理',
-        text: '奖品直接寄到您手中'
+        text: '奖品直接寄到您手中',
+        url: 'address'
       },
       {
         icon: 'icon-kefu',
         title: '联系客服',
-        text: '亲！不懂的请联系我们客服哦'
+        text: '亲！不懂的请联系我们客服哦',
+        url: 'kefu'
       },
       {
         icon: 'icon-lingdang',
         title: '服务介绍',
-        text: '看看我们是做。。。。。'
+        text: '看看我们是做。。。。。',
+        url: '../introduce/introduce?type=company'
       },
       {
         icon: 'icon-fangzi',
@@ -144,6 +148,24 @@ Page({
    * 去公司详情页
    */
   gotocompany (e) {
+    // let that = this
+    if (e.currentTarget.dataset.url === 'kefu') {
+      return
+    } else if (e.currentTarget.dataset.url === 'address') {
+      let obj = {
+        success (res) {
+          // console.log(res)
+          let address = {
+            add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+            name: res.userName,
+            tel: res.telNumber
+          }
+          wx.setStorageSync('address', address)
+        }
+      }
+      wx.chooseAddress(obj)
+      return
+    }
     wx.navigateTo({
       url: e.currentTarget.dataset.url
     })

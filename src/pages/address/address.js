@@ -9,7 +9,14 @@ Page({
   data: {
     title: 'address'
   },
-
+  goaddress () {
+    let obj = {
+      success (res) {
+        console.log(res)
+      }
+    }
+    wx.chooseAddress(obj)
+  },
   /**
    * 生命周期函数--监听页面加载
    */

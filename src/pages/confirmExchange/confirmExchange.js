@@ -24,9 +24,9 @@ Page({
       '参与奖品说明，你需要去专区足够的积分，方可换取奖品',
       '如积分不足或者商品不足,这个就会出现换取失败'
     ],
-    people: '江文强',
-    phone: '188712398',
-    address: '萨都剌的罚款啥地方哈考虑啥地方哈纳斯达克浪费',
+    people: '',
+    phone: '',
+    address: '',
     mask: true
   },
   /**
@@ -35,6 +35,40 @@ Page({
    */
   msgSub (e) {
     app.sendFormId(e)
+  },
+  addressfix () {
+    let obj = {
+      success (res) {
+        console.log(res)
+        if (!res.authSetting['scope.address']) {
+          let obj1 = {
+            success (res) {
+              console.log(res)
+            }
+          }
+          wx.openSetting(obj1)
+        }
+      }
+    }
+    wx.getSetting(obj)
+    let that = this
+    let obj2 = {
+      success (res) {
+        // console.log(res)
+        let address = {
+          add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+          name: res.userName,
+          tel: res.telNumber
+        }
+        wx.setStorageSync('address', address)
+        that.setData({
+          people: address.name,
+          address: address.add,
+          phone: address.tel
+        })
+      }
+    }
+    wx.chooseAddress(obj2)
   },
   maskBtnTap () {
     this.setData({
@@ -45,6 +79,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
+    let that = this
+    let a = wx.getStorageSync('address')
+    if (!a) {
+      let obj = {
+        success (res) {
+          let address = {
+            add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+            name: res.userName,
+            tel: res.telNumber
+          }
+          that.setData({
+            people: address.name,
+            address: address.add,
+            phone: address.tel
+          })
+          wx.setStorageSync('address', address)
+        }
+      }
+      wx.chooseAddress(obj)
+    } else {
+      this.setData({
+        people: a.name,
+        address: a.add,
+        phone: a.tel
+      })
+    }
     // TODO: onLoad
   },
 

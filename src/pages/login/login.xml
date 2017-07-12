@@ -61,14 +61,14 @@
   <!--公司信息-->
   <block wx:for="{{ operation }}">
     <form bindsubmit="msgSub" report-submit="true">
-      <button formType="submit" data-url="{{ item.url }}" bindtap="gotocompany">
-        <navigator class="company" open-type="navigate">
+      <button formType="submit" open-type="{{ item.url == 'kefu' ? 'contact' : ''}}" data-url="{{ item.url }}" bindtap="gotocompany">
+        <view class="company">
           <!--<image class="company-img" src="../../images/company.png"></image>-->
           <view class="operation iconfont {{ item.icon }}">
             <text class="title">{{ item.title }}</text>
             <text class="text">{{ item.text }}</text>
           </view>
-        </navigator>
+        </view>
       </button>
     </form>
   </block>
