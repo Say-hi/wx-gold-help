@@ -1,0 +1,19 @@
+<scroll-view scroll-y="true" style="height: 100%; width: 100%;">
+  <view class="wrap">
+    <view class="out-wrap scroll-wrap" >
+      <view bindtouchmove="touchMove" bindtouchend="touchEnd" bindtouchstart="touchStart"  class="scroll-wrap-in" style="width: {{ width }}px; transform: translateX({{ tf }}px)">
+        <block wx:for="{{ numberArr }}">
+          <view style="margin-left: {{ index == 0 ? firstDistance : '0' }}px; margin-right: {{ index == 200 ? lastDistance : '0' }}px;" data-number="{{ index }}" class="number {{ item.flag == 1 ? 'big' : 'small' }} {{ index == 200 ? 'last-view' : '' }}">
+            <text wx:if="{{ item.flag == 1 }}">{{ item.i }}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view class="show-area">
+    <view class="arrow"></view>
+    <view class="text">
+      {{ showDistance }}
+    </view>
+  </view>
+</scroll-view>

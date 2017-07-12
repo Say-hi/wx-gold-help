@@ -148,22 +148,23 @@ Page({
    * 去公司详情页
    */
   gotocompany (e) {
-    // let that = this
+    let that = this
     if (e.currentTarget.dataset.url === 'kefu') {
       return
     } else if (e.currentTarget.dataset.url === 'address') {
-      let obj = {
-        success (res) {
-          // console.log(res)
-          let address = {
-            add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-            name: res.userName,
-            tel: res.telNumber
-          }
-          wx.setStorageSync('address', address)
-        }
-      }
-      wx.chooseAddress(obj)
+      // let obj = {
+      //   success (res) {
+      //     // console.log(res)
+      //     let address = {
+      //       add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+      //       name: res.userName,
+      //       tel: res.telNumber
+      //     }
+      //     wx.setStorageSync('address', address)
+      //   }
+      // }
+      // wx.chooseAddress(obj)
+      app.openAddress(that)
       return
     }
     wx.navigateTo({

@@ -37,38 +37,8 @@ Page({
     app.sendFormId(e)
   },
   addressfix () {
-    let obj = {
-      success (res) {
-        console.log(res)
-        if (!res.authSetting['scope.address']) {
-          let obj1 = {
-            success (res) {
-              console.log(res)
-            }
-          }
-          wx.openSetting(obj1)
-        }
-      }
-    }
-    wx.getSetting(obj)
     let that = this
-    let obj2 = {
-      success (res) {
-        // console.log(res)
-        let address = {
-          add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-          name: res.userName,
-          tel: res.telNumber
-        }
-        wx.setStorageSync('address', address)
-        that.setData({
-          people: address.name,
-          address: address.add,
-          phone: address.tel
-        })
-      }
-    }
-    wx.chooseAddress(obj2)
+    app.openAddress(that)
   },
   maskBtnTap () {
     this.setData({
@@ -80,31 +50,32 @@ Page({
    */
   onLoad () {
     let that = this
-    let a = wx.getStorageSync('address')
-    if (!a) {
-      let obj = {
-        success (res) {
-          let address = {
-            add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-            name: res.userName,
-            tel: res.telNumber
-          }
-          that.setData({
-            people: address.name,
-            address: address.add,
-            phone: address.tel
-          })
-          wx.setStorageSync('address', address)
-        }
-      }
-      wx.chooseAddress(obj)
-    } else {
-      this.setData({
-        people: a.name,
-        address: a.add,
-        phone: a.tel
-      })
-    }
+    app.getAddress(that)
+    // let a = wx.getStorageSync('address')
+    // if (!a) {
+    //   let obj = {
+    //     success (res) {
+    //       let address = {
+    //         add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+    //         name: res.userName,
+    //         tel: res.telNumber
+    //       }
+    //       that.setData({
+    //         people: address.name,
+    //         address: address.add,
+    //         phone: address.tel
+    //       })
+    //       wx.setStorageSync('address', address)
+    //     }
+    //   }
+    //   wx.chooseAddress(obj)
+    // } else {
+    //   this.setData({
+    //     people: a.name,
+    //     address: a.add,
+    //     phone: a.tel
+    //   })
+    // }
     // TODO: onLoad
   },
 

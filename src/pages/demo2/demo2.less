@@ -1,0 +1,79 @@
+page {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+}
+@height: 100rpx;
+.scroll-wrap {
+  width: 100%;
+  height: @height;
+  background-color: #000;
+  overflow: hidden;
+  @width: 19px;
+  .scroll-wrap-in {
+    height: @height - 20;
+  }
+  .number {
+    display: inline-block;
+    width: @width;
+    height: @height;
+    border-left: 1px solid #fff;
+    position: relative;
+    text {
+      position: absolute;
+      font-size: 26rpx;
+      bottom: -30rpx;
+      left: 0;
+      color: #fff;
+      transform: translateX(-50%);
+    }
+  }
+  .last-view {
+    width: 0px;
+  }
+  .big {
+    height: @height - 30;
+  }
+  .small {
+    height: @height - 50;
+  }
+}
+
+.show-area {
+  position: relative;
+  width: 100%;
+  background-color: #f00;
+  @sd: 20rpx;
+  .arrow {
+    position: absolute;
+    width: @sd;
+    height: @sd;
+    top: 0;
+    left: 50%;
+    background-color: #fff;
+    transform: translate(-50%) rotate(45deg);
+  }
+  .arrow::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 6rpx;
+    left: 6rpx;
+    background-color: #000;
+    width: @sd;
+    height: @sd;
+  }
+  .text {
+    display: inline-block;
+    position: absolute;
+    top: 20rpx;
+    left: 46%;
+    transform: translate(-50%, 0);
+    border-radius: 10rpx;
+    padding: 10rpx 20rpx;
+    border: 1rpx solid #fff;
+    margin-top: 30rpx;
+    margin-left: 30rpx;
+    color: #fff;
+  }
+}

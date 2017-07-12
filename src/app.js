@@ -50,6 +50,108 @@ App({
   },
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
+  getAddress (that) {
+    let _this = this
+    // let _that = that
+    var a = wx.getStorageSync('address')
+    // 判断缓存
+    if (!a) {
+      // 判断授权
+      _this.addressInfo(that)
+    } else {
+      that.setData({
+        people: a.name,
+        address: a.add,
+        phone: a.tel
+      })
+    }
+  },
+  addressInfo (that) {
+    let __this = this
+    let bs = {
+      success (res) {
+        console.log('chooseAddress', res)
+        let addressss = {
+          add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+          name: res.userName,
+          tel: res.telNumber
+        }
+        that.setData({
+          people: addressss.name,
+          address: addressss.add,
+          phone: addressss.tel
+        })
+        return wx.setStorageSync('address', addressss)
+      },
+      fail (res) {
+        console.log(res)
+        let obj1 = {
+          success (res) {
+            // 授权失败
+            if (!res.authSetting['scope.address']) {
+              wx.showToast({
+                title: '请开启地址选项',
+                duration: 1000,
+                mask: true
+              })
+              // 开启设置界面
+              let obj2 = {
+                success (res) {
+                  // 设置成功
+                  if (res.authSetting['scope.address']) {
+                    let obj3 = {
+                      success (res) {
+                        let address = {
+                          add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+                          name: res.userName,
+                          tel: res.telNumber
+                        }
+                        that.setData({
+                          people: address.name,
+                          address: address.add,
+                          phone: address.tel
+                        })
+                        wx.setStorageSync('address', address)
+                      }
+                    }
+                    wx.chooseAddress(obj3)
+                  } else {
+                    return __this.getAddress(that)
+                  }
+                }
+              }
+              setTimeout(function () {
+                wx.openSetting(obj2)
+              }, 1500)
+            } else {
+              let obj4 = {
+                success (res) {
+                  let addresss = {
+                    add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+                    name: res.userName,
+                    tel: res.telNumber
+                  }
+                  that.setData({
+                    people: addresss.name,
+                    address: addresss.add,
+                    phone: addresss.tel
+                  })
+                  wx.setStorageSync('address', addresss)
+                }
+              }
+              wx.chooseAddress(obj4)
+            }
+          }
+        }
+        wx.getSetting(obj1)
+      }
+    }
+    wx.chooseAddress(bs)
+  },
+  openAddress (that) {
+    let _this = this
+    _this.addressInfo(that)
+  },
   /**
    * 关注分析师功能
    * @param e {Event} 事件参数

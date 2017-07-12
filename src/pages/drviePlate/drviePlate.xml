@@ -1,0 +1,17 @@
+<view class="drive-plate">
+  <scroll-view scroll-into-view="a{{ goId }}" scroll-x="true" class="scroll-wrap" bindscroll="scroll" scroll-left="{{ sl }}">
+    <view class="scroll-wrap-in" style="width: {{ width }}px;">
+      <block wx:for="{{ numberArr }}">
+        <view id="a{{ item.i }}" style="margin-left: {{ index == 0 ? firstDistance : '0' }}px; margin-right: {{ index == 2000 ? lastDistance : '0' }}px;" class="number {{ item.flag == 1 ? 'big' : 'small' }} {{ index == 200 ? 'last-view' : '' }}">
+          <text wx:if="{{ item.flag == 1 }}">{{ item.i }}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>
+<view class="show-area">
+  <view class="arrow"></view>
+  <view class="text">
+    {{ showDistance }}
+  </view>
+</view>
