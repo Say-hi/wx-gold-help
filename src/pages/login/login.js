@@ -92,6 +92,7 @@ Page({
     var timestamp = app.timest()
     var url = ''
     var method = ''
+    var header = ''
     if (this.data.status === '已认证') {
       wx.showToast({
         title: '您为认证用户，已向后台提出取消申请',
@@ -100,15 +101,19 @@ Page({
       url = app.data.baseUrl + app.data.cancelFUr + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
       method = 'POST'
       header = {
-        'content-type' : 'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded'
       }
     } else {
       url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
       method = 'GET'
+      header = {
+        'content-type': 'application/json'
+      }
     }
     var obj = {
       url: url,
       method: method,
+      header: header,
       success (res) {
         var code = res.data.code
         if (code === '500') {

@@ -67,6 +67,8 @@ App({
     cancelFUr: '/authenticat/cancel',
     // 获取用户积分
     getUserScore: '/userIntegral/get',
+    // 公共奖品说明
+    getjpsmUrl: '/todayTips/todayTipsInterface',
     // 兑换记录
     exchangeUrl: '/exchangeRecord/wechatuserlist',
     // 奖品详情

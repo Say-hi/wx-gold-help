@@ -20,10 +20,7 @@ Page({
         title: '金毛可爱美丽大方温柔'
       }
     ],
-    textArr: [
-      '参与奖品说明，你需要去赚取足够的积分，方可换取奖品',
-      '如积分不足或者商品不足,会导致兑换失败'
-    ],
+    textArr: [],
     people: '',
     phone: '',
     address: ''
@@ -57,13 +54,29 @@ Page({
       method: 'POST',
       success (res) {
         // console.log(res)
-        // console.log(res)
+        // console.log(`res`, res)
         that.setData({
+          textArr: that.data.textArr.concat(res.data.result.explains.split('&')),
           info: res.data.result
         })
       }
     }
     wx.request(obj)
+  },
+  // 公共奖品说明
+  getjpsmUrl () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.getjpsmUrl
+    }
+    app.getData(obj, function (res, that) {
+      // console.log(res)
+      that.data.textArr.push(res.data.result)
+      that.setData({
+        textArr: that.data.textArr
+      })
+    })
   },
   // 确认兑换
   confirmExchange () {
@@ -116,6 +129,7 @@ Page({
     this.setData({
       id: parmas.id
     })
+    this.getjpsmUrl()
     this.getDetail(parmas.id)
     let that = this
     app.getAddress(that)
