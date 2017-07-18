@@ -6,7 +6,7 @@
       <image class="user-pic" src="{{ userInfo.avatarUrl }}"></image>
       <view class="user-name">{{userInfo.nickName}}</view>
       <view class="user-title">
-        {{ userInfo.status || '' }}
+        {{ status || '' }}
       </view>
     </view>
     <image class="user-bottom-img" src="../../images/login.png"></image>
@@ -67,6 +67,7 @@
           <view class="operation iconfont {{ item.icon }}">
             <text class="title">{{ item.title }}</text>
             <text class="text">{{ item.text }}</text>
+            <text wx:if="{{ item.title == '积分兑换'}}" style="position: absolute; right: 20rpx; color: #f00;font-size: 20rpx">目前积分:{{ jifen }}</text>
           </view>
         </view>
       </button>

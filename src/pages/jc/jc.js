@@ -8,23 +8,14 @@ Page({
    */
   data: {
     title: 'jc',
+    // 关注弹窗显示
+    followHidden: true,
     today: '05月27号',
-    stopTime: '06月25日20:30',
+    stopTime: '20:30',
     jcArr: ['收盘价', '涨跌结果', '日期'],
-    jcResultArr: [
-      {
-        price: 123,
-        status: 0,
-        time: '6-24',
-        url: 'www.jiangwenqiang.com'
-      }
-    ],
-    fxs: '小辉辉',
-    fxstext: '擦亮讲法律思考将对方离开；撒旦教法律考试的将发生地离开房间阿斯兰的看风景阿斯兰的看风景洒落的',
-    fxsid: 1234,
-    fxsFollow: true,
-    fxsimg: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-    jcstatus: 0
+    jcResultArr: [],
+    jcstatus: 0,
+    page: 1
   },
   /**
    * 关注分析师功能
@@ -34,37 +25,49 @@ Page({
     let useUrl = app.data.followUrl
     app.followfxs(e, that, useUrl)
   },
+  cancelFollow () {
+    wx.showModal({
+      title: '取消关注',
+      content: '请在"我的分析师"页面取消关注',
+      showCancel: false
+    })
+  },
+  // 关注分析师点击确定后逻辑
+  confirmfxs () {
+    let that = this
+    app.confirmfxs(that)
+  },
+  // 获取推荐分析师
+  getrecommend () {
+    let that = this
+    let reobj = {
+      those: that,
+      url: app.data.recommendUrl
+    }
+    app.getData(reobj, function (res, _that) {
+      _that.setData({
+        fxs: res.data.result
+      })
+    })
+  },
   // 竞猜选择
   choosejc (e) {
     if (e.currentTarget.dataset.type === 'up') {
       this.setData({
         choose: 'up',
-        jcstatus: 0
+        jcstatus: 1
       })
     } else {
       this.setData({
         choose: 'down',
-        jcstatus: 1
+        jcstatus: 0
       })
     }
-    this.setData({
-      mask: true
-    })
+    this.jc()
   },
   // 展示更多数据
   showMore () {
-    let that = this
-    // todo 获取更多数据
-    let obj = {
-      price: 123,
-      status: 0,
-      time: '6-24',
-      url: 'www.jiangwenqiang.com'
-    }
-    this.data.jcResultArr.push(obj)
-    this.setData({
-      jcResultArr: that.data.jcResultArr
-    })
+    this.getYestoday(++this.data.page)
   },
   /**
    * 发送formId
@@ -79,10 +82,93 @@ Page({
       mask: false
     })
   },
+  // 获取网站地址
+  getWebUrl () {
+    let that = this
+    let webObj = {
+      those: that,
+      url: app.data.webUrl
+    }
+    app.getData(webObj, function (res, that) {
+      that.setData({
+        url: res.data.result || 'http://www.sge.com.cn/sjzx/mrhqsj'
+      })
+    })
+  },
+  // 获取前天的结果
+  getYestoday (page) {
+    let that = this
+    let getyObj = {
+      those: that,
+      url: app.data.upDownRecord,
+      data: {
+        pageNo: page
+      }
+    }
+    app.getData(getyObj, function (res, _that) {
+      console.log(res.data.result[0].list)
+      if (!res.data.result[0].list) {
+        return wx.showToast({
+          title: '没有更多内容了',
+          mask: true,
+          duration: 1000
+        })
+      }
+      for (let i of res.data.result[0].list) {
+        i.createDate = i.createDate.slice(5, 10)
+      }
+      _that.setData({
+        jcResultArr: _that.data.jcResultArr.concat(res.data.result[0].list)
+      })
+    })
+  },
+  // 用户竞猜
+  jc () {
+    let that = this
+    let sign = app.md5()
+    let timestamp = app.timest()
+    let SESSIONID = app.wxGetStorage('sessionId')
+    let url = app.data.baseUrl + app.data.jcUrl + '?appId=' + app.data.appId + '&lift=' + that.data.jcstatus + '&SESSIONID=' + SESSIONID + '&sign=' + sign + '&timestamp=' + timestamp
+    let jcobj = {
+      url: url,
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success (res) {
+        if (res.data.message === '用户不可以重复竞猜') {
+          return wx.showToast({
+            title: '您已经竞猜过了，不能重复竞猜',
+            mask: true
+          })
+        } else {
+          that.setData({
+            mask: true
+          })
+        }
+      }
+    }
+    wx.request(jcobj)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad () {
+    let today = new Date()
+    let hour = today.getHours()
+    let min = today.getMinutes()
+    if (hour > 20 || (hour === 20 && min > 30)) {
+      today = new Date(new Date().getTime() + 86400000)
+    }
+    let m = today.getMonth() * 1 + 1
+    let d = today.getDate()
+    today = (m < 10 ? '0' + m : m) + '月' + (d < 10 ? '0' + d : d) + '日'
+    this.setData({
+      today: today
+    })
+    this.getWebUrl()
+    this.getYestoday(1)
+    this.getrecommend()
     // TODO: onLoad
   },
 

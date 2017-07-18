@@ -30,7 +30,7 @@
   </view>
   <!--btn-->
   <form class="s" bindsubmit="msgSub" report-submit="true">
-    <button class="btn-confirm" formType="submit">
+    <button class="btn-confirm" formType="submit" catchtap="confirmExchange" >
       <view class="confirm">
         确认兑换
       </view>
@@ -41,7 +41,7 @@
 <view wx:if="{{ mask }}" class="noscore">
   <view>
     <image src="../../images/cry.png"></image>
-    <view>哎呀，积分不足诶</view>
+    <view>{{ backText }}</view>
     <view><text class="mask-btn" catchtap="maskBtnTap">确定</text></view>
   </view>
 </view>

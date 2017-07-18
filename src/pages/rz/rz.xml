@@ -2,7 +2,7 @@
 <view class="rz">
   <view class="in-user-info">
     <image src="../../images/rz-bg.png"></image>
-    <view wx:if="{{ showRz }}" class="input-info">
+    <view wx:if="{{ showRz == '1' }}" class="input-info">
       <block wx:for="{{ inputArr }}">
         <view class="i-i-text">
           <text>{{ item }}:</text><input placeholder="请输入您的{{ item }}" data-tag="{{ item }}" bindinput="tagInput" />
@@ -17,7 +17,8 @@
       </block>
     </view>
   </view>
-  <view wx:if="{{ showRz }}" class="tips">
+  <view wx:if="{{ showRz == '1' }}" class="rzbtn" catchtap="rzSave">提交认证</view>
+  <view wx:if="{{ showRz == '1' }}" class="tips">
     <view class="tips-title">认证说明</view>
     <view class="tips-text">{{ tips }}</view>
   </view>

@@ -2,6 +2,7 @@
 <view class="logo-wrap">
     <image class="logo" src="../../images/logo1.png"></image>
 </view>
+<image class="secondImg" src="{{ indexImg }}"></image>
 <!--分析师信息-->
 <view class="fxs-container">
     <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs" wx:for="{{fxs}}" wx:key="index">

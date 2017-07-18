@@ -14,13 +14,17 @@ App({
     name: '黄金帮',
     version: '0.1.0',
     // domain
-    baseUrl: 'https://www.goldbang.cn/rest',
+    // baseUrl: 'https://www.goldbang.cn/rest',
+    // 二期
+    // baseUrl: 'https://www.goldbang.cn/jeesite/rest',
+    baseUrl: 'http://192.168.0.127:8080/jeesite/rest',
     // 首页接口
     homeUrl: '/analyst/list',
     // 图片接口
     // imgUlr: 'http://120.24.41.38:8183',
     // 关注接口
-    followUrl: '/followers/concern/',
+    followUrl: '/wechatUser/concern',
+    // followUrl: '/followers/concern/',
     // 查询分析师接口
     getfxsUrl: '/analyst/get/',
     // 取消关注
@@ -37,6 +41,40 @@ App({
     getUserFxs: '/analyst/concernedAnalyst',
     // formId传送
     sendFormIdUrl: '/wechatUser/saveFormId/',
+    // 图片
+    todayTipsInterfaceUrl: '/frontPicture/frontPictureInterface',
+    // 消息条数
+    checkUrl: '/informationkey/ckeck',
+    // 添加消息条数
+    saveUrl: '/informationkey/save',
+    // 提交认证
+    rzUrl: '/authentication/save',
+    // 认证状态
+    rzStatusUrl: '/authentication/feedback',
+    // 认证说明
+    rzExplanUrl: '/authenticationExplain/explainInterface',
+    // 竞猜记录
+    guessinglist: '/guessingCompetition/guessinglist',
+    // 昨日升跌情况
+    upDownRecord: '/goldPriceRiseFall/yesterdayGoldLift',
+    // 查询网址
+    webUrl: '/website/websiteInterface',
+    // 用户竞猜
+    jcUrl: '/guessingCompetition/save',
+    // 奖品列表
+    scoreUrl: '/prize/prizeList',
+    // 认证用户取消关注的分析师
+    cancelFUr: '/authenticat/cancel',
+    // 获取用户积分
+    getUserScore: '/userIntegral/get',
+    // 兑换记录
+    exchangeUrl: '/exchangeRecord/wechatuserlist',
+    // 奖品详情
+    exchangeDetailUrl: '/prize/get',
+    // 用户兑换
+    confirmExchangeUrl: '/exchangeRecord/exchangeRecordDocking',
+    // 推荐分析师
+    recommendUrl: '/analyst/recommend',
     userInfo: null,
     sessionId: null,
     // 服务器定义的id
@@ -90,7 +128,7 @@ App({
             // 授权失败
             if (!res.authSetting['scope.address']) {
               wx.showToast({
-                title: '请开启地址选项',
+                title: '请开启【通讯地址】选项',
                 duration: 1000,
                 mask: true
               })
@@ -163,33 +201,48 @@ App({
     var appId = this.data.appId
     var sign = this.md5()
     var timestamp = this.timest()
-    var url = this.data.baseUrl + useUrl + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
-    var method = 'GET'
+    var url = this.data.baseUrl + useUrl + '?SESSIONID=' + wx.getStorageSync('sessionId') + '&analystId=' + analystId + '&appId=' + appId + '&sign=' + sign + '&timestamp=' + timestamp
+    var method = 'POST'
     var obj = {
       url: url,
+      // data: data,
       method: method,
+      // header: {
+      //   'content-type': 'application/x-www-for-urlencoded'
+      // },
       success (res) {
-        var code = res.data.code
-        if (code === '200') {
+        console.log('follow-res', res)
+        var message = res.data.message
+        if (message === 'success') {
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
             followText: '您将收到名师最新的操作策略服务',
             followHidden: false,
             fxs: that.data.fxs
           })
-        } else if (code === '500') {
+        } else if (message === '用户无认证') {
           that.setData({
-            followText: '操作失败',
+            followText: '您尚未完成认证，暂不能关注团队级分析师，请前往"我的分析师"完成认证',
             followHidden: false
           })
-        } else if (code === '100') {
+        } else if (message === '同一用户不能关注多个分析师') {
           that.setData({
             followText: '不能同时关注多名分析师，请先在"我的分析师"取消原来的关注后，再进行关注',
             followHidden: false
           })
-        } else {
+        } else if (message === '用户无特权关注高级分析师') {
           that.setData({
-            followText: '暂时无法关注分析师',
+            followText: '您无法关注该高级分析师',
+            followHidden: false
+          })
+        } else if (message === '服务器错误') {
+          that.setData({
+            followText: '哎呀，服务器开小差了，请稍后再试',
+            followHidden: false
+          })
+        } else if (message === '无效的SESSIONID') {
+          that.setData({
+            followText: '请删除小程序后，重新打开并授权',
             followHidden: false
           })
         }
@@ -285,11 +338,15 @@ App({
   sendFormId (e) {
     let that = this
     let formId = e.detail.formId
-    // console.log(e)
-    // console.log(formId)
     let SESSIONID = wx.getStorageSync('sessionId')
     wx.request({
-      url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
+      // url: that.data.baseUrl + that.data.sendFormIdUrl + formId + '?SESSIONID=' + SESSIONID
+      // 二期
+      url: that.data.baseUrl + that.data.saveUrl + '?SESSIONID=' + SESSIONID + '&key=' + formId + '&appId=' + that.data.appId + '&sign=' + that.md5() + '&timestamp=' + that.timest(),
+      method: 'POST',
+      success (res) {
+        console.log(res)
+      }
     })
   },
   /**
@@ -337,7 +394,10 @@ App({
       },
       success (session) {
         // 存储sessionId
-        that.wxSetStorage('sessionId', session.data.result)
+        // console.log('sessionid', session.data.result)
+        if (session.data.result) {
+          that.wxSetStorage('sessionId', session.data.result)
+        }
         // console.log(session.data.result)
         // 回调函数
         successCallback()
@@ -396,9 +456,9 @@ App({
     let url = this.data.baseUrl + inObj.url + '?appId=' + this.data.appId + '&SESSIONID=' + SESSIONID + '&sign=' + sign + '&timestamp=' + timestamp
     let obj = {
       url: url,
-      data: inObj.data,
-      header: inObj.header,
-      method: inObj.method,
+      data: inObj.data || {},
+      header: inObj.header || {'Content-Type': 'application/x-www-form-urlencoded'},
+      method: inObj.method || 'POST',
       success (res) {
         // console.log(res)
         callback(res, inObj.those)

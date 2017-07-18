@@ -71,7 +71,8 @@ Page({
         'up_down': '--'
       }
     ],
-    fxs: []
+    fxs: [],
+    indexImg: '../../images/logo1.png'
   },
   /**
    * 改变Search选项
@@ -341,6 +342,21 @@ Page({
     }
     return sx
   },
+  // 获取首页图片
+  indeximg (res, that) {
+    that.setData({
+      indexImg: res.data.result
+    })
+  },
+  // 获取图片
+  todayTipsInterface () {
+    let that = this
+    let obj = {
+      url: app.data.todayTipsInterfaceUrl,
+      those: that
+    }
+    app.getData(obj, that.indeximg)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -377,6 +393,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
+    this.todayTipsInterface()
     // console.log(' ---------- onReady ----------')
   },
   /**

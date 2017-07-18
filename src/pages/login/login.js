@@ -9,12 +9,14 @@ Page({
   data: {
     title: '我的分析师',
     cancelUrl: '/followers/cancelConcern/',
+    // cancelUrl: '/authenticat/cancel',
     cancelText: '取消关注成功',
     userInfo: null,
     followHidden: true,
     fxsInfo: [],
     company: true,
     soft: {},
+    jifen: 0,
     operation1: {
       icon: 'icon-tongzhi1-on',
       title: '服务通知',
@@ -26,7 +28,7 @@ Page({
         icon: 'icon-VIP',
         title: '申请用户认证',
         text: '显示认证状态',
-        url: '../rz/rz?rz=true'
+        url: '../rz/rz?rz=1'
       },
       {
         icon: 'icon-zhangfubang',
@@ -88,8 +90,22 @@ Page({
     var appId = app.data.appId
     var sign = app.md5()
     var timestamp = app.timest()
-    var url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
-    var method = 'GET'
+    var url = ''
+    var method = ''
+    if (this.data.status === '已认证') {
+      wx.showToast({
+        title: '您为认证用户，已向后台提出取消申请',
+        mask: true
+      })
+      url = app.data.baseUrl + app.data.cancelFUr + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+      method = 'POST'
+      header = {
+        'content-type' : 'application/x-www-form-urlencoded'
+      }
+    } else {
+      url = app.data.baseUrl + this.data.cancelUrl + '/' + analystId + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
+      method = 'GET'
+    }
     var obj = {
       url: url,
       method: method,
@@ -140,8 +156,20 @@ Page({
   },
   // 关闭服务通知弹窗
   closeTz () {
+    let that = this
     this.setData({
       mask: false
+    })
+    let inObj3 = {
+      those: that,
+      url: app.data.checkUrl
+    }
+    app.getData(inObj3, function (res, _that) {
+      // console.log(res)
+      _that.data.operation1.nubmer = res.data.result
+      _that.setData({
+        operation1: _that.data.operation1
+      })
     })
   },
   /**
@@ -152,18 +180,6 @@ Page({
     if (e.currentTarget.dataset.url === 'kefu') {
       return
     } else if (e.currentTarget.dataset.url === 'address') {
-      // let obj = {
-      //   success (res) {
-      //     // console.log(res)
-      //     let address = {
-      //       add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-      //       name: res.userName,
-      //       tel: res.telNumber
-      //     }
-      //     wx.setStorageSync('address', address)
-      //   }
-      // }
-      // wx.chooseAddress(obj)
       app.openAddress(that)
       return
     }
@@ -181,6 +197,47 @@ Page({
   //     path: '/pages/login/login'
   //   }
   // },
+  // 获取认证状态
+  getRzStatus () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.rzStatusUrl
+    }
+    app.getData(obj, function (res, that) {
+      // console.log(res)
+      if (res.data.message === '普通用户') {
+        that.setData({
+          status: '普通用户'
+        })
+      } else if (res.data.message === '管理员拒绝认证') {
+        that.setData({
+          status: '认证失败'
+        })
+      } else if (res.data.message === 'success') {
+        let r = res.data.result
+        that.data.operation[0].url = '../rz/rz?rz=2&username=' + r.username + '&phone=' + r.phone + '&wetusernum=' + r.wetusernum + '&goldnum=' + r.goldnum
+        that.setData({
+          operation: that.data.operation,
+          status: '已认证'
+        })
+      }
+    })
+  },
+  // 获取用户积分
+  getUserScore () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.getUserScore
+    }
+    app.getData(obj, function (res, that) {
+      that.setData({
+        jifen: res.data.result.fraction
+      })
+      // console.log(res)
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -204,6 +261,7 @@ Page({
       var article = that.data.soft.introduce
       WxParse.wxParse('article', 'html', article, that, 5)
     })
+    this.getRzStatus()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -215,7 +273,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow () {
-    // console.log(' ---------- onShow ----------')
     // 获取用户关注的信息
     let that = this
     let inObj2 = {
@@ -242,6 +299,18 @@ Page({
         })
       }
     })
+    let inObj3 = {
+      those: that,
+      url: app.data.checkUrl
+    }
+    app.getData(inObj3, function (res, _that) {
+      // console.log(res)
+      _that.data.operation1.nubmer = res.data.result
+      _that.setData({
+        operation1: _that.data.operation1
+      })
+    })
+    this.getUserScore()
   },
   /**
    * 生命周期函数--监听页面隐藏

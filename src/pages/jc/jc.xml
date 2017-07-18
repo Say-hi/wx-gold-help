@@ -7,7 +7,7 @@
       <image src="../../images/jc-time.png"></image>
       <view>{{ today }}金价涨跌竞猜</view>
     </view>
-    <view class="stopTime"><text class="stopTime-text">截止当前竞猜时间: {{ stopTime }}。猜中可得积分</text></view>
+    <view class="stopTime"><text class="stopTime-text">截止当前竞猜时间: {{ today }}{{ stopTime }}。猜中可得积分</text></view>
     <view class="upDown">
       <view data-type="up" catchtap="choosejc" class="{{ choose == 'up' ? 'up' : '' }}">涨</view>
       <view data-type="down" catchtap="choosejc" class="{{ choose == 'down' ? 'down' : '' }}">跌</view>
@@ -21,11 +21,11 @@
     </view>
     <view wx:for="{{ jcResultArr }}">
       <view class="jc-b-center">
-        <text>{{ item.price }}</text>
-        <text>{{ item.status }}</text>
-        <text>{{ item.time }}</text>
+        <text>{{ item.goldprice }}</text>
+        <text>{{ item.liftDescription }}</text>
+        <text>{{ item.createDate }}</text>
       </view>
-      <view class="jc-url"><text>网址查询</text><text>{{ item.url }}</text></view>
+      <view class="jc-url"><text>网址查询</text><text>{{ url }}</text></view>
     </view>
     <form bindsubmit="msgSub" report-submit="true">
       <button class="more-btn" formType="submit" bindtap="showMore">
@@ -38,15 +38,15 @@
     <view class="ms-top">名师预测</view>
     <view class="ms-center">
       <view class="ms-c-left">
-        <view class="iconfont icon-mingshi">分析师:<text>{{ fxs }}</text></view>
-        <view class="iconfont icon-zoushituacito">行情观点:<view>{{ fxstext }}</view></view>
-        <navigator class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxsid }}">点击查看详细</navigator>
+        <view class="iconfont icon-mingshi">分析师:<text>{{ fxs.name }}</text></view>
+        <view class="iconfont icon-zoushituacito">行情观点:<view>{{ fxs.analystviews }}</view></view>
+        <navigator hover-class="none" class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxs.id }}">点击查看详细</navigator>
       </view>
       <view class="ms-c-right">
-        <image class="fxsimg" src="{{ fxsimg }}"></image>
+        <image class="fxsimg" src="{{ fxs.pictureUrl }}"></image>
         <form bindsubmit="msgSub" report-submit="true">
-          <button data-id="{{ fxsid }}" class="more-btn" formType="submit" bindtap="followfxs">
-            <view class="follow color666">{{ fxsFollow ? '关注' : '取消关注' }}</view>
+          <button data-id="{{ fxs.id }}" class="more-btn" formType="submit" catchtap="{{ fxs.isConcerned === 1 ? 'cancelFollow':'followfxs' }}">
+            <view class="follow color666">{{ fxs.isConcerned == 0 ? '关注' : '取消关注' }}</view>
           </button>
         </form>
       </view>
@@ -54,7 +54,7 @@
   </view>
   <!--我参与的记录-->
   <view class="record">
-    <navigator class="iconfont icon-biaoqian" url="../record/record">我参与的记录</navigator>
+    <navigator hover-class="none" class="iconfont icon-biaoqian" url="../record/record">我参与的记录</navigator>
   </view>
 </view>
 <!--竞猜结果弹窗-->
@@ -63,7 +63,7 @@
   <image class="tz-img" src="../../images/jc-mask.png"></image>
   <view class="tz-c-content">
     <view class="title">
-      您预测明天的金价走势为{{ jcstatus == '0' ? '涨' : '跌' }}
+      您预测明天的金价走势为{{ jcstatus == '1' ? '涨' : '跌' }}
     </view>
   </view>
   <form bindsubmit="msgSub" report-submit="true">
@@ -73,3 +73,4 @@
   </form>
 </view>
 </view>
+<modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>

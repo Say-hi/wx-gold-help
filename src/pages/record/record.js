@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -8,23 +8,52 @@ Page({
    */
   data: {
     title: 'record',
+    page: 1,
     jcArr: ['竞猜日期', '预测涨跌', '实际涨跌', '收盘价', '积分变动'],
-    jcResultArr: [
-      {
-        time: '2017-6-25',
-        before: 0,
-        actual: 0,
-        price: 1546,
-        score: 20
-      }
-    ]
+    jcResultArr: []
   },
-
+  // 获取用户竞猜记录
+  getUserRecord (page) {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.guessinglist,
+      data: {
+        pageNo: page
+      }
+    }
+    app.getData(obj, function (res, that) {
+      if (res.data.message === '最近无竞猜') {
+        wx.showToast({
+          title: '您尚未竞猜过哦，快去竞猜吧',
+          mask: true
+        })
+        return setTimeout(function () {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      }
+      if (!res.data.result.list) {
+        return wx.showToast({
+          title: '没有更多内容啦',
+          mask: true
+        })
+      }
+      for (let i of res.data.result.list) {
+        i.createDate = i.createDate.slice(0, 10)
+      }
+      that.setData({
+        jcResultArr: that.data.jcResultArr.concat(res.data.result.list)
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad () {
     // TODO: onLoad
+    this.getUserRecord(1)
   },
 
   /**
@@ -60,5 +89,8 @@ Page({
    */
   onPullDownRefresh () {
     // TODO: onPullDownRefresh
+  },
+  onReachBottom () {
+    this.getUserRecord(++this.data.page)
   }
 })

@@ -3,16 +3,16 @@
   // First is default to view
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
   "pages": [
+    "pages/myinfo/myinfo",
+    "pages/jc/jc",
+    "pages/login/login",
+    "pages/scoreExchange/scoreExchange",
+    "pages/rz/rz",
     "pages/index/index",
     "pages/address/address",
     "pages/confirmExchange/confirmExchange",
-    "pages/scoreExchange/scoreExchange",
     "pages/exchange/exchange",
     "pages/record/record",
-    "pages/jc/jc",
-    "pages/login/login",
-    "pages/rz/rz",
-    "pages/myinfo/myinfo",
     "pages/detail/detail",
     "pages/introduce/introduce"
     // Dont remove this comment

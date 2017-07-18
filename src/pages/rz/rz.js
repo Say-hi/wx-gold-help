@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -8,23 +8,22 @@ Page({
    */
   data: {
     title: 'rz',
-    showRz: false,
     inputArr: ['姓名', '黄金编号', '电话', '微信号'],
     inputArr2: [
       {
         title: '姓名',
-        text: '一颗星'
+        text: '未填写'
       },
       {
         title: '电话',
-        text: '18855953465'
+        text: '未填写'
       },
       {
         title: '黄金编号',
-        text: '5241654'
+        text: '未填写'
       }
     ],
-    tips: '阿斯兰的开发将阿斯顿将发生的风景阿斯顿浪费将阿斯顿浪费就阿斯顿镂空风景撒旦阿斯顿风景阿斯顿浪费'
+    tips: '您的信息用于认证高级用户'
   },
   tagInput (e) {
     let tag = e.currentTarget.dataset.tag
@@ -48,12 +47,83 @@ Page({
       })
     }
   },
+  // 提交认证
+  rzSave () {
+    if (!this.data.name || !this.data.number) {
+      return wx.showToast({
+        title: '信息不完整，请补全信息',
+        mask: true
+      })
+    }
+    let that = this
+    let sobj = {
+      url: app.data.rzUrl,
+      data: {
+        goldnum: that.data.number,
+        phone: that.data.phone,
+        wetusernum: that.data.wxNubmer,
+        username: that.data.name
+      }
+    }
+    app.getData(sobj, function (res, that) {
+      if (res.data.message === 'success') {
+        wx.showToast({
+          title: '信息提交成功，等待审核',
+          mask: true
+        })
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      } else {
+        wx.showToast({
+          title: '信息填写有误，请检查后提交'
+        })
+      }
+    })
+  },
+  // 获取认证说明
+  getRzExplan () {
+    let that = this
+    let eobj = {
+      those: that,
+      url: app.data.rzExplanUrl
+    }
+    app.getData(eobj, function (res, that) {
+      that.setData({
+        tips: res.data.result
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad (params) {
+    // this.getRzStatus()
+    let that = this
     this.setData({
       showRz: params.rz
+    })
+    if (params.rz === '1') {
+      return this.getRzExplan()
+    }
+    if (params.username) {
+      this.data.inputArr2[0].text = params.username
+    }
+    if (params.wetusernum) {
+      this.data.inputArr2[1].title = '微信'
+      this.data.inputArr2[1].text = params.wetusernum
+    }
+    if (params.phone) {
+      this.data.inputArr2[1].title = '电话'
+      this.data.inputArr2[1].text = params.phone
+    }
+    if (params.goldnum) {
+      this.data.inputArr2[2].text = params.goldnum
+    }
+    this.setData({
+      inputArr2: that.data.inputArr2
     })
     // TODO: onLoad
   },
