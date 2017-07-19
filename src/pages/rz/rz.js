@@ -66,6 +66,7 @@ Page({
       }
     }
     app.getData(sobj, function (res, that) {
+      console.log('信息提交', res)
       if (res.data.message === 'success') {
         wx.showToast({
           title: '信息提交成功，等待审核',
@@ -76,9 +77,14 @@ Page({
             delta: 1
           })
         }, 1500)
+      } else if (res.data.code === '100') {
+        wx.showToast({
+          title: '您的资料审核中，请耐心等待，如有问题请联系客服',
+          mask: true
+        })
       } else {
         wx.showToast({
-          title: '信息填写有误，请检查后提交'
+          title: res.data.message
         })
       }
     })

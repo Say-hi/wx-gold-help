@@ -38,15 +38,15 @@
     <view class="ms-top">名师预测</view>
     <view class="ms-center">
       <view class="ms-c-left">
-        <view class="iconfont icon-mingshi">分析师:<text>{{ fxs.name }}</text></view>
-        <view class="iconfont icon-zoushituacito">行情观点:<view>{{ fxs.analystviews }}</view></view>
-        <navigator hover-class="none" class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxs.id }}">点击查看详细</navigator>
+        <view class="iconfont icon-mingshi">分析师:<text>{{ fxs[0].name }}</text></view>
+        <view class="iconfont icon-zoushituacito">行情观点:<view>{{ fxs[0].analystviews }}</view></view>
+        <navigator hover-class="none" class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxs[0].id }}">点击查看详细</navigator>
       </view>
       <view class="ms-c-right">
-        <image class="fxsimg" src="{{ fxs.pictureUrl }}"></image>
+        <image class="fxsimg" src="{{ fxs[0].pictureUrl }}"></image>
         <form bindsubmit="msgSub" report-submit="true">
-          <button data-id="{{ fxs.id }}" class="more-btn" formType="submit" catchtap="{{ fxs.isConcerned === 1 ? 'cancelFollow':'followfxs' }}">
-            <view class="follow color666">{{ fxs.isConcerned == 0 ? '关注' : '取消关注' }}</view>
+          <button data-arraryid="0" data-id="{{ fxs[0].id }}" class="more-btn" formType="submit" catchtap="{{ fxs[0].isConcerned === 1 ? 'cancelFollow':'followfxs' }}">
+            <view class="follow color666">{{ fxs[0].isConcerned == 0 ? '关注' : '取消关注' }}</view>
           </button>
         </form>
       </view>

@@ -94,10 +94,6 @@ Page({
     var method = ''
     var header = ''
     if (this.data.status === '已认证') {
-      wx.showToast({
-        title: '您为认证用户，已向后台提出取消申请',
-        mask: true
-      })
       url = app.data.baseUrl + app.data.cancelFUr + '?appId=' + appId + '&SESSIONID=' + wx.getStorageSync('sessionId') + '&sign=' + sign + '&timestamp=' + timestamp
       method = 'POST'
       header = {
@@ -115,14 +111,27 @@ Page({
       method: method,
       header: header,
       success (res) {
+        console.log('cancelfollow', res)
         var code = res.data.code
         if (code === '500') {
           // 失败
+          if (that.data.status === '已认证') {
+            return wx.showToast({
+              title: '您为认证用户，已向后台提出取消申请',
+              mask: true
+            })
+          }
           that.setData({
             cancelText: '取消关注失败'
           })
         } else if (code === '200') {
           // 成功
+          if (that.data.status === '已认证') {
+            return wx.showToast({
+              title: '您为认证用户，已向后台提出取消申请',
+              mask: true
+            })
+          }
           that.data.fxsInfo.splice(number, 1)
           that.setData({
             cancelText: '请记得去"首页"重新关注帮你参谋的名师噢',

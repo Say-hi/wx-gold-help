@@ -64,7 +64,7 @@ App({
     // 奖品列表
     scoreUrl: '/prize/prizeList',
     // 认证用户取消关注的分析师
-    cancelFUr: '/authenticat/cancel',
+    cancelFUr: '/authentication/cancel',
     // 获取用户积分
     getUserScore: '/userIntegral/get',
     // 公共奖品说明
@@ -245,6 +245,11 @@ App({
         } else if (message === '无效的SESSIONID') {
           that.setData({
             followText: '请删除小程序后，重新打开并授权',
+            followHidden: false
+          })
+        } else if (message === '用户关注失败') {
+          that.setData({
+            followText: '您为已认证用户，请联系客服修改关注',
             followHidden: false
           })
         }
