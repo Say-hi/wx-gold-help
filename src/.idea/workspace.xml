@@ -15,17 +15,37 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="rz.xml" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/pages/rz/rz.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="311">
+                    <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="src" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="246" column="42" lean-forward="true" selection-start-line="246" selection-start-column="42" selection-end-line="246" selection-end-column="42" />
+            <state relative-caret-position="240">
+              <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
               <folding>
                 <element signature="e#2552#2831#0" expanded="false" />
                 <element signature="e#2664#2715#0" expanded="false" />
@@ -52,33 +72,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.json">
+      <file leaf-file-name="scoreExchange.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/scoreExchange/scoreExchange.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+            <state relative-caret-position="210">
+              <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jc.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/jc/jc.js">
+      <file leaf-file-name="rz.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/rz/rz.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="54" column="9" lean-forward="true" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
-              <folding>
-                <element signature="e#450#560#0" expanded="false" />
-                <element signature="e#596#646#0" expanded="false" />
-                <element signature="e#963#1196#0" expanded="false" />
-                <element signature="e#1323#1350#0" expanded="false" />
-                <element signature="e#1375#1424#0" expanded="false" />
-                <element signature="e#1453#1701#0" expanded="false" />
-                <element signature="e#1737#2356#0" expanded="false" />
-                <element signature="e#2376#3132#0" expanded="false" />
-                <element signature="e#3320#3383#0" expanded="false" />
-                <element signature="e#3538#3564#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="300">
+              <caret line="79" column="14" lean-forward="true" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="record.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/record/record.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="87">
+              <caret line="4" column="50" lean-forward="true" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,6 +108,21 @@
             <state relative-caret-position="-2310">
               <caret line="10" column="42" lean-forward="true" selection-start-line="10" selection-start-column="42" selection-end-line="10" selection-end-column="42" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="confirmExchange.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/confirmExchange/confirmExchange.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding>
+                <element signature="n#view#1;n#view#0;n#!!top" expanded="false" />
+                <element signature="n#view#2;n#view#0;n#!!top" expanded="false" />
+                <element signature="n#view#1;n#view#2;n#view#0;n#!!top" expanded="false" />
+                <element signature="n#view#2;n#view#2;n#view#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,36 +144,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="116">
               <caret line="28" column="108" lean-forward="false" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="108" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confirmExchange.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/confirmExchange/confirmExchange.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="126" column="5" lean-forward="true" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
-              <folding>
-                <element signature="e#574#601#0" expanded="false" />
-                <element signature="e#619#670#0" expanded="false" />
-                <element signature="e#688#737#0" expanded="false" />
-                <element signature="e#768#1468#0" expanded="false" />
-                <element signature="e#1498#1783#0" expanded="false" />
-                <element signature="e#1816#2780#0" expanded="false" />
-                <element signature="e#1837#1883#0" expanded="false" />
-                <element signature="e#1920#2138#0" expanded="false" />
-                <element signature="e#2182#2775#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confirmExchange.less" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/confirmExchange/confirmExchange.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="42" column="17" lean-forward="true" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -289,7 +293,6 @@
         <option value="$PROJECT_DIR$/pages/index/index.less" />
         <option value="$PROJECT_DIR$/pages/index/index.xml" />
         <option value="$PROJECT_DIR$/pages/index/index.js" />
-        <option value="$PROJECT_DIR$/pages/rz/rz.less" />
         <option value="$PROJECT_DIR$/pages/rz/rz.xml" />
         <option value="$PROJECT_DIR$/pages/scoreExchange/scoreExchange.js" />
         <option value="$PROJECT_DIR$/pages/scoreExchange/scoreExchange.less" />
@@ -300,8 +303,6 @@
         <option value="$PROJECT_DIR$/pages/record/record.less" />
         <option value="$PROJECT_DIR$/pages/record/record.js" />
         <option value="$PROJECT_DIR$/pages/jc/jc.less" />
-        <option value="$PROJECT_DIR$/pages/record/record.xml" />
-        <option value="$PROJECT_DIR$/pages/confirmExchange/confirmExchange.xml" />
         <option value="$PROJECT_DIR$/pages/confirmExchange/confirmExchange.less" />
         <option value="$PROJECT_DIR$/pages/confirmExchange/confirmExchange.js" />
         <option value="$PROJECT_DIR$/app.json" />
@@ -309,6 +310,9 @@
         <option value="$PROJECT_DIR$/pages/jc/jc.js" />
         <option value="$PROJECT_DIR$/pages/jc/jc.xml" />
         <option value="$PROJECT_DIR$/pages/login/login.js" />
+        <option value="$PROJECT_DIR$/pages/rz/rz.less" />
+        <option value="$PROJECT_DIR$/pages/confirmExchange/confirmExchange.xml" />
+        <option value="$PROJECT_DIR$/pages/record/record.xml" />
         <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
@@ -326,8 +330,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="825" />
-    <option name="y" value="9" />
+    <option name="x" value="722" />
+    <option name="y" value="37" />
     <option name="width" value="1750" />
     <option name="height" value="1032" />
   </component>
@@ -738,12 +742,12 @@
       <workItem from="1500255716660" duration="26574000" />
       <workItem from="1500340685957" duration="28665000" />
       <workItem from="1500444400180" duration="89000" />
-      <workItem from="1500444511860" duration="5330000" />
+      <workItem from="1500444511860" duration="8531000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="610969000" />
+    <option name="totallyTimeSpent" value="614170000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -755,10 +759,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="825" y="9" width="1750" height="1032" extended-state="0" />
+    <frame x="722" y="37" width="1750" height="1032" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15070094" sideWeight="0.8785489" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15070094" sideWeight="0.8785489" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32898173" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -959,25 +963,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/rz/rz.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="48" column="16" lean-forward="true" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/login/login.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="3" column="32" lean-forward="false" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/rz/rz.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1022,14 +1011,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="5" column="32" lean-forward="true" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/scoreExchange/scoreExchange.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1080,27 +1061,6 @@
         <state relative-caret-position="5970">
           <caret line="199" column="31" lean-forward="false" selection-start-line="199" selection-start-column="31" selection-end-line="199" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/record/record.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="10" column="106" lean-forward="false" selection-start-line="10" selection-start-column="106" selection-end-line="10" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/confirmExchange/confirmExchange.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="12" column="29" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-          <folding>
-            <element signature="n#view#1;n#view#0;n#!!top" expanded="false" />
-            <element signature="n#view#2;n#view#0;n#!!top" expanded="false" />
-            <element signature="n#view#1;n#view#2;n#view#0;n#!!top" expanded="false" />
-            <element signature="n#view#2;n#view#2;n#view#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1237,10 +1197,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pages/rz/rz.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/rz/rz.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="79" column="14" lean-forward="true" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/confirmExchange/confirmExchange.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="n#view#1;n#view#0;n#!!top" expanded="false" />
+            <element signature="n#view#2;n#view#0;n#!!top" expanded="false" />
+            <element signature="n#view#1;n#view#2;n#view#0;n#!!top" expanded="false" />
+            <element signature="n#view#2;n#view#2;n#view#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="246" column="42" lean-forward="true" selection-start-line="246" selection-start-column="42" selection-end-line="246" selection-end-column="42" />
+        <state relative-caret-position="240">
+          <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
           <folding>
             <element signature="e#2552#2831#0" expanded="false" />
             <element signature="e#2664#2715#0" expanded="false" />
@@ -1263,6 +1252,22 @@
             <element signature="e#12934#13720#0" expanded="false" />
             <element signature="e#13043#13588#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/scoreExchange/scoreExchange.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="7" column="13" lean-forward="true" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/record/record.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="4" column="50" lean-forward="true" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

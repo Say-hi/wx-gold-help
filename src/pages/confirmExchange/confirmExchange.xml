@@ -12,7 +12,7 @@
       </view>
       <view class="w-t-wrap">
         <view class="img">
-          <image src="{{ item.pictureUrl2 }}"></image>
+          <image src="{{ info.pictureUrl2 }}"></image>
           <text class="tip">{{ info.name2 }}</text>
         </view>
         <view class="title">{{ info.detailed2 }}</view>
