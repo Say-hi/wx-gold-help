@@ -8,7 +8,7 @@
       <view class="jc-b-center">
         <text>{{ item.createDate }}</text>
         <text class="{{ item.lift == '1' ? 'up' : 'down' }}">{{ item.lift == '1' ? '涨' : '跌' }}</text>
-        <text class="{{ item.scope > 0 ? 'up' : 'down' }}">{{ item.scope > 0 ? '涨' : '跌' }}</text>
+        <text class="{{ item.lift == '1' ? (item.scope > 0 ? 'up' : 'down') : (item.scope > 0 ? 'down' : 'up') }}">{{ item.lift == '1' ? (item.scope > 0 ? '涨' : '跌') : (item.scope > 0 ? '跌' : '涨')}}</text>
         <text>{{ item.goldprice }}</text>
         <text class="{{ item.scope > 0 ? 'up' : 'down' }}">{{ item.scope > 0 ? '+' + item.scope : item.scope }}</text>
       </view>

@@ -12,12 +12,12 @@ App({
    */
   data: {
     name: '黄金帮',
-    version: '0.1.0',
+    version: '0.2.0',
     // domain
     // baseUrl: 'https://www.goldbang.cn/rest',
     // 二期
-    // baseUrl: 'https://www.goldbang.cn/jeesite/rest',
-    baseUrl: 'http://192.168.0.127:8080/jeesite/rest',
+    baseUrl: 'https://www.goldbang.cn/jeesite/rest',
+    // baseUrl: 'http://192.168.0.127:8080/jeesite/rest',
     // 首页接口
     homeUrl: '/analyst/list',
     // 图片接口
