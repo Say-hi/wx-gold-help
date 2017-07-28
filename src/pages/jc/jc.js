@@ -16,7 +16,37 @@ Page({
     jcResultArr: [],
     jcstatus: 0,
     page: 1,
-    fxs: []
+    tabArr: [
+      {
+        icon: 'icon-biaoqian',
+        title: '我参与的记录',
+        url: '../record/record'
+      },
+      {
+        icon: 'icon-giftfill',
+        title: '积分兑换',
+        text: '数种奖品任你选',
+        url: '../scoreExchange/scoreExchange'
+      },
+      {
+        icon: 'icon-dizhi',
+        title: '地址管理',
+        text: '奖品直接寄到您手中',
+        url: 'address'
+      }
+    ]
+  },
+  gotocompany (e) {
+    let that = this
+    if (e.currentTarget.dataset.url === 'kefu') {
+      return
+    } else if (e.currentTarget.dataset.url === 'address') {
+      app.openAddress(that)
+      return
+    }
+    wx.navigateTo({
+      url: e.currentTarget.dataset.url
+    })
   },
   /**
    * 关注分析师功能
@@ -46,9 +76,10 @@ Page({
       url: app.data.recommendUrl
     }
     app.getData(reobj, function (res, _that) {
-      _that.data.fxs.push(res.data.result)
+      let fxs = []
+      fxs.push(res.data.result)
       _that.setData({
-        fxs: _that.data.fxs
+        fxs: fxs
       })
     })
   },
@@ -108,7 +139,7 @@ Page({
       }
     }
     app.getData(getyObj, function (res, _that) {
-      console.log(res.data.result[0].list)
+      // console.log(res.data.result[0].list)
       if (!res.data.result[0].list) {
         return wx.showToast({
           title: '没有更多内容了',
@@ -170,7 +201,7 @@ Page({
     })
     this.getWebUrl()
     this.getYestoday(1)
-    this.getrecommend()
+    // this.getrecommend()
     // TODO: onLoad
   },
 
@@ -185,6 +216,7 @@ Page({
    */
   onShow () {
     // TODO: onShow
+    this.getrecommend()
   },
 
   /**

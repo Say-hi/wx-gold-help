@@ -2,7 +2,7 @@
 <view class="logo-wrap">
     <image class="logo" src="../../images/logo1.png"></image>
 </view>
-<image class="secondImg" src="{{ indexImg }}"></image>
+<image catchtap="gojc" class="secondImg" src="{{ indexImg }}"></image>
 <!--分析师信息-->
 <view class="fxs-container">
     <navigator hover-class="none" open-type="navigate" url="../detail/detail?type={{ item.id }}" class="fxs" wx:for="{{fxs}}" wx:key="index">
@@ -17,6 +17,7 @@
               <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
               <view class="fxs-t-r-style">风格:<text>{{ item.styleDescription }}</text> <text>收益率:{{ item.profitability }}%</text></view>
               <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
+              <view class="fxs-t-r-rise">持仓比例: <text>{{ item.hold_ratio }}%</text></view>
             </view>
             <!--左侧图片-->
             <view class="fxs-t-left">

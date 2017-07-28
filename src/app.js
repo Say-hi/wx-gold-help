@@ -124,7 +124,7 @@ App({
         return wx.setStorageSync('address', addressss)
       },
       fail (res) {
-        console.log(res)
+        console.log('backAddress', res)
         let obj1 = {
           success (res) {
             // 授权失败
@@ -163,24 +163,26 @@ App({
               setTimeout(function () {
                 wx.openSetting(obj2)
               }, 1500)
-            } else {
-              let obj4 = {
-                success (res) {
-                  let addresss = {
-                    add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
-                    name: res.userName,
-                    tel: res.telNumber
-                  }
-                  that.setData({
-                    people: addresss.name,
-                    address: addresss.add,
-                    phone: addresss.tel
-                  })
-                  wx.setStorageSync('address', addresss)
-                }
-              }
-              wx.chooseAddress(obj4)
             }
+            // else {
+            //   console.log('getIn')
+            //   let obj4 = {
+            //     success (res) {
+            //       let addresss = {
+            //         add: res.provinceName + res.cityName + res.countyName + res.detailInfo,
+            //         name: res.userName,
+            //         tel: res.telNumber
+            //       }
+            //       that.setData({
+            //         people: addresss.name,
+            //         address: addresss.add,
+            //         phone: addresss.tel
+            //       })
+            //       wx.setStorageSync('address', addresss)
+            //     }
+            //   }
+            //   wx.chooseAddress(obj4)
+            // }
           }
         }
         wx.getSetting(obj1)

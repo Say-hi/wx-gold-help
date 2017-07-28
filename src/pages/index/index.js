@@ -156,6 +156,12 @@ Page({
       hidden: true
     })
   },
+  // 跳转竞猜页面
+  gojc () {
+    wx.switchTab({
+      url: '../jc/jc'
+    })
+  },
   /**
    * 显示更多信息
    */

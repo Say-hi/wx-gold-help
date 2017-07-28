@@ -20,14 +20,21 @@
       <text wx:for="{{ jcArr }}">{{ item }}</text>
     </view>
     <view wx:for="{{ jcResultArr }}">
-      <view class="jc-b-center">
-        <text>{{ item.goldprice }}</text>
-        <text>{{ item.liftDescription }}</text>
-        <text>{{ item.createDate }}</text>
+      <view class="jc-b-center" wx:if="{{ index <= 5 }}">
+        <text>{{ item.goldprice || '暂无数据' }}</text>
+        <text>{{ item.liftDescription || '暂无数据' }}</text>
+        <text>{{ item.createDate || '暂无数据' }}</text>
       </view>
-      <view class="jc-url"><text>网址查询</text><text>{{ url }}</text></view>
+      <view class="jc-url" wx:if="{{ index <= 5 }}"><text>网址查询</text><text>{{ url }}</text></view>
     </view>
-    <form bindsubmit="msgSub" report-submit="true">
+    <view wx:if="{{ jcResultArr.length == 0 }}">
+      <view class="jc-b-center">
+        <text>暂无数据</text>
+        <text>暂无数据</text>
+        <text>暂无数据</text>
+      </view>
+    </view>
+    <form wx:if="{{ jcResultArr.length <= 5 }}" bindsubmit="msgSub" report-submit="true">
       <button class="more-btn" formType="submit" bindtap="showMore">
         <view class="show-more color666">查看更多</view>
       </button>
@@ -53,8 +60,22 @@
     </view>
   </view>
   <!--我参与的记录-->
-  <view class="record">
-    <navigator hover-class="none" class="iconfont icon-biaoqian" url="../record/record">我参与的记录</navigator>
+  <!--<view wx:for="{{ tabArr }}" class="record">-->
+    <!--<navigator hover-class="none" class="iconfont {{ item.icon }}" url="{{ item.url }}">{{ item.title }}</navigator>-->
+  <!--</view>-->
+  <view class="tabArr">
+    <block wx:for="{{ tabArr }}">
+      <form bindsubmit="msgSub" report-submit="true">
+        <button hover-class="none" class="tabbtn" formType="submit" data-url="{{ item.url }}" bindtap="gotocompany">
+          <view class="company">
+            <view class="operation iconfont {{ item.icon }}">
+              <text class="title">{{ item.title }}</text>
+              <text class="text">{{ item.text }}</text>
+            </view>
+          </view>
+        </button>
+      </form>
+    </block>
   </view>
 </view>
 <!--竞猜结果弹窗-->

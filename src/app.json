@@ -5,13 +5,12 @@
   "pages": [
     "pages/myinfo/myinfo",
     "pages/scoreExchange/scoreExchange",
+    "pages/jc/jc",
     "pages/exchange/exchange",
     "pages/login/login",
     "pages/confirmExchange/confirmExchange",
-    "pages/jc/jc",
     "pages/rz/rz",
     "pages/index/index",
-    "pages/address/address",
     "pages/record/record",
     "pages/detail/detail",
     "pages/introduce/introduce"
@@ -59,6 +58,12 @@
         "pagePath": "pages/login/login",
         "iconPath": "images/user.png",
         "selectedIconPath": "images/user-HL.png"
+      },
+      {
+        "text": "金价竞猜",
+        "pagePath": "pages/jc/jc",
+        "iconPath": "images/jc.png",
+        "selectedIconPath": "images/jc_hl.png"
       }
     ]
   },

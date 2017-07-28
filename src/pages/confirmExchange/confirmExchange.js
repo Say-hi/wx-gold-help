@@ -119,7 +119,7 @@ Page({
           })
         }, 1500)
       }
-      console.log(res)
+      // console.log(res)
     })
   },
   /**

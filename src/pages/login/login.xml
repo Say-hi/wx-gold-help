@@ -108,7 +108,7 @@
       </text>
     </view>
     <form bindsubmit="msgSub" report-submit="true">
-      <button class="addTz" formType="submit">
+      <button hover-class="clickbtn" class="addTz" formType="submit">
           点击我增加次数哦！
       </button>
     </form>

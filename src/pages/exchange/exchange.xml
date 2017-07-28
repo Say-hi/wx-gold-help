@@ -11,4 +11,5 @@
       <view class="status">兑换成功</view>
     </view>
   </block>
+  <view class="no" wx:if="{{ exchangeArr.length == 0 }}">暂无兑换记录</view>
 </view>

@@ -66,7 +66,7 @@ Page({
       }
     }
     app.getData(sobj, function (res, that) {
-      console.log('信息提交', res)
+      // console.log('信息提交', res)
       if (res.data.message === 'success') {
         wx.showToast({
           title: '信息提交成功，等待审核',

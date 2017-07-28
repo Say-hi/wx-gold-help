@@ -63,7 +63,7 @@
       justify-content: space-around;
       view {
         border-radius: 20rpx;
-        width: 149rpx;
+        width: 180rpx;
         text-align: center;
         line-height: 61rpx;
         color: #fff;
@@ -186,8 +186,8 @@
         image {
           //background-color: #f00;
           margin-top: 20rpx;
-          width: 254rpx;
-          height: 200rpx;
+          width: 230rpx;
+          height: 230rpx;
           margin-bottom: 20rpx;
         }
         .more-btn {
@@ -198,6 +198,7 @@
           background: linear-gradient(#fffef6, #fddf14);
           .follow {
             text-align: center;
+            padding: 5rpx 10rpx;
           }
         }
       }
@@ -205,12 +206,12 @@
   }
   //我参与的记录
   .record {
-    margin-top: 20rpx;
-    border-bottom: 20rpx solid #f8f8f8;
+    margin-top: 10rpx;
+    //border-bottom: 5rpx solid #f8f8f8;
     width:710rpx;
     position: relative;
     left: 50%;
-    border-radius: 30rpx;
+    border-radius: 20rpx;
     background-color: #fff;
     transform: translate(-50%, 70rpx);
     overflow: hidden;
@@ -242,6 +243,16 @@
       transform: translate(0, -50%) rotate(45deg);
     }
   }
+  .record:nth-child(1) {
+    margin-top: 20rpx;
+  }
+  .record:nth-last-child(1) {
+    border-bottom: 20rpx solid #f8f8f8;
+  }
+  .tabArr {
+    position: relative;
+    margin-top: 98rpx;
+  }
 }
 //弹窗
 .tz-content {
@@ -257,6 +268,57 @@
   .title {
     margin-top: 40rpx;
     text-align: center;
+  }
+}
+.tabbtn {
+  width: 710rpx;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-bottom: 10rpx;
+}
+.company {
+  background-color: #fff;
+  height: 80rpx;
+  margin: 2rpx 0;
+  display: flex;
+  border-radius: 20rpx;
+  align-items: center;
+  padding-left: 20rpx;
+  .company-img {
+    width: 54rpx;
+    height: 54rpx;
+  }
+  view {
+    padding-left: 19rpx;
+    font-size: 26rpx;
+    line-height: 90rpx;
+    color: #333;
+  }
+  .operation {
+    display: flex;
+    align-items: center;
+  }
+  .operation::before {
+    font-size: 40rpx;
+    font-weight: 500;
+    color: #f4d34a;
+    margin-right: 30rpx;
+  }
+  .text {
+    font-size: 20rpx;
+    color: #999;
+    flex: 1;
+    //line-height: 90rpx;
+  }
+  .title {
+    font-weight: 700;
+    width: 250rpx;
+  }
+  .number {
+    text-align: right;
+    width: 150rpx;
+    color: #f00;
   }
 }
 

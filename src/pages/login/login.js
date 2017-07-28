@@ -31,24 +31,6 @@ Page({
         url: '../rz/rz?rz=1'
       },
       {
-        icon: 'icon-zhangfubang',
-        title: '金价涨跌竞猜',
-        text: '每天赚取积分赢大奖',
-        url: '../jc/jc'
-      },
-      {
-        icon: 'icon-giftfill',
-        title: '积分兑换',
-        text: '数种奖品任你选',
-        url: '../scoreExchange/scoreExchange'
-      },
-      {
-        icon: 'icon-dizhi',
-        title: '地址管理',
-        text: '奖品直接寄到您手中',
-        url: 'address'
-      },
-      {
         icon: 'icon-kefu',
         title: '联系客服',
         text: '亲！不懂的请联系我们客服哦',
@@ -57,12 +39,7 @@ Page({
       {
         icon: 'icon-lingdang',
         title: '服务介绍',
-        text: '看看我们是做。。。。。',
-        url: '../introduce/introduce?type=company'
-      },
-      {
-        icon: 'icon-fangzi',
-        title: '公司介绍',
+        text: '看看我们是做什么哒~',
         url: '../introduce/introduce?type=company'
       }
     ]
@@ -111,7 +88,7 @@ Page({
       method: method,
       header: header,
       success (res) {
-        console.log('cancelfollow', res)
+        // console.log('cancelfollow', res)
         var code = res.data.code
         if (code === '500') {
           // 失败

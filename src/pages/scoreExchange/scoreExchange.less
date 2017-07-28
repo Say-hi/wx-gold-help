@@ -34,21 +34,25 @@
     }
   }
   .wrap-center {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
     font-size: 20rpx;
     color: #333;
     line-height: 40rpx;
-    .w-c-a {
-      font-size: 26rpx;
-    }
     .w-c-b {
       font-size: 16rpx;
-      width: 42rpx;
+      //width: 42rpx;
+      position: absolute;
+      top: -20rpx;
+      left: 0;
       text-align: center;
       line-height: 21rpx;
       border: 1rpx solid #f4d656;
+    }
+    .w-c-a {
+      font-size: 26rpx;
     }
     .w-c-n {
       text-align: flex-end;
