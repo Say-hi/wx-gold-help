@@ -80,46 +80,62 @@ Page({
   },
   // 确认兑换
   confirmExchange () {
-    wx.showLoading({
-      title: '奖品兑换中',
-      mask: true
-    })
-    let that = this
-    let cobj = {
-      those: that,
-      url: app.data.confirmExchangeUrl,
-      data: {
-        address: that.data.address,
-        name: that.data.people,
-        phone: that.data.phone,
-        prizeid: that.data.id
-      }
+    if (!this.data.address) {
+      wx.showToast({
+        title: '请补全地址信息'
+      })
     }
-    app.getData(cobj, function (res, that) {
-      wx.hideLoading()
-      if (res.data.message === '当前商品仓库剩余0，兑换失败') {
-        that.setData({
-          backText: '当前商品仓库剩余0，兑换失败',
-          mask: true
-        })
-      } else if (res.data.message === '用户积分不足,兑换失败') {
-        that.setData({
-          backText: '哎呀，积分不够诶，兑换失败',
-          mask: true
-        })
-      }
-      if (res.data.message === '兑换成功') {
-        wx.showToast({
-          title: '兑换成功',
-          mask: true
-        })
-        setTimeout(function () {
-          wx.navigateBack({
-            delta: 1
+    wx.showModal({
+      title: '奖品兑换',
+      content: '是否确认兑换奖品',
+      showCancel: true,
+      cancelText: '取消',
+      confirmText: '兑换',
+      success (res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '奖品兑换中',
+            mask: true
           })
-        }, 1500)
+          let that = this
+          let cobj = {
+            those: that,
+            url: app.data.confirmExchangeUrl,
+            data: {
+              address: that.data.address,
+              name: that.data.people,
+              phone: that.data.phone,
+              prizeid: that.data.id
+            }
+          }
+          app.getData(cobj, function (res, that) {
+            wx.hideLoading()
+            if (res.data.message === '当前商品仓库剩余0，兑换失败') {
+              that.setData({
+                backText: '当前商品仓库剩余0，兑换失败',
+                mask: true
+              })
+            } else if (res.data.message === '用户积分不足,兑换失败') {
+              that.setData({
+                backText: '哎呀，积分不够诶，兑换失败',
+                mask: true
+              })
+            }
+            if (res.data.message === '兑换成功') {
+              wx.showToast({
+                title: '兑换成功',
+                mask: true
+              })
+              setTimeout(function () {
+                wx.navigateBack({
+                  delta: 1
+                })
+              }, 1500)
+            }
+            // console.log(res)
+          })
+        }
       }
-      // console.log(res)
     })
   },
   /**
