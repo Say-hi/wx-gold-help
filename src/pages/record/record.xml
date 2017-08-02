@@ -1,6 +1,6 @@
 <view class="record">
   <view class="jc-before">
-    <view class="jc-b-top">竞猜记录</view>
+    <view class="jc-b-top">竞猜记录  <text>我的积分：{{ jifen }}</text></view>
     <view class="jc-b-top-title">
       <text wx:for="{{ jcArr }}">{{ item }}</text>
     </view>

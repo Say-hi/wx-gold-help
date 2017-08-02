@@ -7,15 +7,15 @@
       <image src="../../images/jc-time.png"></image>
       <view>{{ today }}金价涨跌竞猜</view>
     </view>
-    <view class="stopTime"><text class="stopTime-text">截止当前竞猜时间: {{ today }}{{ stopTime }}。猜中可得积分</text></view>
+    <view class="stopTime"><text class="stopTime-text">当期竞猜时间: {{ today }}{{ stopTime }}。猜中可得{{ getjifen }}积分</text></view>
     <view class="upDown">
-      <view data-type="up" catchtap="choosejc" class="{{ choose == 'up' ? 'up' : '' }}">涨</view>
-      <view data-type="down" catchtap="choosejc" class="{{ choose == 'down' ? 'down' : '' }}">跌</view>
+      <view data-type="up" catchtap="choosejc" class="{{ choose == 'up' ? 'up' : '' }}">涨 <text class="aa">{{ rate.riseproportion == 'NaN%' ?  '50%' : rate.riseproportion}}</text></view>
+      <view data-type="down" catchtap="choosejc" class="{{ choose == 'down' ? 'down' : '' }}">跌 <text class="aa">{{ rate.riseproportion == 'NaN%' ? '50%' :  rate.riseproportion}}</text></view>
     </view>
   </view>
   <!--昨日结果展示-->
   <view class="jc-before">
-    <view class="jc-b-top">AUTD</view>
+    <view class="jc-b-top">AuT+D的历史涨跌结果</view>
     <view class="jc-b-top-title">
       <text wx:for="{{ jcArr }}">{{ item }}</text>
     </view>
@@ -71,6 +71,7 @@
             <view class="operation iconfont {{ item.icon }}">
               <text class="title">{{ item.title }}</text>
               <text class="text">{{ item.text }}</text>
+              <text wx:if="{{ index == 0 }}" class="jifen">我的积分：{{ jifen }}分</text>
             </view>
           </view>
         </button>
@@ -84,14 +85,23 @@
   <image class="tz-img" src="../../images/jc-mask.png"></image>
   <view class="tz-c-content">
     <view class="title">
-      您预测明天的金价走势为{{ jcstatus == '1' ? '涨' : '跌' }}
+      <view>亲，您竞猜{{ today }}AuT+D未来金价<text style="font-size: 40rpx; color: #f00;">{{ jcstatus == '1' ? '涨' : '跌' }}</text></view>
+      <view>猜对了可得{{ getjifen }}分噢</view>
+      <!--您预测明天的金价走势为-->
     </view>
   </view>
-  <form bindsubmit="msgSub" report-submit="true">
-    <button class="addTz" formType="submit" bindtap="confirm">
-      确定
-    </button>
-  </form>
+  <view class="bottom-btn">
+    <form bindsubmit="msgSub" report-submit="true">
+      <button class="addTz" formType="submit" bindtap="confirm">
+        确定
+      </button>
+    </form>
+    <form bindsubmit="msgSub" report-submit="true">
+      <button class="addTz" formType="submit" bindtap="cancel">
+        取消
+      </button>
+    </form>
+  </view>
 </view>
 </view>
 <modal hidden="{{ followHidden }}" title="我的分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ followText }}</modal>

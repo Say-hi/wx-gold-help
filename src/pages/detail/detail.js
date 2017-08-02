@@ -15,14 +15,16 @@ Page({
       'directionDescription': '操作',
       'price': '价格',
       'quantity': '数量',
-      'buyRatio': '比例'
+      'buyRatio': '比例',
+      'createDate': '操作日期'
     }],
     operationCopy: [{
       'typeDescription': '品种',
       'directionDescription': '操作',
       'price': '价格',
       'quantity': '数量',
-      'buyRatio': '比例'
+      'buyRatio': '比例',
+      'createDate': '操作日期'
     }],
     pageNo: 0,
     pageSize: 1
@@ -46,6 +48,11 @@ Page({
           title: '没有更多的操作记录了',
           icon: 'success'
         })
+      }
+      for (let i of res.data.result) {
+        let s = i.createDate.split(' ')[0].split('-')
+        s.shift()
+        i.createDate = s[0] + '月' + s[1] + '日'
       }
       if (that.data.pageNo === 1) {
         that.setData({
@@ -93,9 +100,13 @@ Page({
         'directionDescription': '暂无',
         'price': '暂无',
         'quantity': '暂无',
-        'buyRatio': '暂无'
+        'buyRatio': '暂无',
+        'createDate': '暂无'
       })
     } else {
+      let s = fxs.market.createDate.split(' ')[0].split('-')
+      s.shift()
+      fxs.market.createDate = s[0] + '月' + s[1] + '日'
       that.data.operation.push(fxs.market)
     }
     that.setData({

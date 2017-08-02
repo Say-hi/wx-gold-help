@@ -3,9 +3,9 @@
   // First is default to view
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
   "pages": [
+    "pages/jc/jc",
     "pages/myinfo/myinfo",
     "pages/scoreExchange/scoreExchange",
-    "pages/jc/jc",
     "pages/exchange/exchange",
     "pages/login/login",
     "pages/confirmExchange/confirmExchange",

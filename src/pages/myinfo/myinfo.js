@@ -31,7 +31,6 @@ Page({
     var that = this
     wx.getSystemInfo({
       success (res) {
-        // console.log(res)
         that.setData({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight

@@ -16,6 +16,7 @@ Page({
     jcResultArr: [],
     jcstatus: 0,
     page: 1,
+    getjifen: 20,
     tabArr: [
       {
         icon: 'icon-biaoqian',
@@ -25,7 +26,7 @@ Page({
       {
         icon: 'icon-giftfill',
         title: '积分兑换',
-        text: '数种奖品任你选',
+        text: '数种奖品任您选',
         url: '../scoreExchange/scoreExchange'
       },
       {
@@ -45,7 +46,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: e.currentTarget.dataset.url
+      url: e.currentTarget.dataset.url + '?jifen=' + that.data.jifen
     })
   },
   /**
@@ -61,6 +62,12 @@ Page({
       title: '取消关注',
       content: '请在"我的分析师"页面取消关注',
       showCancel: false
+    })
+  },
+  // 取消竞猜
+  cancel () {
+    this.setData({
+      mask: false
     })
   },
   // 关注分析师点击确定后逻辑
@@ -85,22 +92,51 @@ Page({
   },
   // 竞猜选择
   choosejc (e) {
+    let jcStatus = wx.getStorageSync('jcStatus')
+    // console.log(jcStatus.date)
+    if (jcStatus.date === this.data.today) {
+      return this.setData({
+        jcstatus: jcStatus.jcstatus,
+        choose: jcStatus.choose
+      })
+    }
     if (e.currentTarget.dataset.type === 'up') {
       this.setData({
         choose: 'up',
-        jcstatus: 1
+        jcstatus: 1,
+        mask: true
       })
     } else {
       this.setData({
         choose: 'down',
-        jcstatus: 0
+        jcstatus: 0,
+        mask: true
       })
     }
-    this.jc()
   },
   // 展示更多数据
   showMore () {
     this.getYestoday(++this.data.page)
+  },
+  // 获取竞猜比例
+  rate () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.getRateUrl,
+      method: 'GET',
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(obj, function (res, that) {
+      // console.log('rate', res)
+      res.data.result.fallproportion = Math.round(res.data.result.fallproportion * 10000) / 100.00 + '%'
+      res.data.result.riseproportion = Math.round(res.data.result.riseproportion * 10000) / 100.00 + '%'
+      // res.data.result.fallproportion * 100
+      // res.data.result.riseproportion * 100
+      that.setData({
+        rate: res.data.result
+      })
+    })
   },
   /**
    * 发送formId
@@ -111,6 +147,8 @@ Page({
   },
   // 弹窗关闭
   confirm () {
+    // todo 发送jc请求
+    this.jc()
     this.setData({
       mask: false
     })
@@ -175,6 +213,12 @@ Page({
             mask: true
           })
         } else {
+          let jcStatus = {
+            date: that.data.today,
+            jcstatus: that.data.jcstatus,
+            choose: that.data.choose
+          }
+          wx.setStorageSync('jcStatus', jcStatus)
           that.setData({
             mask: true
           })
@@ -182,6 +226,20 @@ Page({
       }
     }
     wx.request(jcobj)
+  },
+  // 获取用户积分
+  getUserScore () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.getUserScore
+    }
+    app.getData(obj, function (res, that) {
+      that.setData({
+        jifen: res.data.result.fraction
+      })
+      // console.log(res)
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -201,6 +259,7 @@ Page({
     })
     this.getWebUrl()
     this.getYestoday(1)
+    this.rate()
     // this.getrecommend()
     // TODO: onLoad
   },
@@ -217,6 +276,7 @@ Page({
   onShow () {
     // TODO: onShow
     this.getrecommend()
+    this.getUserScore()
   },
 
   /**
@@ -238,5 +298,12 @@ Page({
    */
   onPullDownRefresh () {
     // TODO: onPullDownRefresh
+  },
+  onShareAppMessage () {
+    return {
+      desc: '分享我的首页',
+      title: '黄金帮，名师帮您做参谋',
+      path: '/pages/myinfo/myinfo'
+    }
   }
 })

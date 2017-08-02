@@ -131,8 +131,8 @@ Page({
     })
     this.getjpsmUrl()
     this.getDetail(parmas.id)
-    let that = this
-    app.getAddress(that)
+    // let that = this
+    // app.getAddress(that)
   },
 
   /**

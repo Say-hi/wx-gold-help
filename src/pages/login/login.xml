@@ -53,7 +53,7 @@
         <view class="operation iconfont {{ operation1.icon }}">
           <text class="title">{{ operation1.title }}</text>
           <text class="text">{{ operation1.text }}</text>
-          <text class="number">{{ operation1.nubmer }}</text>
+          <text class="number">{{ operation1.nubmer >= 25 ? '25' : operation1.nubmer }}</text>
         </view>
       </view>
     </button>
@@ -95,7 +95,7 @@
         服务通知作用:
       </view>
       <view class="text">
-        帮助你及时收到分析师的消息
+        帮助你及时收到分析师的消息,最大上限为25次
       </view>
       <view class="title">
         服务通知期限:

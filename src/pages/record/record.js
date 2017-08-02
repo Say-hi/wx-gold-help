@@ -51,8 +51,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad () {
+  onLoad (parmas) {
     // TODO: onLoad
+    this.setData({
+      jifen: parmas.jifen
+    })
     this.getUserRecord(1)
   },
 

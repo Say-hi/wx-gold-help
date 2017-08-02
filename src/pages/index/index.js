@@ -128,6 +128,7 @@ Page({
    * @param that
    */
   getHomeFixData (res, that) {
+    this.userLogin()
     let fxs = res.data.result
     if (res.data.code !== '200') {
       this.setData({
@@ -362,6 +363,18 @@ Page({
       those: that
     }
     app.getData(obj, that.indeximg)
+  },
+  // 记录用户登陆
+  userLogin () {
+    // let that = this
+    let obj = {
+      url: app.data.userLoginTimeUrl,
+      method: 'GET',
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(obj, function (res) {
+      console.log('记录', res)
+    })
   },
   /**
    * 生命周期函数--监听页面加载

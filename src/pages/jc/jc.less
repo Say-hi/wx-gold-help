@@ -67,13 +67,35 @@
         text-align: center;
         line-height: 61rpx;
         color: #fff;
+        position: relative;
         background-color: #ffbd00;
+        box-shadow: 4rpx 4rpx 6rpx 1rpx #F57900;
       }
       .up {
         background-color: #e44268;
       }
+      .up::after {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -40rpx);
+        font-size: 20rpx;
+        color: #2b2f41;
+        content: '这次我猜了';
+      }
       .down {
         background-color: #51b935;
+      }
+      .down::after {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -40rpx);
+        font-size: 20rpx;
+        color: #2b2f41;
+        content: '这次我猜了';
       }
     }
   }
@@ -174,6 +196,7 @@
         color: #fec622;
         font-size: 50rpx;
         margin-right: 20rpx;
+        vertical-align: middle;
       }
       .ms-c-right {
         position: absolute;
@@ -186,8 +209,8 @@
         image {
           //background-color: #f00;
           margin-top: 20rpx;
-          width: 230rpx;
-          height: 230rpx;
+          width: 200rpx;
+          height: 200rpx;
           margin-bottom: 20rpx;
         }
         .more-btn {
@@ -265,6 +288,7 @@
   transform: translate(-50%, 0);
 }
 .tz-c-content {
+  padding: 70rpx 20rpx !important;
   .title {
     margin-top: 40rpx;
     text-align: center;
@@ -278,6 +302,7 @@
   margin-bottom: 10rpx;
 }
 .company {
+  position: relative;
   background-color: #fff;
   height: 80rpx;
   margin: 2rpx 0;
@@ -319,6 +344,21 @@
     text-align: right;
     width: 150rpx;
     color: #f00;
+  }
+  .jifen {
+    position: absolute;
+    right: 10rpx;
+    font-size: 24rpx;
+    color: #333;
+  }
+}
+.bottom-btn {
+  display: flex;
+  z-index: 1000;
+  justify-content: space-around;
+  margin-top: -50rpx;
+  .addTz {
+    width: 200rpx !important;
   }
 }
 

@@ -39,6 +39,8 @@ App({
     sessionIdUrl: '/wechatUser/getSessionID/',
     // 获取用户已关注的分析师
     getUserFxs: '/analyst/concernedAnalyst',
+    // 获取竞猜比例
+    getRateUrl: '/guessingCompetition/proportion',
     // formId传送
     sendFormIdUrl: '/wechatUser/saveFormId/',
     // 图片
@@ -75,6 +77,8 @@ App({
     exchangeDetailUrl: '/prize/get',
     // 用户兑换
     confirmExchangeUrl: '/exchangeRecord/exchangeRecordDocking',
+    // 用户登陆记录
+    userLoginTimeUrl: '/userLastLoginTime/save',
     // 推荐分析师
     recommendUrl: '/analyst/recommend',
     userInfo: null,
