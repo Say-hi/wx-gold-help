@@ -3,14 +3,14 @@
   // First is default to view
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
   "pages": [
-    "pages/confirmExchange/confirmExchange",
-    "pages/jc/jc",
+    "pages/index/index",
+    "pages/login/login",
     "pages/myinfo/myinfo",
+    "pages/jc/jc",
+    "pages/confirmExchange/confirmExchange",
     "pages/scoreExchange/scoreExchange",
     "pages/exchange/exchange",
-    "pages/login/login",
     "pages/rz/rz",
-    "pages/index/index",
     "pages/record/record",
     "pages/detail/detail",
     "pages/introduce/introduce"
@@ -43,7 +43,7 @@
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#tabBar
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#35495e",
+    "selectedColor": "#F7DF7D",
     "borderStyle": "black",
     "backgroundColor": "#fff",
     "list": [
@@ -54,16 +54,16 @@
         "selectedIconPath": "images/home-HL.png"
       },
       {
-        "text": "我的分析师",
-        "pagePath": "pages/login/login",
-        "iconPath": "images/user.png",
-        "selectedIconPath": "images/user-HL.png"
-      },
-      {
         "text": "金价竞猜",
         "pagePath": "pages/jc/jc",
         "iconPath": "images/jc.png",
         "selectedIconPath": "images/jc_hl.png"
+      },
+      {
+        "text": "我的分析师",
+        "pagePath": "pages/login/login",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-HL.png"
       }
     ]
   },

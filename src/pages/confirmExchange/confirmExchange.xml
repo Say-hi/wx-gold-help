@@ -28,12 +28,12 @@
   <view class="address">
     <view class="a-title">收货地址</view>
     <view class="a-people">
-      <text>收货人: {{ people }}</text><text>{{ phone }}</text>
+      <text>收货人: {{ people }}</text><text>联系方式: {{ phone }}</text>
     </view>
     <view class="iconfont icon-dizhi">
       收货地址:{{ address }}
     </view>
-    <view catchtap="addressfix" class="changeAddress">填写-修改地址</view>
+    <view catchtap="addressfix" class="changeAddress">填写/修改地址</view>
   </view>
   <!--btn-->
   <form class="s" bindsubmit="msgSub" report-submit="true">

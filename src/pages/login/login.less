@@ -225,3 +225,43 @@
   background-color: #f4d796 !important;
   color: #fff !important;
 }
+.sss {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  //height: 200rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx 20rpx 100rpx 20rpx;
+  text-align: center;
+  .sss-text {
+    font-size: 28rpx;
+    //line-height: 60rpx;
+  }
+  .sss-btn {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    font-size: 28rpx;
+    display: flex;
+    align-items: center;
+    line-height: 60rpx;
+    justify-content: space-around;
+    button {
+      flex: 1;
+      border-radius: 0;
+      border-bottom-left-radius: 10rpx;
+      border-bottom-right-radius: 10rpx;
+      line-height: 80rpx;
+      border-top: 1rpx solid #ccc;
+      background-color: #fff;
+      border-left: 1rpx solid #ccc;
+    }
+    button:nth-child(1) {
+      border-left: none;
+    }
+  }
+}

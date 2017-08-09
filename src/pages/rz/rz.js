@@ -8,7 +8,8 @@ Page({
    */
   data: {
     title: 'rz',
-    inputArr: ['姓名', '黄金编号', '电话', '微信号'],
+    inputArr: ['姓名', '黄金交易编码', '电话', '微信号'],
+    btn: '提交认证',
     inputArr2: [
       {
         title: '姓名',
@@ -19,12 +20,39 @@ Page({
         text: '未填写'
       },
       {
-        title: '黄金编号',
+        title: '黄金交易编码',
         text: '未填写'
       }
     ],
     tips: '您的信息用于认证高级用户'
   },
+  // 获取认证状态
+  getRzStatus () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.rzStatusUrl
+    }
+    app.getData(obj, function (res, that) {
+      // console.log(res)
+      if (res.data.message === '普通用户') {
+        let r = res.data.result
+        console.log(res)
+        that.setData({
+          name: r.username,
+          phone: r.phone,
+          wxNubmer: r.wetusernum,
+          number: r.goldnum
+        })
+        if (r.username) {
+          that.setData({
+            btn: '审核中'
+          })
+        }
+      }
+    })
+  },
+  // input
   tagInput (e) {
     let tag = e.currentTarget.dataset.tag
     let that = this
@@ -33,7 +61,7 @@ Page({
       that.setData({
         name: value
       })
-    } else if (tag === '黄金编号') {
+    } else if (tag === '黄金交易编码') {
       that.setData({
         number: value
       })
@@ -55,6 +83,13 @@ Page({
         mask: true
       })
     }
+    // let rzobj = {
+    //   goldnum: this.data.number,
+    //   phone: this.data.phone,
+    //   wetusernum: this.data.wxNubmer,
+    //   username: this.data.name
+    // }
+    // wx.setStorageSync('rzInfo', rzobj)
     let that = this
     let sobj = {
       url: app.data.rzUrl,
@@ -79,7 +114,7 @@ Page({
         }, 1500)
       } else if (res.data.code === '100') {
         wx.showToast({
-          title: '您的资料审核中，请耐心等待，如有问题请联系客服',
+          title: '资料审核中，请耐心等待黄金帮认证结果。',
           mask: true
         })
       } else {
@@ -101,12 +136,12 @@ Page({
         tips: res.data.result
       })
     })
+    this.getRzStatus()
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad (params) {
-    // this.getRzStatus()
     let that = this
     this.setData({
       showRz: params.rz

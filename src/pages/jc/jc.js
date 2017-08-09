@@ -10,13 +10,13 @@ Page({
     title: 'jc',
     // 关注弹窗显示
     followHidden: true,
-    today: '05月27号',
+    // today: '05月27号',
     stopTime: '20:30',
     jcArr: ['收盘价', '涨跌结果', '日期'],
     jcResultArr: [],
-    jcstatus: 0,
+    // jcstatus: 0,
     page: 1,
-    getjifen: 20,
+    jifen: 0,
     tabArr: [
       {
         icon: 'icon-biaoqian',
@@ -92,24 +92,23 @@ Page({
   },
   // 竞猜选择
   choosejc (e) {
-    let jcStatus = wx.getStorageSync('jcStatus')
+    // let jcStatus = wx.getStorageSync('jcStatus')
     // console.log(jcStatus.date)
-    if (jcStatus.date === this.data.today) {
-      return this.setData({
-        jcstatus: jcStatus.jcstatus,
-        choose: jcStatus.choose
-      })
-    }
+    // if (jcStatus.date === this.data.today) {
+    //   return this.setData({
+    //     mask: true
+    //   })
+    // }
     if (e.currentTarget.dataset.type === 'up') {
       this.setData({
-        choose: 'up',
-        jcstatus: 1,
+        chooses: 'up',
+        jcstatuss: 1,
         mask: true
       })
     } else {
       this.setData({
-        choose: 'down',
-        jcstatus: 0,
+        chooses: 'down',
+        jcstatuss: 0,
         mask: true
       })
     }
@@ -117,6 +116,22 @@ Page({
   // 展示更多数据
   showMore () {
     this.getYestoday(++this.data.page)
+  },
+  // 获取今日竞猜类型
+  gettodayjc () {
+    let that = this
+    let obj = {
+      those: that,
+      url: app.data.getTodayjc,
+      method: 'GET',
+      header: {'Content-Type': 'application/json'}
+    }
+    app.getData(obj, function (res, that) {
+      // console.log('jctype', res)
+      that.setData({
+        jctype: res.data.result
+      })
+    })
   },
   // 获取竞猜比例
   rate () {
@@ -147,6 +162,15 @@ Page({
   },
   // 弹窗关闭
   confirm () {
+    let jcStatus = wx.getStorageSync('jcStatus')
+    // console.log(jcStatus.date)
+    if (jcStatus.date === this.data.today) {
+      this.setData({
+        jcstatus: jcStatus.jcstatus,
+        choose: jcStatus.choose,
+        mask: false
+      })
+    }
     // todo 发送jc请求
     this.jc()
     this.setData({
@@ -199,10 +223,13 @@ Page({
     let sign = app.md5()
     let timestamp = app.timest()
     let SESSIONID = app.wxGetStorage('sessionId')
-    let url = app.data.baseUrl + app.data.jcUrl + '?appId=' + app.data.appId + '&lift=' + that.data.jcstatus + '&SESSIONID=' + SESSIONID + '&sign=' + sign + '&timestamp=' + timestamp
+    let url = app.data.baseUrl + app.data.jcUrl + '?appId=' + app.data.appId + '&lift=' + that.data.jcstatuss + '&SESSIONID=' + SESSIONID + '&sign=' + sign + '&timestamp=' + timestamp
     let jcobj = {
       url: url,
       method: 'POST',
+      data: {
+        type: that.data.jctype
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -212,16 +239,24 @@ Page({
             title: '您已经竞猜过了，不能重复竞猜',
             mask: true
           })
+        } else if (res.data.message === '当前时间不能竞猜') {
+          wx.removeStorageSync('jcStatus')
+          return wx.showToast({
+            title: '非常抱歉,当前时间不能竞猜',
+            mask: true
+          })
         } else {
           let jcStatus = {
             date: that.data.today,
-            jcstatus: that.data.jcstatus,
-            choose: that.data.choose
+            jcstatus: that.data.jcstatuss,
+            choose: that.data.chooses
           }
-          wx.setStorageSync('jcStatus', jcStatus)
           that.setData({
-            mask: true
+            jcstatus: that.data.jcstatuss,
+            choose: that.data.chooses
           })
+          wx.setStorageSync('jcStatus', jcStatus)
+          that.rate()
         }
       }
     }
@@ -235,17 +270,31 @@ Page({
       url: app.data.getUserScore
     }
     app.getData(obj, function (res, that) {
+      console.log('jifen', res)
       that.setData({
         jifen: res.data.result.fraction
       })
-      // console.log(res)
+    })
+  },
+  // 获取增加的积分
+  getAddScore () {
+    let that = this
+    let objs = {
+      those: that,
+      url: app.data.getAddScoreUrl
+    }
+    app.getData(objs, function (res, that) {
+      // console.log('add score', res)
+      that.setData({
+        getjifen: res.data.result
+      })
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad () {
-    let today = new Date()
+    let today = new Date(new Date().getTime() + 86400000)
     let hour = today.getHours()
     let min = today.getMinutes()
     if (hour > 20 || (hour === 20 && min > 30)) {
@@ -259,7 +308,9 @@ Page({
     })
     this.getWebUrl()
     this.getYestoday(1)
-    this.rate()
+    // this.rate()
+    this.getAddScore()
+    this.gettodayjc()
     // this.getrecommend()
     // TODO: onLoad
   },
@@ -277,6 +328,7 @@ Page({
     // TODO: onShow
     this.getrecommend()
     this.getUserScore()
+    this.rate()
   },
 
   /**

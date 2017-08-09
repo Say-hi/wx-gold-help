@@ -13,10 +13,10 @@
             <!--图片位置交换->原左现右-->
             <!--右侧信息-->
             <view class="fxs-t-right color666">
-              <view class="fxs-t-r-name">　分析师: <text>{{ item.name }}</text></view>
+              <view class="fxs-t-r-name">分析师: <text>{{ item.name }}</text></view>
               <view class="fxs-t-r-company {{ item.isAuth == 1 ? 'approve' : '' }}"><text>{{ item.jobDescription }}</text></view>
-              <view class="fxs-t-r-style">　风　格: <text>{{ item.styleDescription }}</text></view>
-              <view class="fxs-t-r-style">　收益率: <text>{{ item.profitability }}%</text></view>
+              <view class="fxs-t-r-style">风　格: <text>{{ item.styleDescription }}</text></view>
+              <view class="fxs-t-r-style">收益率: <text>{{ item.profitability }}%</text></view>
               <view class="fxs-t-r-rise">最近操作: <text>{{ item.lastOperate }}</text></view>
               <view class="fxs-t-r-rise">持仓比例: <text>{{ item.hold_ratio }}%</text></view>
             </view>
@@ -28,7 +28,7 @@
           <!--下部-分析师功能-->
           <view class="fxs-bottom">
             <!--todo 关注分析师ID-->
-              <button formType="submit" catchtap="{{ item.isConcerned === 1 ? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
+              <button formType="submit" catchtap="{{ item.isConcerned === 1 ? 'cancelFollow':'followfxs' }}" data-arraryid = "{{ index }}" data-id="{{ item.id }}" class="fxs-follow {{ (item.grade == 1 || item.grade == 2) ? 'hfxs' : '' }}">{{ item.isConcerned === 1? "取消关注":"关注"}}</button>
             <!--</form>-->
             <view class="fxs-detail">查看明细</view>
           </view>

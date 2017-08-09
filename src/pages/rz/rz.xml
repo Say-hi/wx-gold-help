@@ -5,7 +5,7 @@
     <view wx:if="{{ showRz == '1' }}" class="input-info">
       <block wx:for="{{ inputArr }}">
         <view class="i-i-text">
-          <text>{{ item }}:</text><input placeholder="请输入您的{{ item }}" data-tag="{{ item }}" bindinput="tagInput" />
+          <text>{{ item }}:</text><input type="{{ index == 2 ? 'number' : 'text' }}" value="{{ index == 0 ? name : index == 1 ? number : index == 2 ? phone : wxNubmer }}" placeholder="请输入您的{{ item }}" data-tag="{{ item }}" bindinput="tagInput" />
         </view>
       </block>
     </view>
@@ -17,7 +17,7 @@
       </block>
     </view>
   </view>
-  <view wx:if="{{ showRz == '1' }}" class="rzbtn" catchtap="rzSave">提交认证</view>
+  <view wx:if="{{ showRz == '1' }}" class="rzbtn" catchtap="rzSave">{{ btn }}</view>
   <view wx:if="{{ showRz == '1' }}" class="tips">
     <view class="tips-title">认证说明</view>
     <view class="tips-text">{{ tips }}</view>

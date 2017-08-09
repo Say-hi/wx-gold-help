@@ -26,7 +26,7 @@ Page({
     operation: [
       {
         icon: 'icon-VIP',
-        title: '申请用户认证',
+        title: '用户认证',
         text: '显示认证状态',
         url: '../rz/rz?rz=1'
       },
@@ -93,10 +93,13 @@ Page({
         if (code === '500') {
           // 失败
           if (that.data.status === '已认证') {
-            return wx.showToast({
-              title: '您为认证用户，已向后台提出取消申请',
-              mask: true
+            return that.setData({
+              kefu: true
             })
+            // wx.showToast({
+            //   title: '您为认证用户，已向后台提出取消申请',
+            //   mask: true
+            // })
           }
           that.setData({
             cancelText: '取消关注失败'
@@ -104,14 +107,13 @@ Page({
         } else if (code === '200') {
           // 成功
           if (that.data.status === '已认证') {
-            return wx.showToast({
-              title: '您为认证用户，已向后台提出取消申请',
-              mask: true
+            return that.setData({
+              kefu: true
             })
           }
           that.data.fxsInfo.splice(number, 1)
           that.setData({
-            cancelText: '请记得去"首页"重新关注帮你参谋的名师噢',
+            cancelText: '请记得去"首页"重新关注帮您参谋的名师噢',
             fxsInfo: that.data.fxsInfo
           })
         } else {
@@ -143,6 +145,12 @@ Page({
   showTz () {
     this.setData({
       mask: true
+    })
+  },
+  // 认证用户弹窗关闭
+  kefuMask () {
+    this.setData({
+      kefu: false
     })
   },
   // 关闭服务通知弹窗
@@ -198,16 +206,21 @@ Page({
     app.getData(obj, function (res, that) {
       // console.log(res)
       if (res.data.message === '普通用户') {
+        that.data.operation[0].text = '普通用户'
         that.setData({
-          status: '普通用户'
+          status: '普通用户',
+          operation: that.data.operation
         })
       } else if (res.data.message === '管理员拒绝认证') {
+        that.data.operation[0].text = '认证失败'
         that.setData({
-          status: '认证失败'
+          status: '认证失败',
+          operation: that.data.operation
         })
       } else if (res.data.message === 'success') {
         let r = res.data.result
         that.data.operation[0].url = '../rz/rz?rz=2&username=' + r.username + '&phone=' + r.phone + '&wetusernum=' + r.wetusernum + '&goldnum=' + r.goldnum
+        that.data.operation[0].text = '用户已认证'
         that.setData({
           operation: that.data.operation,
           status: '已认证'

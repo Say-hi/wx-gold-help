@@ -8,7 +8,7 @@
   .jc-time {
     border-radius: 30rpx;
     width: 710rpx;
-    height: 292rpx;
+    height: 320rpx;
     background-color: #fff;
     //border: 40rpx;
     position: relative;
@@ -179,6 +179,9 @@
     }
     .ms-center {
       display: flex;
+      .ms-c-left {
+        flex: 1;
+      }
       .iconfont {
         font-size: 24rpx;
         color: #666;
@@ -199,7 +202,7 @@
         vertical-align: middle;
       }
       .ms-c-right {
-        position: absolute;
+        //position: absolute;
         right: 10rpx;
         top: 10rpx;
         display: flex;
@@ -208,7 +211,7 @@
         flex-direction: column;
         image {
           //background-color: #f00;
-          margin-top: 20rpx;
+          //margin-top: 20rpx;
           width: 200rpx;
           height: 200rpx;
           margin-bottom: 20rpx;
@@ -358,7 +361,14 @@
   justify-content: space-around;
   margin-top: -50rpx;
   .addTz {
+    transform: translate(-50%, 0) !important;
     width: 200rpx !important;
   }
+}
+.upDownNumber {
+  margin-top: 20rpx;
+  color: #999;
+  font-size: 28rpx;
+  text-align: center;
 }
 

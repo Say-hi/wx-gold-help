@@ -12,11 +12,11 @@
         </view>
         <!--右侧分析师信息-->
         <view class="fxs-t-right color666">
-          <view class="fxs-t-r-name">　分析师: <text>{{ fxsInfo.name }}</text></view>
+          <view class="fxs-t-r-name">分析师: <text>{{ fxsInfo.name }}</text></view>
           <view class="fxs-t-r-company {{ fxsInfo.isAuth == 1 ? 'approve' : '' }}"><text>{{ fxsInfo.jobDescription }}</text></view>
-          <view class="fxs-t-r-style">　风　格: <text>{{ fxsInfo.styleDescription }}</text></view>
-          <view>　收益率: <text>{{ fxsInfo.profitability }}%</text></view>
-          <view>月收益率: <text>{{ fxsInfo.profit }}%</text></view>
+          <view class="fxs-t-r-style">风　格: <text>{{ fxsInfo.styleDescription }}</text></view>
+          <view>收益率: <text>{{ fxsInfo.profitability }}%</text></view>
+          <view>上月收益率: <text>{{ fxsInfo.profit }}%</text></view>
           <view class="fxs-t-r-rise">最近操作: <text>{{ fxsInfo.lastOperate }}</text></view>
         </view>
       </view>

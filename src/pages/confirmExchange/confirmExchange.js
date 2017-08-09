@@ -80,8 +80,9 @@ Page({
   },
   // 确认兑换
   confirmExchange () {
+    let that = this
     if (!this.data.address) {
-      wx.showToast({
+      return wx.showToast({
         title: '请补全地址信息'
       })
     }
@@ -97,7 +98,6 @@ Page({
             title: '奖品兑换中',
             mask: true
           })
-          let that = this
           let cobj = {
             those: that,
             url: app.data.confirmExchangeUrl,
@@ -149,6 +149,14 @@ Page({
     this.getDetail(parmas.id)
     // let that = this
     // app.getAddress(that)
+    let s = wx.getStorageSync('address')
+    if (s) {
+      this.setData({
+        people: s.name,
+        address: s.add,
+        phone: s.tel
+      })
+    }
   },
 
   /**

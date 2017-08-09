@@ -63,6 +63,8 @@ App({
     webUrl: '/website/websiteInterface',
     // 用户竞猜
     jcUrl: '/guessingCompetition/save',
+    // 获取今日竞猜类型
+    getTodayjc: '/quizVariety/quizVarietyInterface',
     // 奖品列表
     scoreUrl: '/prize/prizeList',
     // 认证用户取消关注的分析师
@@ -79,6 +81,8 @@ App({
     confirmExchangeUrl: '/exchangeRecord/exchangeRecordDocking',
     // 用户登陆记录
     userLoginTimeUrl: '/userLastLoginTime/save',
+    // 获取增加积分
+    getAddScoreUrl: '/increaseIntegral/get',
     // 推荐分析师
     recommendUrl: '/analyst/recommend',
     userInfo: null,
@@ -224,14 +228,28 @@ App({
         if (message === 'success') {
           that.data.fxs[arrayId].isConcerned = that.data.fxs[arrayId].isConcerned === 1 ? 0 : 1
           that.setData({
-            followText: '您将收到名师最新的操作策略服务',
+            followText: '您将收到黄金帮名师最新的操作策略及资讯服务通知。',
             followHidden: false,
             fxs: that.data.fxs
           })
         } else if (message === '用户无认证') {
           that.setData({
-            followText: '您尚未完成认证，暂不能关注团队级分析师，请前往"我的分析师"完成认证',
-            followHidden: false
+            // followText: '您尚未完成认证，暂不能关注团队级分析师，请前往"我的分析师"完成认证',
+            followHidden: true
+          })
+          wx.showModal({
+            title: '我的分析师',
+            content: '您尚未完成认证，请完成认证',
+            showCancel: true,
+            cancelText: '返回',
+            confirmText: '用户认证',
+            success (res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '../rz/rz?rz=1'
+                })
+              }
+            }
           })
         } else if (message === '同一用户不能关注多个分析师') {
           that.setData({
@@ -240,8 +258,22 @@ App({
           })
         } else if (message === '用户无特权关注高级分析师') {
           that.setData({
-            followText: '您无法关注该高级分析师',
-            followHidden: false
+            // followText: '您无法关注该高级分析师',
+            followHidden: true
+          })
+          wx.showModal({
+            title: '我的分析师',
+            content: '您无法关注该级别分析师，请先进行用户认证',
+            showCancel: true,
+            cancelText: '返回',
+            confirmText: '用户认证',
+            success (res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '../rz/rz?rz=1'
+                })
+              }
+            }
           })
         } else if (message === '服务器错误') {
           that.setData({
@@ -255,13 +287,13 @@ App({
           })
         } else if (message === '用户关注失败') {
           that.setData({
-            followText: '您为已认证用户，请联系客服修改关注',
+            followText: '无法关注分析师，如需更改关注，请联系客服',
             followHidden: false
           })
         }
-        that.setData({
-          followHidden: false
-        })
+        // that.setData({
+        //   followHidden: false
+        // })
       }
     }
     wx.request(obj)
@@ -357,8 +389,8 @@ App({
       // 二期
       url: that.data.baseUrl + that.data.saveUrl + '?SESSIONID=' + SESSIONID + '&key=' + formId + '&appId=' + that.data.appId + '&sign=' + that.md5() + '&timestamp=' + that.timest(),
       method: 'POST',
-      success (res) {
-        console.log(res)
+      success () {
+        console.log('send success')
       }
     })
   },

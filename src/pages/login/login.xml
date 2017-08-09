@@ -88,7 +88,7 @@
 </view>
 <!--服务通知弹窗-->
 <view wx:if="{{ mask }}" class="tz-mask">
-  <view class="tz-content">
+    <view class="tz-content">
     <image src="../../images/tz.png"></image>
     <view class="tz-c-content">
       <view class="title">
@@ -106,6 +106,9 @@
       <text class="title">
         增加服务方法:<text class="text">点击下方按钮方可添加次数</text>
       </text>
+      <text class="title">
+        提示:<text class="text">推荐服务通知次数为25次。</text>
+      </text>
     </view>
     <form bindsubmit="msgSub" report-submit="true">
       <button hover-class="clickbtn" class="addTz" formType="submit">
@@ -116,4 +119,14 @@
   </view>
 </view>
 <!--关注结果弹窗-->
-<modal hidden="{{ followHidden }}" title="取消关注分析师" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ cancelText }}</modal>
+<modal hidden="{{ followHidden }}" title="取消关注" confirm-text="确定" no-cancel="true" bindconfirm="confirmfxs">{{ cancelText }}</modal>
+
+<view class="tz-mask" wx:if="{{ kefu }}">
+  <view class="sss">
+    <view class="sss-text">认证用户无法取消关注，如需取消，需联系客服人员</view>
+    <view class="sss-btn">
+      <button catchtap="kefuMask">返回</button>
+      <button catchtap="kefuMask" open-type="contact">联系客服</button>
+    </view>
+  </view>
+</view>

@@ -120,7 +120,7 @@
           //padding-left: 30rpx;
           //padding-bottom: 20rpx;
           font-size: 24rpx;
-          margin-bottom: 20rpx;
+          margin-bottom: 10rpx;
           .fxs-t-r-site, .fxs-t-r-time {
             font-size: 24rpx;
             padding-left: 10rpx;
@@ -139,7 +139,7 @@
     //关注按钮样式
     .fxs-bottom {
       position: relative;
-      margin-top: -22rpx;
+      margin-top: -10rpx;
       background-color: #fff;
       .fxs-follow {
         position: absolute;
@@ -163,6 +163,14 @@
         text-align: center;
         position: relative;
         z-index: 9;
+      }
+      .hfxs::after {
+        content: '关注此分析师需通过用户认证';
+        position: absolute;
+        top: -20rpx;
+        left: 0;
+        font-size: 26rpx;
+        color: #666;
       }
     }
   }

@@ -1,21 +1,25 @@
 <view class="jc">
   <!--顶部图片-->
-  <image class="top-img" src="../../images/jc-top.png"></image>
+  <image mode="widthFix" class="top-img" src="../../images/jc-top.png"></image>
   <!--中心时间-->
   <view class="jc-time">
     <view class="jc-t-top">
       <image src="../../images/jc-time.png"></image>
       <view>{{ today }}金价涨跌竞猜</view>
     </view>
-    <view class="stopTime"><text class="stopTime-text">当期竞猜时间: {{ today }}{{ stopTime }}。猜中可得{{ getjifen }}积分</text></view>
+    <view class="stopTime"><text class="stopTime-text">当期竞猜截止时间: {{ today }}{{ stopTime }}。猜中可得{{ getjifen }}积分</text></view>
     <view class="upDown">
-      <view data-type="up" catchtap="choosejc" class="{{ choose == 'up' ? 'up' : '' }}">涨 <text class="aa">{{ rate.riseproportion == 'NaN%' ?  '50%' : rate.riseproportion}}</text></view>
-      <view data-type="down" catchtap="choosejc" class="{{ choose == 'down' ? 'down' : '' }}">跌 <text class="aa">{{ rate.riseproportion == 'NaN%' ? '50%' :  rate.riseproportion}}</text></view>
+      <view data-type="up" catchtap="choosejc" class="{{ choose == 'up' ? 'up' : '' }}">涨</view>
+      <view data-type="down" catchtap="choosejc" class="{{ choose == 'down' ? 'down' : '' }}">跌</view>
+    </view>
+    <view class="upDownNumber">
+      本期竞猜涨跌比例为：涨{{ rate.riseproportion == 'NaN%' ?  '50%' : rate.riseproportion}} : 跌{{ rate.riseproportion == 'NaN%' ? '50%' :  rate.fallproportion}}，仅供参考
     </view>
   </view>
   <!--昨日结果展示-->
   <view class="jc-before">
-    <view class="jc-b-top">AuT+D的历史涨跌结果</view>
+    <view class="jc-b-top">{{ jctype || 'AuT+D' }}的历史涨跌结果</view>
+    <!--<view class="jc-url"><text>网址查询</text><text style="text-align: center;">{{ url || 'https://www.sge.com.cn' }}</text></view>-->
     <view class="jc-b-top-title">
       <text wx:for="{{ jcArr }}">{{ item }}</text>
     </view>
@@ -25,7 +29,6 @@
         <text>{{ item.liftDescription || '暂无数据' }}</text>
         <text>{{ item.createDate || '暂无数据' }}</text>
       </view>
-      <view class="jc-url" wx:if="{{ index <= 5 }}"><text>网址查询</text><text>{{ url }}</text></view>
     </view>
     <view wx:if="{{ jcResultArr.length == 0 }}">
       <view class="jc-b-center">
@@ -47,7 +50,7 @@
       <view class="ms-c-left">
         <view class="iconfont icon-mingshi">分析师:<text>{{ fxs[0].name }}</text></view>
         <view class="iconfont icon-zoushituacito">行情观点:<view>{{ fxs[0].analystviews }}</view></view>
-        <navigator hover-class="none" class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxs[0].id }}">点击查看详细</navigator>
+        <navigator hover-class="none" class="iconfont icon-xiangqing-copy" url="../detail/detail?type={{ fxs[0].id }}">点击查看分析师明细</navigator>
       </view>
       <view class="ms-c-right">
         <image class="fxsimg" src="{{ fxs[0].pictureUrl }}"></image>
@@ -85,7 +88,7 @@
   <image class="tz-img" src="../../images/jc-mask.png"></image>
   <view class="tz-c-content">
     <view class="title">
-      <view>亲，您竞猜{{ today }}AuT+D未来金价<text style="font-size: 40rpx; color: #f00;">{{ jcstatus == '1' ? '涨' : '跌' }}</text></view>
+      <view>亲，您竞猜{{ today }}{{ jctype || 'AuT+D' }}未来金价<text style="font-size: 40rpx; color: #f00;">{{ jcstatuss == '1' ? '涨' : '跌' }}</text></view>
       <view>猜对了可得{{ getjifen }}分噢</view>
       <!--您预测明天的金价走势为-->
     </view>
