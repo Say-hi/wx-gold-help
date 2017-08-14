@@ -8,7 +8,7 @@ Page({
    */
   data: {
     title: 'rz',
-    inputArr: ['姓名', '黄金交易编码', '电话', '微信号'],
+    inputArr: ['姓名', '黄金交易编号', '电话', '微信号'],
     btn: '提交认证',
     inputArr2: [
       {
@@ -20,7 +20,7 @@ Page({
         text: '未填写'
       },
       {
-        title: '黄金交易编码',
+        title: '黄金交易编号',
         text: '未填写'
       }
     ],
@@ -61,7 +61,7 @@ Page({
       that.setData({
         name: value
       })
-    } else if (tag === '黄金交易编码') {
+    } else if (tag === '黄金交易编号') {
       that.setData({
         number: value
       })
@@ -146,9 +146,10 @@ Page({
     this.setData({
       showRz: params.rz
     })
-    if (params.rz === '1') {
-      return this.getRzExplan()
-    }
+    // if (params.rz === '1') {
+    //   return
+    // }
+    this.getRzExplan()
     if (params.username) {
       this.data.inputArr2[0].text = params.username
     }

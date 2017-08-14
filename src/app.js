@@ -287,7 +287,7 @@ App({
           })
         } else if (message === '用户关注失败') {
           that.setData({
-            followText: '无法关注分析师，如需更改关注，请联系客服',
+            followText: '已完成用户认证。无法关注分析师，如需更改关注或取消认证，请联系客服或查看用户认证说明',
             followHidden: false
           })
         }

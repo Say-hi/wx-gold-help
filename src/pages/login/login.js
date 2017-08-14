@@ -207,6 +207,7 @@ Page({
       // console.log(res)
       if (res.data.message === '普通用户') {
         that.data.operation[0].text = '普通用户'
+        that.data.operation[0].url = '../rz/rz?rz=1'
         that.setData({
           status: '普通用户',
           operation: that.data.operation
@@ -220,7 +221,7 @@ Page({
       } else if (res.data.message === 'success') {
         let r = res.data.result
         that.data.operation[0].url = '../rz/rz?rz=2&username=' + r.username + '&phone=' + r.phone + '&wetusernum=' + r.wetusernum + '&goldnum=' + r.goldnum
-        that.data.operation[0].text = '用户已认证'
+        that.data.operation[0].text = '认证用户'
         that.setData({
           operation: that.data.operation,
           status: '已认证'
@@ -265,7 +266,6 @@ Page({
       var article = that.data.soft.introduce
       WxParse.wxParse('article', 'html', article, that, 5)
     })
-    this.getRzStatus()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -315,6 +315,7 @@ Page({
       })
     })
     // this.getUserScore()
+    this.getRzStatus()
   },
   /**
    * 生命周期函数--监听页面隐藏

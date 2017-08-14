@@ -22,7 +22,7 @@
             </view>
             <!--左侧图片-->
             <view class="fxs-t-left">
-              <image src="{{ item.photo || '../../images/fxs-image.png' }}" alt="分析师头像"></image>
+              <image mode="aspectFill" src="{{ item.photo || '../../images/fxs-image.png' }}" alt="分析师头像"></image>
             </view>
           </view>
           <!--下部-分析师功能-->

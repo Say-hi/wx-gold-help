@@ -18,7 +18,8 @@
     </view>
   </view>
   <view wx:if="{{ showRz == '1' }}" class="rzbtn" catchtap="rzSave">{{ btn }}</view>
-  <view wx:if="{{ showRz == '1' }}" class="tips">
+  <view wx:else class="rzbtn">已认证</view>
+  <view class="tips">
     <view class="tips-title">认证说明</view>
     <view class="tips-text">{{ tips }}</view>
   </view>
